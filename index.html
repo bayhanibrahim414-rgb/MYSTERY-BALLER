@@ -1,0 +1,2988 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Mystery Baller FC</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,700;0,800;0,900;1,900&display=swap');
+
+        :root {
+            --bg-color: #090d16;
+            --glass-bg: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --accent: #2563eb;
+            --accent-glow: rgba(37, 99, 235, 0.45);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --card-text: #2e1b04;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        html, body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(37, 99, 235, 0.25), transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(217, 119, 6, 0.2), transparent 45%);
+            color: var(--text-main);
+            height: 100dvh;
+            width: 100vw;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        .screen {
+            display: none;
+            width: 100%;
+            height: 100dvh;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 14px;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .screen.active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.97); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* GİRİŞ EKRANI LOGO & SARI KARE DIŞINA SEKİP DÖNEN TOP */
+        .logo-emblem {
+            position: relative;
+            width: 78px;
+            height: 78px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, #fef08a, #ca8a04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                0 12px 30px rgba(234, 179, 8, 0.35),
+                inset 0 2px 4px rgba(255, 255, 255, 0.55);
+            margin-bottom: 20px;
+            overflow: visible;
+            animation: emblemRecoil 4.2s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
+        }
+
+        .logo-ball {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.3rem;
+            line-height: 1;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.35));
+            will-change: transform;
+            animation: ballBounceOutAndBack 4.2s cubic-bezier(0.32, 0.72, 0.35, 1) infinite;
+        }
+
+        @keyframes ballBounceOutAndBack {
+            0%, 16% {
+                transform: translate(0px, 0px) rotate(0deg) scale(1, 1);
+            }
+            34% {
+                transform: translate(27px, -23px) rotate(165deg) scale(1.04, 0.96);
+            }
+            38% {
+                transform: translate(29px, -24px) rotate(190deg) scale(0.9, 1.1);
+            }
+            56% {
+                transform: translate(-24px, 21px) rotate(345deg) scale(1.03, 0.97);
+            }
+            60% {
+                transform: translate(-26px, 23px) rotate(370deg) scale(1.1, 0.9);
+            }
+            79% {
+                transform: translate(2px, -2px) rotate(705deg) scale(0.98, 1.02);
+            }
+            84%, 100% {
+                transform: translate(0px, 0px) rotate(720deg) scale(1, 1);
+            }
+        }
+
+        @keyframes emblemRecoil {
+            0%, 34%, 44%, 56%, 66%, 100% {
+                transform: rotate(0deg) scale(1);
+            }
+            38% {
+                transform: rotate(4deg) scale(1.03);
+            }
+            60% {
+                transform: rotate(-4deg) scale(1.03);
+            }
+        }
+
+        /* GİZEMLİ FUTBOLCU YAZISI — ARA ARA PARLAK IŞIK GEÇİŞİ */
+        .brand-title {
+            position: relative;
+            font-size: clamp(2.1rem, 8vw, 3.4rem);
+            font-weight: 900;
+            font-style: italic;
+            letter-spacing: -1px;
+            background-image: linear-gradient(
+                110deg,
+                #eab308 0%,
+                #fef08a 22%,
+                #ca8a04 41%,
+                #fef9c3 47%,
+                #ffffff 50%,
+                #fef9c3 53%,
+                #ca8a04 59%,
+                #fef08a 78%,
+                #eab308 100%
+            );
+            background-size: 260% 100%;
+            background-position: 115% 0;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            line-height: 1.08;
+            padding: 0 8px;
+            margin-bottom: 6px;
+            animation: titleLightSweep 4.8s ease-in-out infinite;
+        }
+
+        @keyframes titleLightSweep {
+            0%, 54% {
+                background-position: 115% 0;
+                filter: drop-shadow(0 2px 10px rgba(234, 179, 8, 0.18));
+            }
+            68% {
+                filter: drop-shadow(0 2px 18px rgba(254, 249, 195, 0.55));
+            }
+            82%, 100% {
+                background-position: -35% 0;
+                filter: drop-shadow(0 2px 10px rgba(234, 179, 8, 0.18));
+            }
+        }
+
+        .brand-sub {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            margin-bottom: 32px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* BUTONLAR */
+        .btn {
+            padding: 14px 20px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            cursor: pointer;
+            color: white;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px);
+            margin: 6px;
+            transition: transform 0.15s, opacity 0.15s;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            width: 86%;
+            max-width: 320px;
+        }
+        .btn:active { transform: scale(0.96); }
+        .btn:disabled { opacity: 0.5; cursor: default; }
+        .btn.primary {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border: none;
+            box-shadow: 0 8px 20px var(--accent-glow);
+        }
+        .btn.gold-outline {
+            border: 1px solid rgba(250, 204, 21, 0.45);
+            background: rgba(250, 204, 21, 0.1);
+            color: #fef08a;
+        }
+        .btn.action {
+            width: auto;
+            flex: 1.2;
+            margin: 0;
+            background: linear-gradient(135deg, #facc15, #ca8a04);
+            border: none;
+            color: #291502;
+            box-shadow: 0 4px 12px rgba(234, 179, 8, 0.35);
+        }
+        .btn.secondary {
+            width: auto;
+            flex: 0.8;
+            margin: 0;
+        }
+
+        /* YANA KAYDIRMALI ANAHTAR (TOGGLE SWITCH) */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 999px;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        .slider::before {
+            content: "";
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            top: 3px;
+            background: #f8fafc;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+            transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .switch input:checked + .slider {
+            background: linear-gradient(135deg, #facc15, #ca8a04);
+            border-color: #fde047;
+        }
+        .switch input:checked + .slider::before {
+            transform: translateX(22px);
+            background: #ffffff;
+        }
+
+        /* AYARLAR & LİG FİLTRESİ PANELİ */
+        .settings-panel {
+            background: rgba(15, 23, 42, 0.82);
+            padding: 20px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 370px;
+            border: 1px solid var(--glass-border);
+            margin-bottom: 14px;
+            backdrop-filter: blur(14px);
+        }
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        .setting-row:last-child { margin-bottom: 0; }
+        select {
+            padding: 9px 12px;
+            border-radius: 10px;
+            background: #1e293b;
+            color: #fff;
+            border: 1px solid #334155;
+            outline: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        input[type="range"] {
+            width: 115px;
+            accent-color: #eab308;
+        }
+
+        /* LİG FİLTRE SATIRLARI */
+        .league-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 55dvh;
+            overflow-y: auto;
+        }
+        .league-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 14px;
+            border-radius: 14px;
+            transition: border-color 0.25s, background 0.25s;
+        }
+        .league-item.active-league {
+            border-color: rgba(250, 204, 21, 0.42);
+            background: rgba(250, 204, 21, 0.08);
+        }
+        .league-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .league-badge-circle {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            flex-shrink: 0;
+        }
+        .league-badge-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .league-text {
+            display: flex;
+            flex-direction: column;
+        }
+        .league-name {
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: #f8fafc;
+        }
+        .league-meta {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+        #leagueWarnMsg {
+            color: #f87171;
+            font-size: 0.8rem;
+            font-weight: 800;
+            min-height: 20px;
+            text-align: center;
+            margin-bottom: 6px;
+        }
+
+        /* ÜST SKOR & TAKIM BARI */
+        .top-hud {
+            width: 100%;
+            max-width: 410px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .score-board {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.78);
+            border: 1px solid var(--glass-border);
+            padding: 6px 16px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-around;
+            font-weight: 800;
+            font-size: 0.75rem;
+            backdrop-filter: blur(10px);
+        }
+        .score-item { display: flex; flex-direction: column; align-items: center; }
+        .score-label { color: var(--text-muted); font-size: 0.62rem; letter-spacing: 0.5px; }
+        .score-val { color: #fef08a; font-size: 1.02rem; }
+
+        .active-team-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 4px 14px;
+            border-radius: 999px;
+            font-size: 0.84rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+        .team-pill-logo-wrap {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .active-team-pill img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* BÜYÜK EA FC NADİR ALTIN KART TASARIMI */
+        .card-wrapper {
+            position: relative;
+            width: min(76vw, 45dvh, 330px);
+            aspect-ratio: 300 / 435;
+            margin: 2px 0 8px 0;
+            filter: drop-shadow(0 20px 32px rgba(0, 0, 0, 0.9));
+            flex-shrink: 0;
+        }
+
+        .card-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+        .card-bg svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .card-content {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+        }
+
+        /* SOL ÜST REYTİNG & MEVKİ — HER ZAMAN FOTOĞRAFIN ÖNÜNDE VE SOLUNDA */
+        .card-top-left {
+            position: absolute;
+            top: 12.8%;
+            left: 10.2%;
+            width: 18%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 0.98;
+            z-index: 6;
+            pointer-events: none;
+        }
+        .c-ovr {
+            font-size: clamp(2.1rem, 7vw, 2.8rem);
+            font-weight: 900;
+            color: var(--card-text);
+            letter-spacing: -1px;
+            text-shadow: 0 1px 0 rgba(255, 250, 210, 0.75);
+        }
+        .c-pos {
+            font-size: clamp(0.88rem, 3vw, 1.12rem);
+            font-weight: 800;
+            color: var(--card-text);
+            margin-top: 2px;
+            text-shadow: 0 1px 0 rgba(255, 250, 210, 0.75);
+        }
+
+        /* SİLÜET VE YÜZ ODAKLI AKTİF TAKIM FORMALI OYUNCU FOTOĞRAFI */
+        .c-player-img {
+            position: absolute;
+            bottom: 37.5%;
+            left: 60.5%;
+            transform: translateX(-50%) scale(1);
+            width: 56%;
+            height: 49%;
+            object-fit: contain;
+            object-position: bottom center;
+            filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.28));
+            opacity: 1;
+            transition: opacity 1.1s ease-in-out, transform 1.2s ease-out;
+            -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+            z-index: 3;
+            pointer-events: none;
+        }
+        .c-player-img.fade-out {
+            opacity: 0;
+            transform: translateX(-50%) scale(0.95);
+        }
+
+        .c-player-portrait-frame {
+            position: absolute;
+            bottom: 37.5%;
+            left: 60.8%;
+            transform: translateX(-50%) scale(0.93);
+            width: 55%;
+            height: 49.5%;
+            border-radius: 22px 22px 6px 6px;
+            overflow: hidden;
+            opacity: 0;
+            filter: blur(14px) brightness(0.78) drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+            transition:
+                opacity 1.35s ease-in-out,
+                filter 1.5s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+            -webkit-mask-image: radial-gradient(ellipse 92% 95% at 50% 44%, black 70%, transparent 100%);
+            mask-image: radial-gradient(ellipse 92% 95% at 50% 44%, black 70%, transparent 100%);
+            z-index: 3;
+            pointer-events: none;
+        }
+        .c-player-portrait-frame.revealed {
+            opacity: 1;
+            filter: blur(0px) brightness(1) drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+            transform: translateX(-50%) scale(1);
+        }
+
+        .c-player-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 50% 15%;
+            transform: scale(1);
+            transform-origin: 50% 20%;
+            transition: transform 0.6s ease-out;
+        }
+
+        /* KART ALT BİLGİLER (YATAY ÇİZGİNİN ALTI) */
+        .card-bottom {
+            position: absolute;
+            bottom: 6.8%;
+            left: 8%;
+            right: 8%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 6;
+        }
+        .c-name {
+            font-size: clamp(1.04rem, 4.2vw, 1.4rem);
+            font-weight: 900;
+            color: var(--card-text);
+            text-transform: uppercase;
+            letter-spacing: -0.3px;
+            margin-bottom: 3px;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .c-divider {
+            width: 86%;
+            height: 1.4px;
+            background: rgba(46, 27, 4, 0.28);
+            margin-bottom: 5px;
+        }
+
+        .c-stats-container {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            width: 100%;
+            text-align: center;
+            gap: 1px;
+            margin-bottom: 6px;
+        }
+        .c-stat-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.08;
+        }
+        .c-stat-label {
+            font-size: clamp(0.55rem, 2vw, 0.68rem);
+            font-weight: 800;
+            color: var(--card-text);
+            opacity: 0.85;
+        }
+        .c-stat-val {
+            font-size: clamp(0.92rem, 3.4vw, 1.15rem);
+            font-weight: 900;
+            color: var(--card-text);
+        }
+
+        .c-icons-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+        }
+        .c-icon {
+            width: clamp(23px, 5.8vw, 28px);
+            height: clamp(23px, 5.8vw, 28px);
+            object-fit: contain;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.24));
+        }
+        .c-flag {
+            width: clamp(26px, 6.4vw, 31px);
+            height: clamp(18px, 4.4vw, 21px);
+            object-fit: cover;
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        }
+
+        /* ÖZELLİK VE REYTİNGLERİN YAVAŞÇA AÇILMA GEÇİŞİ */
+        .revealable {
+            transition:
+                filter 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.9s ease,
+                transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+            transform: scale(1);
+            opacity: 1;
+            filter: blur(0px);
+        }
+        .hidden-stat {
+            filter: blur(7px);
+            opacity: 0.18;
+            transform: scale(0.86);
+        }
+
+        /* KONTROLLER */
+        .controls {
+            width: 100%;
+            max-width: 410px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-group {
+            position: relative;
+            display: flex;
+            width: 100%;
+            gap: 8px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            background: rgba(15, 23, 42, 0.85);
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            outline: none;
+            -webkit-user-select: text;
+            user-select: text;
+            touch-action: manipulation;
+        }
+        input[type="text"]:focus {
+            border-color: #eab308;
+        }
+
+        .autocomplete-list {
+            position: absolute;
+            bottom: calc(100% + 6px);
+            left: 0;
+            right: 84px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            max-height: 155px;
+            overflow-y: auto;
+            touch-action: pan-y;
+            -webkit-overflow-scrolling: touch;
+            display: none;
+            z-index: 100;
+            box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.85);
+        }
+        .autocomplete-list div {
+            padding: 11px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.92rem;
+        }
+        .autocomplete-list div:last-child { border-bottom: none; }
+        .autocomplete-list div:active { background: var(--accent); }
+
+        #msgArea {
+            font-weight: 800;
+            text-align: center;
+            min-height: 21px;
+            font-size: 0.92rem;
+        }
+
+        .action-row {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. GİRİŞ EKRANI -->
+    <div id="startScreen" class="screen active">
+        <div class="logo-emblem">
+            <span class="logo-ball">⚽</span>
+        </div>
+        <div class="brand-title" id="ui-title">GİZEMLİ FUTBOLCU</div>
+        <div class="brand-sub">ULTIMATE TEAM EDITION</div>
+        <button class="btn primary" id="ui-start" onclick="startGame()">Oyuna Başla</button>
+        <button class="btn gold-outline" id="ui-leagues-btn" onclick="openLeaguesScreen()">Ligler (6/6)</button>
+        <button class="btn" id="ui-settings-btn" onclick="showScreen('settingsScreen')">Ayarlar</button>
+    </div>
+
+    <!-- 2. LİG FİLTRESİ EKRANI -->
+    <div id="leaguesScreen" class="screen">
+        <h2 style="margin-bottom:14px; font-weight:900; letter-spacing:1px;" id="ui-leagues-title">LİG FİLTRESİ</h2>
+        <div class="settings-panel">
+            <div class="league-list" id="leagueFilterList"></div>
+        </div>
+        <div id="leagueWarnMsg"></div>
+        <button class="btn primary" id="ui-leagues-back" onclick="showScreen('startScreen')">Tamam</button>
+    </div>
+
+    <!-- 3. AYARLAR EKRANI -->
+    <div id="settingsScreen" class="screen">
+        <h2 style="margin-bottom:18px; font-weight:900; letter-spacing:1px;" id="ui-settings-title">AYARLAR</h2>
+        <div class="settings-panel" id="settingsPanelBox">
+            <div class="setting-row">
+                <label id="ui-lang-label">Dil:</label>
+                <select id="langSelect" onchange="changeLanguage()">
+                    <option value="tr" selected>Türkçe</option>
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="de">Deutsch</option>
+                    <option value="fr">Français</option>
+                    <option value="it">Italiano</option>
+                    <option value="pt">Português</option>
+                    <option value="nl">Nederlands</option>
+                    <option value="ru">Русский</option>
+                    <option value="ar">العربية</option>
+                    <option value="zh">中文</option>
+                    <option value="ja">日本語</option>
+                    <option value="ko">한국어</option>
+                    <option value="hi">हिन्दी</option>
+                    <option value="sv">Svenska</option>
+                </select>
+            </div>
+            <div class="setting-row">
+                <label id="ui-sound-label">Ses Efektleri:</label>
+                <label class="switch">
+                    <input type="checkbox" id="soundToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="setting-row">
+                <label id="ui-vol-label">Ses Seviyesi:</label>
+                <input type="range" id="volSlider" min="0.01" max="0.25" step="0.01" value="0.09">
+            </div>
+        </div>
+        <button class="btn gold-outline" id="ui-settings-leagues" onclick="openLeaguesScreen()">Lig Filtresi</button>
+        <button class="btn primary" id="ui-back" onclick="showScreen('startScreen')">Geri Dön</button>
+    </div>
+
+    <!-- 4. OYUN EKRANI -->
+    <div id="gameScreen" class="screen">
+        <div class="top-hud">
+            <div class="score-board">
+                <div class="score-item">
+                    <span class="score-label" id="l-pot">TUR PUANI</span>
+                    <span class="score-val" id="currentScore">1000</span>
+                </div>
+                <div class="score-item">
+                    <span class="score-label" id="l-total">TOPLAM SKOR</span>
+                    <span class="score-val" id="totalScore">0</span>
+                </div>
+            </div>
+            <div class="active-team-pill">
+                <div class="team-pill-logo-wrap">
+                    <img id="top-TeamLogo" src="" alt="Team">
+                </div>
+                <span id="top-TeamName">TAKIM</span>
+            </div>
+        </div>
+
+        <!-- EA FC NADİR ALTIN KART -->
+        <div class="card-wrapper">
+            <div class="card-bg">
+                <svg viewBox="0 0 300 435" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="goldBase" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#f7e594"/>
+                            <stop offset="32%" stop-color="#e5c258"/>
+                            <stop offset="68%" stop-color="#cfa336"/>
+                            <stop offset="100%" stop-color="#ebd06e"/>
+                        </linearGradient>
+
+                        <linearGradient id="goldLower" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#e7c663"/>
+                            <stop offset="50%" stop-color="#ddb64c"/>
+                            <stop offset="100%" stop-color="#cfa135"/>
+                        </linearGradient>
+
+                        <pattern id="ribbedGold" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)">
+                            <rect x="0" y="0" width="2.2" height="7" fill="#fff9cf" fill-opacity="0.72"/>
+                            <rect x="2.2" y="0" width="2.3" height="7" fill="#cfa234" fill-opacity="0.58"/>
+                            <rect x="4.5" y="0" width="2.5" height="7" fill="#7d560f" fill-opacity="0.52"/>
+                        </pattern>
+
+                        <linearGradient id="prismSheen" x1="0%" y1="100%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.05"/>
+                            <stop offset="48%" stop-color="#fffbe0" stop-opacity="0.55"/>
+                            <stop offset="52%" stop-color="#9e7118" stop-opacity="0.35"/>
+                            <stop offset="100%" stop-color="#ffffff" stop-opacity="0.25"/>
+                        </linearGradient>
+
+                        <clipPath id="fcCardClip">
+                            <path d="M 54 34 Q 150 6 246 34 Q 260 54 286 58 L 286 376 Q 286 404 218 412 Q 174 418 150 436 Q 126 418 82 412 Q 14 404 14 376 L 14 58 Q 40 54 54 34 Z"/>
+                        </clipPath>
+                    </defs>
+
+                    <g clip-path="url(#fcCardClip)">
+                        <rect x="0" y="0" width="300" height="435" fill="url(#goldBase)"/>
+                        <polygon points="10,222 290,52 290,185 10,272" fill="url(#ribbedGold)"/>
+                        <polygon points="10,222 290,52 290,185 10,272" fill="url(#prismSheen)"/>
+                        <polygon points="10,248 290,148 290,210 10,272" fill="#f6e38c" fill-opacity="0.45"/>
+                        <polygon points="10,256 290,172 290,225 10,272" fill="url(#ribbedGold)" opacity="0.65"/>
+
+                        <line x1="12" y1="196" x2="288" y2="26" stroke="#fffbe0" stroke-width="2" stroke-opacity="0.7"/>
+                        <line x1="12" y1="222" x2="288" y2="52" stroke="#fffbe6" stroke-width="2.6" stroke-opacity="0.92"/>
+                        <line x1="12" y1="224" x2="288" y2="54" stroke="#8f6312" stroke-width="1.2" stroke-opacity="0.55"/>
+                        <line x1="12" y1="248" x2="288" y2="148" stroke="#fffce6" stroke-width="2.4" stroke-opacity="0.9"/>
+                        <line x1="12" y1="250" x2="288" y2="150" stroke="#855a0e" stroke-width="1.5" stroke-opacity="0.65"/>
+
+                        <rect x="0" y="272" width="300" height="165" fill="url(#goldLower)"/>
+                        <line x1="12" y1="271.5" x2="288" y2="271.5" stroke="#996d18" stroke-width="1.8" stroke-opacity="0.75"/>
+                        <line x1="12" y1="273" x2="288" y2="273" stroke="#fff7c2" stroke-width="1.4" stroke-opacity="0.85"/>
+                    </g>
+
+                    <path d="M 54 34 Q 150 6 246 34 Q 260 54 286 58 L 286 376 Q 286 404 218 412 Q 174 418 150 436 Q 126 418 82 412 Q 14 404 14 376 L 14 58 Q 40 54 54 34 Z"
+                          fill="none" stroke="#614309" stroke-width="3.2"/>
+                    <path d="M 55 35.5 Q 150 8 245 35.5 Q 259 55 284.5 59 L 284.5 375 Q 284.5 402.5 217.5 410.5 Q 174 416.5 150 434 Q 126 416.5 82.5 410.5 Q 15.5 402.5 15.5 375 L 15.5 59 Q 41 55 55 35.5 Z"
+                          fill="none" stroke="#fff8c9" stroke-width="1.4" stroke-opacity="0.8"/>
+                </svg>
+            </div>
+
+            <div class="card-content">
+                <div class="card-top-left">
+                    <span class="c-ovr revealable hidden-stat" id="s-OVR">90</span>
+                    <span class="c-pos revealable hidden-stat" id="s-POS">ST</span>
+                </div>
+
+                <!-- Katman 1: Siyah silüet | Katman 2: Yüz odaklı ve aktif takım formalı oyuncu portresi -->
+                <img src="" id="s-Silhouette" class="c-player-img" alt="Silhouette">
+                <div id="s-PhotoFrame" class="c-player-portrait-frame">
+                    <img src="" id="s-Photo" class="c-player-photo" alt="Player">
+                </div>
+
+                <div class="card-bottom">
+                    <div class="c-name revealable hidden-stat" id="s-Name">OYUNCU</div>
+                    <div class="c-divider"></div>
+
+                    <div class="c-stats-container">
+                        <div class="c-stat-col"><span class="c-stat-label" id="l-PAC">HIZ</span><span id="s-PAC" class="c-stat-val revealable hidden-stat">88</span></div>
+                        <div class="c-stat-col"><span class="c-stat-label" id="l-SHO">ŞUT</span><span id="s-SHO" class="c-stat-val revealable hidden-stat">90</span></div>
+                        <div class="c-stat-col"><span class="c-stat-label" id="l-PAS">PAS</span><span id="s-PAS" class="c-stat-val revealable hidden-stat">84</span></div>
+                        <div class="c-stat-col"><span class="c-stat-label" id="l-DRI">DRİ</span><span id="s-DRI" class="c-stat-val revealable hidden-stat">86</span></div>
+                        <div class="c-stat-col"><span class="c-stat-label" id="l-DEF">DEF</span><span id="s-DEF" class="c-stat-val revealable hidden-stat">45</span></div>
+                        <div class="c-stat-col"><span class="c-stat-label" id="l-PHY">FİZ</span><span id="s-PHY" class="c-stat-val revealable hidden-stat">82</span></div>
+                    </div>
+
+                    <div class="c-icons-row">
+                        <img src="" id="s-Nation" class="c-flag revealable hidden-stat" alt="Nation">
+                        <img src="" id="s-League" class="c-icon" alt="League">
+                        <img src="" id="s-TeamLogo" class="c-icon" alt="Team">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="input-group">
+                <input type="text" id="guessInput" placeholder="Oyuncu adı yaz..." autocomplete="off">
+                <button class="btn primary" style="width: 76px; margin: 0; padding: 12px 0;" id="ui-guessBtn" onclick="checkGuess()">OK</button>
+                <div id="autocompleteList" class="autocomplete-list"></div>
+            </div>
+
+            <div id="msgArea"></div>
+
+            <div class="action-row">
+                <button class="btn action" id="ui-hintBtn" onclick="handleHint()">İPUCU AÇ (-50)</button>
+                <button class="btn primary" id="ui-nextBtn" style="display:none; flex:1.2; margin:0;" onclick="initGame()">YENİ KART</button>
+                <button class="btn secondary" id="ui-menuBtn" onclick="showScreen('startScreen')">MENÜ</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. ÇOKLU DİL SÖZLÜĞÜ (15 DİL + STAT ÇEVİRİLERİ + LİG FİLTRESİ)
+        const langData = {
+            tr: { t: { title: "GİZEMLİ FUTBOLCU", start: "OYUNA BAŞLA", leagues: "LİGLER", leaguesTitle: "LİG FİLTRESİ", minLeague: "En az 1 lig seçili olmalı!", done: "TAMAM", settings: "AYARLAR", lang: "Dil:", sound: "Ses Efektleri:", vol: "Ses Seviyesi:", back: "GERİ DÖN", guess: "TAHMİN", hint: "İPUCU AÇ (-50)", next: "YENİ KART", menu: "MENÜ", ph: "Oyuncu adı yaz...", win: "TEBRİKLER! +", lose: "0 PUAN - BİLEMEDİN!", wrong: "Yanlış! İpucu açıldı (-100P)", pot: "TUR PUANI", tot: "TOPLAM SKOR", teamsWord: "Takım" }, stats: { PAC: "HIZ", SHO: "ŞUT", PAS: "PAS", DRI: "DRİ", DEF: "DEF", PHY: "FİZ" } },
+            en: { t: { title: "MYSTERY BALLER", start: "START GAME", leagues: "LEAGUES", leaguesTitle: "LEAGUE FILTER", minLeague: "At least 1 league must stay active!", done: "DONE", settings: "SETTINGS", lang: "Language:", sound: "Sound Effects:", vol: "Volume:", back: "BACK", guess: "GUESS", hint: "HINT (-50)", next: "NEXT CARD", menu: "MENU", ph: "Type player name...", win: "SPOT ON! +", lose: "0 PTS - GAME OVER!", wrong: "Wrong! Hint opened (-100P)", pot: "ROUND PTS", tot: "TOTAL SCORE", teamsWord: "Teams" }, stats: { PAC: "PAC", SHO: "SHO", PAS: "PAS", DRI: "DRI", DEF: "DEF", PHY: "PHY" } },
+            es: { t: { title: "JUGADOR MISTERIO", start: "JUGAR", leagues: "LIGAS", leaguesTitle: "FILTRO DE LIGAS", minLeague: "¡Al menos 1 liga debe estar activa!", done: "LISTO", settings: "AJUSTES", lang: "Idioma:", sound: "Sonido:", vol: "Volumen:", back: "VOLVER", guess: "ADIVINAR", hint: "PISTA (-50)", next: "SIGUIENTE", menu: "MENÚ", ph: "Nombre del jugador...", win: "¡CORRECTO! +", lose: "0 PTS - ¡FIN!", wrong: "¡Fallo! Pista (-100P)", pot: "PUNTOS", tot: "TOTAL", teamsWord: "Equipos" }, stats: { PAC: "RIT", SHO: "TIR", PAS: "PAS", DRI: "REG", DEF: "DEF", PHY: "FÍS" } },
+            de: { t: { title: "GEHEIMER SPIELER", start: "STARTEN", leagues: "LIGEN", leaguesTitle: "LIGA-FILTER", minLeague: "Mindestens 1 Liga muss aktiv sein!", done: "FERTIG", settings: "EINSTELLUNGEN", lang: "Sprache:", sound: "Ton:", vol: "Lautstärke:", back: "ZURÜCK", guess: "RATEN", hint: "TIPP (-50)", next: "NÄCHSTER", menu: "MENÜ", ph: "Spielername...", win: "RICHTIG! +", lose: "0 PKT - VORBEI!", wrong: "Falsch! Tipp (-100P)", pot: "RUNDE", tot: "GESAMT", teamsWord: "Teams" }, stats: { PAC: "TEM", SHO: "SCH", PAS: "PAS", DRI: "DRI", DEF: "DEF", PHY: "PHY" } },
+            fr: { t: { title: "JOUEUR MYSTÈRE", start: "JOUER", leagues: "LIGUES", leaguesTitle: "FILTRE DES LIGUES", minLeague: "Au moins 1 ligue doit être active !", done: "OK", settings: "PARAMÈTRES", lang: "Langue:", sound: "Sons:", vol: "Volume:", back: "RETOUR", guess: "DEVINER", hint: "INDICE (-50)", next: "SUIVANT", menu: "MENU", ph: "Nom du joueur...", win: "BRAVO ! +", lose: "0 PTS - PERDU !", wrong: "Faux ! Indice (-100P)", pot: "POINTS", tot: "SCORE", teamsWord: "Équipes" }, stats: { PAC: "VIT", SHO: "TIR", PAS: "PAS", DRI: "DRI", DEF: "DÉF", PHY: "PHY" } },
+            it: { t: { title: "GIOCATORE SEGRETO", start: "INIZIA", leagues: "LEGHE", leaguesTitle: "FILTRO LEGHE", minLeague: "Almeno 1 lega deve restare attiva!", done: "FATTO", settings: "IMPOSTAZIONI", lang: "Lingua:", sound: "Suoni:", vol: "Volume:", back: "INDIETRO", guess: "INDOVINA", hint: "AIUTO (-50)", next: "PROSSIMO", menu: "MENU", ph: "Nome giocatore...", win: "ESATTO! +", lose: "0 PTI - PERSO!", wrong: "Sbagliato! Aiuto (-100P)", pot: "PUNTI", tot: "TOTALE", teamsWord: "Squadre" }, stats: { PAC: "VEL", SHO: "TIR", PAS: "PAS", DRI: "DRI", DEF: "DIF", PHY: "FIS" } },
+            pt: { t: { title: "JOGADOR MISTÉRIO", start: "JOGAR", leagues: "LIGAS", leaguesTitle: "FILTRO DE LIGAS", minLeague: "Pelo menos 1 liga deve estar ativa!", done: "PRONTO", settings: "CONFIGURAÇÕES", lang: "Idioma:", sound: "Sons:", vol: "Volume:", back: "VOLTAR", guess: "CHUTAR", hint: "DICA (-50)", next: "PRÓXIMO", menu: "MENU", ph: "Nome do jogador...", win: "ACERTOU! +", lose: "0 PTS - FIM!", wrong: "Errado! Dica (-100P)", pot: "PONTOS", tot: "TOTAL", teamsWord: "Times" }, stats: { PAC: "RIT", SHO: "FIN", PAS: "PAS", DRI: "DRI", DEF: "DEF", PHY: "FÍS" } },
+            nl: { t: { title: "MYSTERIE SPELER", start: "STARTEN", leagues: "COMPETITIES", leaguesTitle: "COMPETITIE FILTER", minLeague: "Minimaal 1 competitie moet actief zijn!", done: "KLAAR", settings: "INSTELLINGEN", lang: "Taal:", sound: "Geluid:", vol: "Volume:", back: "TERUG", guess: "RADEN", hint: "HINT (-50)", next: "VOLGENDE", menu: "MENU", ph: "Spelersnaam...", win: "GOED! +", lose: "0 PTN - VOORBIJ!", wrong: "Fout! Hint (-100P)", pot: "PUNTEN", tot: "TOTAAL", teamsWord: "Teams" }, stats: { PAC: "SNE", SHO: "SCH", PAS: "PAS", DRI: "DRI", DEF: "VER", PHY: "FYS" } },
+            ru: { t: { title: "ТАЙНЫЙ ИГРОК", start: "ИГРАТЬ", leagues: "ЛИГИ", leaguesTitle: "ФИЛЬТР ЛИГ", minLeague: "Выберите хотя бы 1 лигу!", done: "ГОТОВО", settings: "НАСТРОЙКИ", lang: "Язык:", sound: "Звук:", vol: "Громкость:", back: "НАЗАД", guess: "УГАДАТЬ", hint: "ПОДСКАЗКА", next: "ДАЛЕЕ", menu: "МЕНЮ", ph: "Имя игрока...", win: "ВЕРНО! +", lose: "0 ОЧКОВ!", wrong: "Ошибка! (-100P)", pot: "РАУНД", tot: "СЧЁТ", teamsWord: "Команд" }, stats: { PAC: "СКР", SHO: "УДР", PAS: "ПАС", DRI: "ДРБ", DEF: "ЗАЩ", PHY: "ФИЗ" } },
+            ar: { t: { title: "اللاعب الغامض", start: "ابدأ اللعب", leagues: "الدوريات", leaguesTitle: "تصفية الدوريات", minLeague: "يجب اختيار دوري واحد على الأقل!", done: "تم", settings: "الإعدادات", lang: "اللغة:", sound: "الأصوات:", vol: "الصوت:", back: "رجوع", guess: "تخمين", hint: "تلميح (-50)", next: "التالي", menu: "القائمة", ph: "اسم اللاعب...", win: "صحيح! +", lose: "0 نقطة!", wrong: "خطأ! (-100P)", pot: "نقاط الجولة", tot: "المجموع", teamsWord: "فرق" }, stats: { PAC: "سرعة", SHO: "تسديد", PAS: "تمرير", DRI: "مراوغة", DEF: "دفاع", PHY: "بدني" } },
+            zh: { t: { title: "神秘球星", start: "开始游戏", leagues: "联赛筛选", leaguesTitle: "选择联赛", minLeague: "至少保留1个联赛！", done: "完成", settings: "设置", lang: "语言:", sound: "音效:", vol: "音量:", back: "返回", guess: "猜测", hint: "提示 (-50)", next: "下一张", menu: "菜单", ph: "输入球员姓名...", win: "猜对了! +", lose: "0分 - 结束!", wrong: "错误! (-100P)", pot: "本轮得分", tot: "总分", teamsWord: "支球队" }, stats: { PAC: "速度", SHO: "射门", PAS: "传球", DRI: "盘带", DEF: "防守", PHY: "身体" } },
+            ja: { t: { title: "ミステリー選手", start: "スタート", leagues: "リーグ選択", leaguesTitle: "リーグフィルター", minLeague: "1つ以上のリーグを選択してください", done: "完了", settings: "設定", lang: "言語:", sound: "効果音:", vol: "音量:", back: "戻る", guess: "予想", hint: "ヒント (-50)", next: "次のカード", menu: "メニュー", ph: "選手名を入力...", win: "正解！ +", lose: "0点 - 終了！", wrong: "不正解！(-100P)", pot: "ラウンド", tot: "合計スコア", teamsWord: "チーム" }, stats: { PAC: "PAC", SHO: "SHO", PAS: "PAS", DRI: "DRI", DEF: "DEF", PHY: "PHY" } },
+            ko: { t: { title: "미스터리 선수", start: "게임 시작", leagues: "리그 필터", leaguesTitle: "리그 선택", minLeague: "최소 1개 리그를 선택하세요!", done: "완료", settings: "설정", lang: "언어:", sound: "효과음:", vol: "음량:", back: "뒤로", guess: "추측", hint: "힌트 (-50)", next: "다음 카드", menu: "메뉴", ph: "선수 이름 입력...", win: "정답! +", lose: "0점 - 종료!", wrong: "오답! (-100P)", pot: "라운드", tot: "총점", teamsWord: "팀" }, stats: { PAC: "속도", SHO: "슛", PAS: "패스", DRI: "드리블", DEF: "수비", PHY: "피지컬" } },
+            hi: { t: { title: "रहस्यमय खिलाड़ी", start: "खेल शुरू करें", leagues: "लीग फ़िल्टर", leaguesTitle: "लीग चुनें", minLeague: "कम से कम 1 लीग चुनें!", done: "ठीक है", settings: "सेटिंग्स", lang: "भाषा:", sound: "ध्वनि:", vol: "आवाज़:", back: "वापस", guess: "अनुमान", hint: "संकेत (-50)", next: "अगला कार्ड", menu: "मेनू", ph: "खिलाड़ी का नाम...", win: "सही जवाब! +", lose: "0 अंक!", wrong: "गलत! (-100P)", pot: "राउंड", tot: "कुल स्कोर", teamsWord: "टीमें" }, stats: { PAC: "PAC", SHO: "SHO", PAS: "PAS", DRI: "DRI", DEF: "DEF", PHY: "PHY" } },
+            sv: { t: { title: "MYSTERIESPELARE", start: "STARTA SPEL", leagues: "LIGOR", leaguesTitle: "LIGAFILTER", minLeague: "Minst 1 liga måste vara aktiv!", done: "KLAR", settings: "INSTÄLLNINGAR", lang: "Språk:", sound: "Ljudeffekter:", vol: "Volym:", back: "TILLBAKA", guess: "GISSA", hint: "LEDTRÅD (-50)", next: "NÄSTA", menu: "MENY", ph: "Spelarnamn...", win: "RÄTT! +", lose: "0 POÄNG!", wrong: "Fel! (-100P)", pot: "RUNDA", tot: "TOTALT", teamsWord: "Lag" }, stats: { PAC: "FART", SHO: "SKOTT", PAS: "PASS", DRI: "DRI", DEF: "FÖRS", PHY: "FYS" } }
+        };
+
+        let currentLang = 'tr';
+
+        function normalizeStr(str) {
+            return (str || '')
+                .replace(/İ/g, 'i')
+                .replace(/I/g, 'i')
+                .replace(/ı/g, 'i')
+                .replace(/Ş/g, 's').replace(/ş/g, 's')
+                .replace(/Ğ/g, 'g').replace(/ğ/g, 'g')
+                .replace(/Ü/g, 'u').replace(/ü/g, 'u')
+                .replace(/Ö/g, 'o').replace(/ö/g, 'o')
+                .replace(/Ç/g, 'c').replace(/ç/g, 'c')
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase()
+                .trim();
+        }
+
+        function changeLanguage() {
+            currentLang = document.getElementById('langSelect').value;
+            const t = langData[currentLang].t;
+            const st = langData[currentLang].stats;
+            const isRtl = currentLang === 'ar';
+            document.getElementById('settingsPanelBox').dir = isRtl ? 'rtl' : 'ltr';
+            document.getElementById('leagueFilterList').dir = isRtl ? 'rtl' : 'ltr';
+
+            document.getElementById('ui-title').innerText = t.title;
+            document.getElementById('ui-start').innerText = t.start;
+            document.getElementById('ui-leagues-title').innerText = t.leaguesTitle;
+            document.getElementById('ui-leagues-back').innerText = t.done;
+            document.getElementById('ui-settings-btn').innerText = t.settings;
+            document.getElementById('ui-settings-leagues').innerText = t.leaguesTitle;
+            document.getElementById('ui-settings-title').innerText = t.settings;
+            document.getElementById('ui-lang-label').innerText = t.lang;
+            document.getElementById('ui-sound-label').innerText = t.sound;
+            document.getElementById('ui-vol-label').innerText = t.vol;
+            document.getElementById('ui-back').innerText = t.back;
+            document.getElementById('ui-guessBtn').innerText = t.guess;
+            document.getElementById('ui-hintBtn').innerText = t.hint;
+            document.getElementById('ui-nextBtn').innerText = t.next;
+            document.getElementById('ui-menuBtn').innerText = t.menu;
+            document.getElementById('guessInput').placeholder = t.ph;
+            document.getElementById('l-pot').innerText = t.pot;
+            document.getElementById('l-total').innerText = t.tot;
+            document.getElementById('l-PAC').innerText = st.PAC;
+            document.getElementById('l-SHO').innerText = st.SHO;
+            document.getElementById('l-PAS').innerText = st.PAS;
+            document.getElementById('l-DRI').innerText = st.DRI;
+            document.getElementById('l-DEF').innerText = st.DEF;
+            document.getElementById('l-PHY').innerText = st.PHY;
+            updateLeagueButtonLabel();
+            renderLeagueFilterList();
+        }
+
+        // 2. GELİŞMİŞ YUMUŞAK SES SİSTEMİ
+        let audioCtx = null;
+        function playSound(type, stepIndex = 0) {
+            try {
+                if (!document.getElementById('soundToggle').checked) return;
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtx) return;
+                if (!audioCtx) audioCtx = new AudioCtx();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                const vol = parseFloat(document.getElementById('volSlider').value) || 0.09;
+                const now = audioCtx.currentTime;
+
+                if (type === 'click') {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(750, now);
+                    gain.gain.setValueAtTime(vol, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.08);
+
+                } else if (type === 'toggleOn' || type === 'toggleOff') {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(type === 'toggleOn' ? 540 : 660, now);
+                    osc.frequency.exponentialRampToValueAtTime(type === 'toggleOn' ? 820 : 440, now + 0.09);
+                    gain.gain.setValueAtTime(vol * 0.85, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.09);
+
+                } else if (type === 'stat') {
+                    const scale = [523.25, 587.33, 659.25, 783.99, 880.0, 1046.5, 1174.66, 1318.51, 1567.98];
+                    const baseFreq = scale[stepIndex % scale.length];
+
+                    const filter = audioCtx.createBiquadFilter();
+                    filter.type = 'lowpass';
+                    filter.frequency.setValueAtTime(2200, now);
+                    filter.connect(audioCtx.destination);
+
+                    [baseFreq, baseFreq * 1.5].forEach((freq, idx) => {
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.type = idx === 0 ? 'sine' : 'triangle';
+                        osc.frequency.setValueAtTime(freq, now);
+                        const peak = idx === 0 ? vol * 0.85 : vol * 0.25;
+                        gain.gain.setValueAtTime(0.0008, now);
+                        gain.gain.linearRampToValueAtTime(peak, now + 0.035);
+                        gain.gain.exponentialRampToValueAtTime(0.0008, now + 0.38);
+                        osc.connect(gain);
+                        gain.connect(filter);
+                        osc.start(now);
+                        osc.stop(now + 0.39);
+                    });
+
+                } else if (type === 'wrong') {
+                    const filter = audioCtx.createBiquadFilter();
+                    filter.type = 'lowpass';
+                    filter.frequency.setValueAtTime(520, now);
+                    filter.connect(audioCtx.destination);
+
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(215, now);
+                    osc.frequency.exponentialRampToValueAtTime(140, now + 0.2);
+                    gain.gain.setValueAtTime(vol * 0.9, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+                    osc.connect(gain);
+                    gain.connect(filter);
+                    osc.start(now);
+                    osc.stop(now + 0.21);
+
+                } else if (type === 'win') {
+                    const notes = [523.25, 659.25, 783.99, 987.77, 1046.5];
+                    notes.forEach((freq, i) => {
+                        const start = now + i * 0.085;
+                        const osc = audioCtx.createOscillator();
+                        const sub = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.type = 'sine';
+                        sub.type = 'triangle';
+                        osc.frequency.setValueAtTime(freq, start);
+                        sub.frequency.setValueAtTime(freq * 0.5, start);
+
+                        osc.connect(gain);
+                        sub.connect(gain);
+                        gain.connect(audioCtx.destination);
+
+                        gain.gain.setValueAtTime(0.0008, start);
+                        gain.gain.linearRampToValueAtTime(vol * 0.95, start + 0.04);
+                        gain.gain.exponentialRampToValueAtTime(0.0008, start + 0.72);
+
+                        osc.start(start);
+                        sub.start(start);
+                        osc.stop(start + 0.74);
+                        sub.stop(start + 0.74);
+                    });
+
+                } else if (type === 'lose') {
+                    const filter = audioCtx.createBiquadFilter();
+                    filter.type = 'lowpass';
+                    filter.frequency.setValueAtTime(950, now);
+                    filter.connect(audioCtx.destination);
+
+                    const sadNotes = [440.0, 392.0, 349.23, 293.66, 220.0];
+                    sadNotes.forEach((freq, i) => {
+                        const start = now + i * 0.14;
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(freq, start);
+                        osc.frequency.exponentialRampToValueAtTime(freq * 0.985, start + 0.48);
+
+                        gain.gain.setValueAtTime(0.0008, start);
+                        gain.gain.linearRampToValueAtTime(vol * 0.85, start + 0.05);
+                        gain.gain.exponentialRampToValueAtTime(0.0008, start + 0.52);
+
+                        osc.connect(gain);
+                        gain.connect(filter);
+                        osc.start(start);
+                        osc.stop(start + 0.54);
+                    });
+                }
+            } catch (e) {}
+        }
+
+        function svgUri(svg) {
+            return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+        }
+
+        // 3. KATMANLI SAÇLI, KULAKLI VE YAKA GÖLGELİ İNSAN SİLÜETİ
+        const defaultSilhouette = svgUri(`<svg viewBox="0 0 240 245" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 83 56
+                     C 81 40, 88 24, 101 19
+                     L 104 22
+                     L 111 16
+                     C 124 14, 137 18, 146 26
+                     C 155 34, 159 46, 157 60
+                     C 162 61, 163 72, 158 83
+                     C 156 87, 153 87, 151 84
+                     C 150 96, 146 105, 139 111
+                     L 139 127
+                     C 148 136, 162 144, 185 151
+                     C 212 159, 226 172, 232 205
+                     L 237 245
+                     L 3 245
+                     L 8 205
+                     C 14 172, 28 159, 55 151
+                     C 78 144, 92 136, 101 127
+                     L 101 111
+                     C 94 105, 90 96, 89 84
+                     C 87 87, 84 87, 82 83
+                     C 77 72, 78 61, 83 60 Z" fill="#060606"/>
+            <path d="M 85 52 C 89 48, 92 54, 91 65 C 88 64, 86 60, 85 52 Z" fill="#464646"/>
+            <path d="M 155 52 C 151 48, 148 54, 149 65 C 152 64, 154 60, 155 52 Z" fill="#464646"/>
+            <path d="M 90 83 C 92 95, 96 104, 103 109 L 103 113 C 94 106, 90 96, 88 83 Z" fill="#424242"/>
+            <path d="M 150 83 C 148 95, 144 104, 137 109 L 137 113 C 146 106, 150 96, 152 83 Z" fill="#424242"/>
+            <path d="M 101 125 L 92 134 C 95 142, 101 148, 108 151 C 103 142, 101 134, 101 125 Z" fill="#4c4c4c"/>
+            <path d="M 139 125 L 148 134 C 145 142, 139 148, 132 151 C 137 142, 139 134, 139 125 Z" fill="#4c4c4c"/>
+            <path d="M 22 174 C 35 162, 54 156, 76 149 C 56 158, 37 165, 22 174 Z" fill="#3f3f3f"/>
+            <path d="M 218 174 C 205 162, 186 156, 164 149 C 184 158, 203 165, 218 174 Z" fill="#3f3f3f"/>
+        </svg>`);
+
+        function createFallbackCrest(label, c1, c2) {
+            const initials = label.replace(/[^A-ZÇĞİÖŞÜ0-9]/gi, '').slice(0, 3).toUpperCase() || "FC";
+            return svgUri(`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="${c1}"/>
+                        <stop offset="100%" stop-color="${c2}"/>
+                    </linearGradient>
+                </defs>
+                <path d="M50 5 L88 18 L84 58 C80 78 65 90 50 96 C35 90 20 78 16 58 L12 18 Z" fill="url(#g)" stroke="#ffffff" stroke-width="4"/>
+                <text x="50" y="58" text-anchor="middle" fill="#ffffff" font-family="Arial,sans-serif" font-weight="900" font-size="25">${initials}</text>
+            </svg>`);
+        }
+
+        // 4. LİG VE TAKIM KONFİGÜRASYONU (DOĞRULANMIŞ SVG/PNG ARMALAR + WIKIPEDIA INFOBOX ZİNCİRİ)
+        const leagueData = {
+            "Premier League": {
+                wikiTitle: "Premier League",
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg",
+                colors: ["#38003c", "#00ff85"]
+            },
+            "La Liga": {
+                wikiTitle: "La Liga",
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/commons/0/0f/LaLiga_logo_2023.svg",
+                colors: ["#ff4b44", "#111827"]
+            },
+            "Serie A": {
+                wikiTitle: "Serie A",
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/commons/e/e9/Serie_A_logo_2022.svg",
+                colors: ["#024494", "#008fd7"]
+            },
+            "Bundesliga": {
+                wikiTitle: "Bundesliga",
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/en/d/df/Bundesliga_logo_%282017%29.svg",
+                colors: ["#d20515", "#111827"]
+            },
+            "Ligue 1": {
+                wikiTitle: "Ligue 1",
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/en/b/ba/Ligue_1_McDonald%27s.svg",
+                colors: ["#091c3e", "#2563eb"]
+            },
+            "Süper Lig": {
+                wikiTitle: "Süper Lig",
+                trWikiTitle: "Süper Lig",
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/commons/4/4f/S%C3%BCper_Lig_logo.svg",
+                colors: ["#e30a17", "#111827"]
+            }
+        };
+
+        const teamConfig = {
+            "BAYERN MÜNİH": {
+                name: "Bayern Münih",
+                league: "Bundesliga",
+                wikiTitle: "FC Bayern Munich",
+                searchTerms: ["Bayern Munich", "Bayern München", "FC Bayern"],
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/commons/1/1b/FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg",
+                colors: ["#dc052d", "#0066b2"]
+            },
+            "BORUSSIA DORTMUND": {
+                name: "Borussia Dortmund",
+                league: "Bundesliga",
+                wikiTitle: "Borussia Dortmund",
+                searchTerms: ["Borussia Dortmund", "BVB"],
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/commons/6/67/Borussia_Dortmund_logo.svg",
+                colors: ["#fde100", "#111111"]
+            },
+            "PARIS SAINT-GERMAIN": {
+                name: "Paris Saint-Germain",
+                league: "Ligue 1",
+                wikiTitle: "Paris Saint-Germain F.C.",
+                searchTerms: ["Paris Saint-Germain", "PSG"],
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/en/a/a7/Paris_Saint-Germain_F.C..svg",
+                colors: ["#004170", "#da291c"]
+            },
+            "REAL MADRID": {
+                name: "Real Madrid",
+                league: "La Liga",
+                wikiTitle: "Real Madrid CF",
+                searchTerms: ["Real Madrid"],
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg",
+                colors: ["#febe10", "#00529f"]
+            },
+            "BARCELONA": {
+                name: "Barcelona",
+                league: "La Liga",
+                wikiTitle: "FC Barcelona",
+                searchTerms: ["FC Barcelona", "Barcelona"],
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg",
+                colors: ["#a50044", "#004d98"]
+            },
+            "ATLÉTICO MADRID": {
+                name: "Atlético Madrid",
+                league: "La Liga",
+                wikiTitle: "Atlético Madrid",
+                searchTerms: ["Atlético Madrid", "Atletico Madrid"],
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/en/f/f4/Atletico_Madrid_2017_logo.svg",
+                colors: ["#cb3524", "#272e61"]
+            },
+            "INTER": {
+                name: "Inter",
+                league: "Serie A",
+                wikiTitle: "Inter Milan",
+                searchTerms: ["Inter Milan", "Internazionale", "Inter"],
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/commons/0/05/FC_Internazionale_Milano_2021.svg",
+                colors: ["#010e80", "#000000"]
+            },
+            "MILAN": {
+                name: "Milan",
+                league: "Serie A",
+                wikiTitle: "AC Milan",
+                searchTerms: ["AC Milan", "Milan"],
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_of_AC_Milan.svg",
+                colors: ["#fb090b", "#000000"]
+            },
+            "ROMA": {
+                name: "Roma",
+                league: "Serie A",
+                wikiTitle: "AS Roma",
+                searchTerms: ["AS Roma", "Roma"],
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/en/f/f7/AS_Roma_logo_%282017%29.svg",
+                colors: ["#8e1f2f", "#f0bc42"]
+            },
+            "NAPOLI": {
+                name: "Napoli",
+                league: "Serie A",
+                wikiTitle: "SSC Napoli",
+                searchTerms: ["SSC Napoli", "Napoli"],
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/commons/0/00/SSC_Napoli_2024_%28deep_blue_navy%29.svg",
+                colors: ["#003c82", "#12a0d7"]
+            },
+            "JUVENTUS": {
+                name: "Juventus",
+                league: "Serie A",
+                wikiTitle: "Juventus FC",
+                searchTerms: ["Juventus"],
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/commons/b/bc/Juventus_FC_2017_icon_%28black%29.svg",
+                colors: ["#111111", "#4b5563"]
+            },
+            "ARSENAL": {
+                name: "Arsenal",
+                league: "Premier League",
+                wikiTitle: "Arsenal F.C.",
+                searchTerms: ["Arsenal"],
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg",
+                colors: ["#ef0107", "#063672"]
+            },
+            "MANCHESTER CITY": {
+                name: "Manchester City",
+                league: "Premier League",
+                wikiTitle: "Manchester City F.C.",
+                searchTerms: ["Manchester City", "Man City"],
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg",
+                colors: ["#6cabdd", "#1c2c5b"]
+            },
+            "LIVERPOOL": {
+                name: "Liverpool",
+                league: "Premier League",
+                wikiTitle: "Liverpool F.C.",
+                searchTerms: ["Liverpool"],
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg",
+                colors: ["#c8102e", "#00b2a9"]
+            },
+            "CHELSEA": {
+                name: "Chelsea",
+                league: "Premier League",
+                wikiTitle: "Chelsea F.C.",
+                searchTerms: ["Chelsea"],
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg",
+                colors: ["#034694", "#1d4ed8"]
+            },
+            "MANCHESTER UNITED": {
+                name: "Manchester United",
+                league: "Premier League",
+                wikiTitle: "Manchester United F.C.",
+                searchTerms: ["Manchester United", "Man Utd"],
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg",
+                colors: ["#da291c", "#fbe122"]
+            },
+            "FENERBAHÇE": {
+                name: "Fenerbahçe",
+                league: "Süper Lig",
+                wikiTitle: "Fenerbahçe S.K. (football)",
+                trWikiTitle: "Fenerbahçe (futbol takımı)",
+                searchTerms: ["Fenerbahçe", "Fenerbahce"],
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/en/3/39/Fenerbah%C3%A7e.svg",
+                colors: ["#002d72", "#ffed00"]
+            },
+            "BEŞİKTAŞ": {
+                name: "Beşiktaş",
+                league: "Süper Lig",
+                wikiTitle: "Beşiktaş J.K.",
+                trWikiTitle: "Beşiktaş (futbol takımı)",
+                searchTerms: ["Beşiktaş", "Besiktas"],
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/commons/2/20/Besiktas_JK.svg",
+                colors: ["#111111", "#4b5563"]
+            },
+            "GALATASARAY": {
+                name: "Galatasaray",
+                league: "Süper Lig",
+                wikiTitle: "Galatasaray S.K. (football)",
+                trWikiTitle: "Galatasaray (futbol takımı)",
+                searchTerms: ["Galatasaray"],
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/commons/2/20/Galatasaray_Sports_Club_Logo.svg",
+                colors: ["#a90432", "#fdb912"]
+            },
+            "TRABZONSPOR": {
+                name: "Trabzonspor",
+                league: "Süper Lig",
+                wikiTitle: "Trabzonspor",
+                trWikiTitle: "Trabzonspor",
+                searchTerms: ["Trabzonspor"],
+                fallbackUrl: "https://upload.wikimedia.org/wikipedia/en/a/ab/TrabzonsporAmblem.png",
+                colors: ["#800020", "#3bb9ff"]
+            }
+        };
+
+        // 5. WIKIPEDIA INFOBOX ARMALARINI TOPLU ÇEKME VE 3 KATMANLI DOĞRULAMA SİSTEMİ
+        const wikiInfoboxCache = {};
+        let logoBatchPromise = null;
+
+        async function fetchWikiLangBatch(langCode, titles) {
+            const uniqueTitles = [...new Set(titles.filter(Boolean))];
+            if (uniqueTitles.length === 0) return;
+
+            for (let i = 0; i < uniqueTitles.length; i += 25) {
+                const chunk = uniqueTitles.slice(i, i + 25);
+                try {
+                    const url = `https://${langCode}.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(chunk.join('|'))}&redirects=1&prop=pageimages&piprop=original|thumbnail&pithumbsize=320&format=json&origin=*`;
+                    const res = await fetch(url);
+                    const data = await res.json();
+                    const query = data?.query || {};
+
+                    const normMap = {};
+                    (query.normalized || []).forEach(n => { normMap[n.from] = n.to; });
+
+                    const redirMap = {};
+                    (query.redirects || []).forEach(r => { redirMap[r.from] = r.to; });
+
+                    const pageByTitle = {};
+                    Object.values(query.pages || {}).forEach(p => {
+                        if (p && p.title) pageByTitle[p.title] = p;
+                    });
+
+                    chunk.forEach(origTitle => {
+                        let resolvedTitle = normMap[origTitle] || origTitle;
+                        let safety = 0;
+                        while (redirMap[resolvedTitle] && safety < 5) {
+                            resolvedTitle = redirMap[resolvedTitle];
+                            safety++;
+                        }
+                        const pageObj = pageByTitle[resolvedTitle];
+                        if (pageObj) {
+                            const origSrc = pageObj.original?.source || null;
+                            const thumbSrc = pageObj.thumbnail?.source || null;
+                            const best = (origSrc && /\.svg$/i.test(origSrc)) ? origSrc : (thumbSrc || origSrc);
+                            if (best && !wikiInfoboxCache[`${langCode}:${origTitle}`]) {
+                                wikiInfoboxCache[`${langCode}:${origTitle}`] = { primary: best, backup: thumbSrc || origSrc };
+                            }
+                        }
+                    });
+                } catch (e) {}
+            }
+        }
+
+        function ensureAllLogosPreloaded() {
+            if (!logoBatchPromise) {
+                const enTitles = [
+                    ...Object.values(teamConfig).map(t => t.wikiTitle),
+                    ...Object.values(leagueData).map(l => l.wikiTitle)
+                ];
+                const trTitles = [
+                    ...Object.values(teamConfig).map(t => t.trWikiTitle),
+                    ...Object.values(leagueData).map(l => l.trWikiTitle)
+                ];
+                logoBatchPromise = Promise.all([
+                    fetchWikiLangBatch('en', enTitles),
+                    fetchWikiLangBatch('tr', trTitles)
+                ]);
+            }
+            return logoBatchPromise;
+        }
+
+        async function applyVerifiedLogo(imgEl, wikiTitle, fallbackUrl, label, colors, trWikiTitle = null) {
+            const crest = createFallbackCrest(label, colors[0], colors[1]);
+            imgEl.dataset.targetWiki = wikiTitle;
+
+            const setWithFallbackChain = (urls) => {
+                const validUrls = urls.filter(Boolean);
+                let idx = 0;
+                const tryNext = () => {
+                    if (imgEl.dataset.targetWiki !== wikiTitle) return;
+                    if (idx >= validUrls.length) {
+                        imgEl.onerror = null;
+                        imgEl.src = crest;
+                        return;
+                    }
+                    const currentUrl = validUrls[idx++];
+                    imgEl.onerror = tryNext;
+                    imgEl.src = currentUrl;
+                };
+                tryNext();
+            };
+
+            const enEntry = wikiInfoboxCache[`en:${wikiTitle}`];
+            const trEntry = trWikiTitle ? wikiInfoboxCache[`tr:${trWikiTitle}`] : null;
+
+            if (enEntry || trEntry) {
+                setWithFallbackChain([
+                    trEntry?.primary,
+                    enEntry?.primary,
+                    fallbackUrl,
+                    trEntry?.backup,
+                    enEntry?.backup
+                ]);
+                return;
+            }
+
+            if (fallbackUrl) {
+                setWithFallbackChain([fallbackUrl]);
+            } else {
+                imgEl.src = crest;
+            }
+
+            await ensureAllLogosPreloaded();
+            if (imgEl.dataset.targetWiki !== wikiTitle) return;
+
+            const enLoaded = wikiInfoboxCache[`en:${wikiTitle}`];
+            const trLoaded = trWikiTitle ? wikiInfoboxCache[`tr:${trWikiTitle}`] : null;
+            setWithFallbackChain([
+                trLoaded?.primary,
+                enLoaded?.primary,
+                fallbackUrl,
+                trLoaded?.backup,
+                enLoaded?.backup
+            ]);
+        }
+
+        // 6. LİG FİLTRESİ YÖNETİMİ (YANA KAYDIRMALI ANAHTARLAR)
+        const allLeagueNames = Object.keys(leagueData);
+        let activeLeagues = new Set(allLeagueNames);
+        try {
+            const savedLeagues = JSON.parse(localStorage.getItem('MysteryBallerLeagues'));
+            if (Array.isArray(savedLeagues) && savedLeagues.length > 0) {
+                const valid = savedLeagues.filter(l => leagueData[l]);
+                if (valid.length > 0) activeLeagues = new Set(valid);
+            }
+        } catch (e) {}
+
+        function saveActiveLeagues() {
+            try {
+                localStorage.setItem('MysteryBallerLeagues', JSON.stringify([...activeLeagues]));
+            } catch (e) {}
+            updateLeagueButtonLabel();
+        }
+
+        function updateLeagueButtonLabel() {
+            const t = langData[currentLang].t;
+            const btn = document.getElementById('ui-leagues-btn');
+            if (btn) {
+                btn.innerText = `${t.leagues} (${activeLeagues.size}/${allLeagueNames.length})`;
+            }
+        }
+
+        function openLeaguesScreen() {
+            document.getElementById('leagueWarnMsg').innerText = '';
+            renderLeagueFilterList();
+            showScreen('leaguesScreen');
+        }
+
+        function renderLeagueFilterList() {
+            const container = document.getElementById('leagueFilterList');
+            if (!container) return;
+            container.innerHTML = '';
+            const t = langData[currentLang].t;
+
+            allLeagueNames.forEach(leagueName => {
+                const lg = leagueData[leagueName];
+                const isChecked = activeLeagues.has(leagueName);
+                const teamCount = Object.values(teamConfig).filter(tc => tc.league === leagueName).length;
+
+                const row = document.createElement('div');
+                row.className = 'league-item' + (isChecked ? ' active-league' : '');
+
+                const info = document.createElement('div');
+                info.className = 'league-info';
+
+                const badge = document.createElement('div');
+                badge.className = 'league-badge-circle';
+                const img = document.createElement('img');
+                img.alt = leagueName;
+                applyVerifiedLogo(img, lg.wikiTitle, lg.fallbackUrl, leagueName, lg.colors, lg.trWikiTitle);
+                badge.appendChild(img);
+
+                const txt = document.createElement('div');
+                txt.className = 'league-text';
+                txt.innerHTML = `<span class="league-name">${leagueName}</span><span class="league-meta">${teamCount} ${t.teamsWord}</span>`;
+
+                info.appendChild(badge);
+                info.appendChild(txt);
+
+                const switchLabel = document.createElement('label');
+                switchLabel.className = 'switch';
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = isChecked;
+
+                checkbox.addEventListener('change', function () {
+                    const warnEl = document.getElementById('leagueWarnMsg');
+                    if (!this.checked && activeLeagues.size <= 1) {
+                        this.checked = true;
+                        playSound('wrong');
+                        warnEl.innerText = langData[currentLang].t.minLeague;
+                        return;
+                    }
+                    warnEl.innerText = '';
+                    if (this.checked) {
+                        activeLeagues.add(leagueName);
+                        row.classList.add('active-league');
+                        playSound('toggleOn');
+                    } else {
+                        activeLeagues.delete(leagueName);
+                        row.classList.remove('active-league');
+                        playSound('toggleOff');
+                    }
+                    saveActiveLeagues();
+                });
+
+                const sliderSpan = document.createElement('span');
+                sliderSpan.className = 'slider';
+                switchLabel.appendChild(checkbox);
+                switchLabel.appendChild(sliderSpan);
+
+                row.appendChild(info);
+                row.appendChild(switchLabel);
+                container.appendChild(row);
+            });
+        }
+
+        // 7. OYUNCULARIN GERÇEK EA SPORTS FC REYTİNGLERİ [UYRUK, MEVKİ, OVR, PAC, SHO, PAS, DRI, DEF, PHY]
+        const playerDB = {
+            // BAYERN MÜNİH
+            "Harry Kane": ["gb-eng", "ST", 90, 66, 93, 84, 83, 49, 83],
+            "Michael Olise": ["fr", "RW", 86, 82, 81, 84, 88, 45, 67],
+            "Joshua Kimmich": ["de", "CDM", 89, 70, 74, 89, 84, 83, 79],
+            "Luis Díaz": ["co", "LW", 85, 90, 80, 77, 88, 43, 75],
+            "Jamal Musiala": ["de", "CAM", 88, 84, 81, 82, 91, 56, 65],
+            "Dayot Upamecano": ["fr", "CB", 85, 82, 46, 68, 72, 85, 85],
+            "Jonathan Tah": ["de", "CB", 86, 68, 44, 65, 64, 87, 86],
+            "Konrad Laimer": ["at", "CM", 83, 83, 73, 78, 80, 82, 81],
+            "Kim Min-jae": ["kr", "CB", 84, 79, 42, 66, 67, 85, 84],
+            "Aleksandar Pavlović": ["de", "CDM", 80, 66, 67, 81, 79, 77, 74],
+            "Serge Gnabry": ["de", "RW", 82, 81, 81, 79, 84, 44, 69],
+            "Ismael Saibari": ["ma", "CAM", 80, 80, 76, 78, 82, 65, 79],
+            "Alphonso Davies": ["ca", "LB", 84, 95, 68, 77, 84, 77, 77],
+            "Nathaniel Brown": ["de", "LB", 77, 82, 58, 71, 76, 73, 71],
+            "Josip Stanišić": ["hr", "RB", 80, 75, 56, 73, 74, 80, 79],
+            "Manuel Neuer": ["de", "GK", 86, 84, 82, 88, 85, 48, 84],
+            "Jonas Urbig": ["de", "GK", 76, 77, 74, 76, 78, 42, 74],
+            "Tom Bischof": ["de", "CM", 77, 73, 71, 79, 79, 68, 67],
+            "Hiroki Ito": ["jp", "CB", 79, 75, 52, 72, 72, 80, 78],
+            "Lennart Karl": ["de", "CAM", 70, 75, 66, 70, 74, 38, 56],
+            "Sacha Boey": ["fr", "RB", 78, 84, 60, 70, 76, 76, 78],
+            "Sven Ulreich": ["de", "GK", 75, 75, 73, 72, 76, 40, 74],
+
+            // BORUSSIA DORTMUND
+            "Nico Schlotterbeck": ["de", "CB", 85, 77, 58, 76, 74, 86, 83],
+            "Gregor Kobel": ["ch", "GK", 88, 87, 86, 75, 89, 45, 87],
+            "Serhou Guirassy": ["gn", "ST", 86, 78, 87, 73, 81, 39, 84],
+            "Felix Nmecha": ["de", "CM", 81, 77, 76, 79, 81, 75, 81],
+            "Waldemar Anton": ["de", "CB", 82, 72, 48, 69, 68, 83, 82],
+            "Julian Ryerson": ["no", "RB", 81, 80, 62, 74, 76, 79, 81],
+            "Joey Veerman": ["nl", "CM", 82, 66, 76, 86, 80, 72, 71],
+            "Emre Can": ["de", "CDM", 81, 71, 73, 77, 76, 81, 84],
+            "Marcel Sabitzer": ["at", "CM", 82, 75, 80, 82, 81, 76, 78],
+            "Maximilian Beier": ["de", "ST", 80, 86, 79, 71, 80, 41, 72],
+            "Daniel Svensson": ["se", "LB", 78, 81, 63, 74, 76, 74, 75],
+            "Ramy Bensebaini": ["dz", "LB", 79, 75, 68, 74, 75, 79, 80],
+            "Carney Chukwuemeka": ["gb-eng", "CM", 77, 77, 71, 75, 80, 65, 75],
+            "Fábio Silva": ["pt", "ST", 77, 78, 76, 69, 78, 34, 72],
+            "Jobe Bellingham": ["gb-eng", "CM", 77, 75, 72, 75, 78, 71, 78],
+            "Konstantinos Karetsas": ["gr", "CAM", 74, 76, 68, 75, 79, 42, 56],
+            "Ethan Nwaneri": ["gb-eng", "CAM", 76, 80, 73, 74, 80, 44, 62],
+            "Alexander Meyer": ["de", "GK", 76, 76, 74, 73, 77, 41, 75],
+
+            // PARIS SAINT-GERMAIN
+            "Ousmane Dembélé": ["fr", "RW", 90, 94, 83, 84, 93, 40, 64],
+            "Vitinha": ["pt", "CM", 89, 77, 80, 89, 90, 76, 70],
+            "Khvicha Kvaratskhelia": ["ge", "LW", 87, 86, 82, 82, 90, 45, 74],
+            "Nuno Mendes": ["pt", "LB", 86, 91, 69, 79, 84, 81, 79],
+            "Willian Pacho": ["ec", "CB", 86, 81, 41, 68, 71, 86, 85],
+            "Achraf Hakimi": ["ma", "RB", 89, 93, 79, 82, 85, 81, 80],
+            "João Neves": ["pt", "CM", 85, 78, 72, 84, 86, 81, 77],
+            "Fabián Ruiz": ["es", "CM", 85, 67, 80, 86, 84, 77, 77],
+            "Marquinhos": ["br", "CB", 87, 78, 56, 76, 75, 88, 82],
+            "Désiré Doué": ["fr", "LW", 85, 85, 79, 81, 88, 52, 72],
+            "Matvey Safonov": ["ru", "GK", 81, 82, 79, 76, 83, 46, 80],
+            "Warren Zaïre-Emery": ["fr", "CM", 82, 80, 73, 80, 83, 78, 79],
+            "Lucas Hernández": ["fr", "CB", 82, 78, 56, 73, 74, 83, 82],
+            "Maghnes Akliouche": ["fr", "RW", 81, 81, 75, 80, 84, 54, 65],
+            "Lucas Chevalier": ["fr", "GK", 83, 84, 81, 78, 85, 45, 81],
+            "Illia Zabarnyi": ["ua", "CB", 80, 76, 42, 66, 67, 81, 82],
+            "Senny Mayulu": ["fr", "CM", 76, 77, 70, 75, 79, 64, 68],
+            "Lucas Beraldo": ["br", "CB", 79, 73, 48, 73, 72, 80, 77],
+            "Lucas Digne": ["fr", "LB", 80, 76, 68, 80, 78, 77, 74],
+            "Mika Godts": ["be", "LW", 77, 84, 71, 72, 81, 35, 62],
+
+            // REAL MADRID
+            "Kylian Mbappé": ["fr", "ST", 91, 97, 90, 81, 93, 36, 78],
+            "Thibaut Courtois": ["be", "GK", 89, 85, 89, 76, 90, 46, 88],
+            "Jude Bellingham": ["gb-eng", "CAM", 90, 80, 87, 85, 90, 78, 85],
+            "Vini Jr.": ["br", "LW", 89, 95, 84, 81, 92, 29, 69],
+            "Federico Valverde": ["uy", "CM", 89, 88, 84, 85, 85, 83, 85],
+            "Marc Cucurella": ["es", "LB", 84, 80, 64, 78, 80, 82, 78],
+            "Arda Güler": ["tr", "CAM", 81, 77, 77, 83, 85, 52, 58],
+            "Bernardo Silva": ["pt", "CM", 86, 74, 77, 85, 90, 68, 67],
+            "Éder Militão": ["br", "CB", 84, 83, 50, 70, 72, 85, 82],
+            "Ibrahima Konaté": ["fr", "CB", 85, 79, 41, 66, 68, 86, 86],
+            "Aurélien Tchouaméni": ["fr", "CDM", 85, 72, 71, 80, 79, 84, 84],
+            "Trent Alexander-Arnold": ["gb-eng", "RB", 86, 76, 72, 90, 81, 79, 73],
+            "Denzel Dumfries": ["nl", "RB", 84, 85, 68, 74, 77, 81, 86],
+            "Antonio Rüdiger": ["de", "CB", 86, 80, 54, 70, 68, 86, 87],
+            "Eduardo Camavinga": ["fr", "CM", 83, 80, 68, 80, 84, 80, 79],
+            "Brahim": ["ma", "CAM", 82, 82, 76, 80, 86, 44, 60],
+            "Álvaro Carreras": ["es", "LB", 80, 83, 62, 74, 78, 76, 76],
+            "Andriy Lunin": ["ua", "GK", 81, 81, 79, 76, 83, 43, 80],
+            "Ferland Mendy": ["fr", "LB", 81, 87, 63, 74, 78, 79, 82],
+            "Endrick": ["br", "ST", 79, 87, 79, 66, 81, 33, 74],
+            "Asencio": ["es", "CB", 78, 78, 42, 65, 67, 79, 79],
+            "Carlos Espí": ["es", "ST", 72, 70, 73, 61, 69, 30, 76],
+
+            // BARCELONA
+            "Lamine Yamal": ["es", "RW", 89, 88, 81, 83, 91, 28, 56],
+            "Pedri": ["es", "CM", 89, 78, 74, 88, 91, 74, 68],
+            "Rodri": ["es", "CDM", 90, 66, 80, 86, 84, 87, 85],
+            "Raphinha": ["br", "RW", 89, 91, 85, 84, 88, 55, 76],
+            "Frenkie de Jong": ["nl", "CM", 87, 82, 70, 86, 88, 78, 77],
+            "Joan García": ["es", "GK", 83, 84, 81, 77, 85, 44, 81],
+            "Pau Cubarsí": ["es", "CB", 83, 74, 42, 75, 74, 84, 78],
+            "Jules Koundé": ["fr", "RB", 86, 84, 49, 74, 78, 86, 81],
+            "Fermín López": ["es", "CAM", 80, 79, 78, 78, 81, 63, 69],
+            "Dani Olmo": ["es", "CAM", 84, 76, 80, 83, 87, 52, 62],
+            "João Cancelo": ["pt", "RB", 84, 81, 73, 83, 85, 78, 72],
+            "Anthony Gordon": ["gb-eng", "LW", 83, 90, 78, 77, 83, 47, 70],
+            "Karim Adeyemi": ["de", "LW", 81, 95, 77, 71, 82, 39, 70],
+            "Gavi": ["es", "CM", 83, 77, 68, 80, 85, 76, 74],
+            "Balde": ["es", "LB", 82, 91, 56, 74, 81, 77, 72],
+            "Wojciech Szczęsny": ["pl", "GK", 84, 84, 81, 74, 85, 47, 84],
+            "Dominik Livaković": ["hr", "GK", 80, 81, 78, 72, 82, 43, 79],
+            "Marc Bernal": ["es", "CDM", 76, 68, 63, 76, 75, 74, 76],
+            "Gerard Martín": ["es", "LB", 76, 78, 54, 71, 73, 74, 73],
+            "Andreas Christensen": ["dk", "CB", 82, 68, 43, 73, 71, 84, 78],
+            "Gabriel Jesus": ["br", "ST", 81, 82, 79, 74, 85, 44, 73],
+            "Xavi Espart": ["es", "RB", 71, 76, 52, 68, 71, 69, 66],
+
+            // ATLÉTICO MADRID
+            "Jan Oblak": ["si", "GK", 88, 86, 89, 77, 87, 46, 88],
+            "Julián Álvarez": ["ar", "ST", 87, 85, 86, 81, 87, 56, 76],
+            "Marcos Llorente": ["es", "CM", 84, 88, 79, 80, 81, 79, 82],
+            "Grimaldo": ["es", "LB", 86, 84, 77, 86, 85, 77, 71],
+            "Dávid Hancko": ["sk", "CB", 84, 80, 62, 75, 75, 84, 83],
+            "Pablo Barrios": ["es", "CM", 81, 78, 71, 80, 82, 75, 73],
+            "Morten Hjulmand": ["dk", "CDM", 83, 72, 71, 80, 78, 82, 84],
+            "Álex Baena": ["es", "LW", 83, 80, 78, 84, 84, 58, 68],
+            "Alexander Sørloth": ["no", "ST", 83, 80, 84, 69, 76, 40, 86],
+            "Ademola Lookman": ["ng", "LW", 84, 87, 82, 78, 86, 39, 71],
+            "Cristian Romero": ["ar", "CB", 84, 75, 48, 66, 68, 86, 85],
+            "Giuliano": ["ar", "RW", 80, 86, 75, 74, 80, 54, 74],
+            "Juan Musso": ["ar", "GK", 81, 81, 79, 73, 82, 44, 81],
+            "Koke": ["es", "CM", 82, 63, 74, 84, 80, 77, 74],
+            "Lee Kang-in": ["kr", "CAM", 80, 77, 75, 81, 84, 51, 63],
+            "Robin Le Normand": ["es", "CB", 83, 68, 41, 66, 66, 84, 83],
+            "Johnny Cardoso": ["us", "CDM", 80, 73, 67, 76, 76, 79, 79],
+            "Jonathan David": ["ca", "ST", 82, 82, 82, 74, 81, 38, 76],
+            "Pubill": ["es", "RB", 78, 82, 57, 70, 74, 75, 79],
+            "Obed Vargas": ["mx", "CM", 72, 73, 63, 71, 73, 67, 68],
+            "Rodri Mendoza": ["es", "CM", 73, 73, 66, 73, 76, 63, 65],
+            "Arnau Ortiz": ["es", "LW", 71, 79, 66, 66, 73, 35, 58],
+
+            // INTER
+            "Alessandro Bastoni": ["it", "CB", 87, 76, 46, 77, 76, 88, 83],
+            "Federico Dimarco": ["it", "LB", 85, 81, 77, 84, 82, 79, 76],
+            "Marcus Thuram": ["fr", "ST", 85, 87, 82, 74, 83, 44, 84],
+            "Hakan Çalhanoğlu": ["tr", "CDM", 86, 69, 82, 88, 84, 79, 74],
+            "Yann Sommer": ["ch", "GK", 86, 85, 83, 81, 88, 46, 83],
+            "Henrikh Mkhitaryan": ["am", "CM", 82, 75, 78, 82, 83, 69, 68],
+            "Davide Frattesi": ["it", "CM", 82, 82, 78, 77, 81, 75, 76],
+            "Stefan de Vrij": ["nl", "CB", 82, 65, 46, 70, 68, 84, 80],
+            "Piotr Zieliński": ["pl", "CM", 82, 75, 78, 82, 84, 67, 67],
+            "Carlos Augusto": ["br", "LB", 80, 81, 68, 75, 77, 78, 79],
+            "Benjamin Pavard": ["fr", "CB", 83, 74, 64, 75, 74, 85, 80],
+            "Curtis Jones": ["gb-eng", "CM", 80, 75, 74, 80, 82, 73, 74],
+            "Djed Spence": ["gb-eng", "RB", 78, 86, 58, 70, 77, 74, 76],
+            "Luis Henrique": ["br", "RW", 78, 86, 72, 73, 81, 55, 68],
+
+            // MILAN
+            "Mike Maignan": ["fr", "GK", 87, 86, 85, 85, 89, 51, 86],
+            "Luka Modrić": ["hr", "CM", 83, 66, 74, 86, 86, 70, 63],
+            "Adrien Rabiot": ["fr", "CM", 83, 74, 77, 80, 80, 79, 82],
+            "Christian Pulisic": ["us", "RW", 84, 86, 80, 80, 86, 44, 65],
+            "Mario Gila": ["es", "CB", 80, 79, 41, 66, 68, 81, 79],
+            "Fikayo Tomori": ["gb-eng", "CB", 82, 82, 41, 64, 68, 83, 81],
+            "Matteo Gabbia": ["it", "CB", 80, 68, 42, 66, 65, 81, 80],
+            "Alexis Saelemaekers": ["be", "RW", 79, 81, 71, 76, 81, 67, 68],
+            "Diego Moreira": ["pt", "LW", 77, 84, 70, 72, 80, 56, 65],
+            "Ruben Loftus-Cheek": ["gb-eng", "CM", 80, 77, 76, 77, 80, 70, 83],
+            "Strahinja Pavlović": ["rs", "CB", 79, 74, 48, 65, 67, 80, 84],
+            "Samuel Chukwueze": ["ng", "RW", 80, 87, 74, 74, 83, 35, 62],
+            "Pervis Estupiñán": ["ec", "LB", 80, 82, 64, 75, 78, 77, 77],
+
+            // ROMA
+            "Paulo Dybala": ["ar", "CAM", 86, 80, 85, 85, 89, 40, 60],
+            "Mile Svilar": ["rs", "GK", 83, 83, 81, 74, 85, 45, 81],
+            "Donyell Malen": ["nl", "ST", 83, 89, 82, 73, 83, 39, 73],
+            "Gianluca Mancini": ["it", "CB", 83, 68, 52, 67, 66, 84, 84],
+            "Evan Ndicka": ["ci", "CB", 82, 77, 41, 67, 68, 83, 83],
+            "Kouadio Koné": ["fr", "CM", 82, 78, 71, 78, 82, 78, 81],
+            "Bryan Cristante": ["it", "CDM", 80, 58, 73, 78, 74, 79, 81],
+            "Wesley": ["br", "RB", 79, 85, 60, 72, 78, 74, 74],
+            "Mario Hermoso": ["es", "CB", 80, 72, 54, 73, 72, 81, 79],
+            "Marten de Roon": ["nl", "CDM", 81, 65, 69, 77, 74, 81, 82],
+            "Matías Soulé": ["ar", "RW", 80, 81, 75, 78, 84, 41, 58],
+            "Leonardo Balerdi": ["ar", "CB", 80, 74, 44, 67, 69, 81, 80],
+            "Lorenzo Pellegrini": ["it", "CAM", 80, 72, 77, 81, 80, 67, 71],
+            "Santiago Castro": ["ar", "ST", 77, 77, 76, 67, 76, 36, 76],
+            "Rodrigo Mora": ["pt", "CAM", 77, 79, 73, 77, 82, 42, 55],
+            "Nahuel Molina": ["ar", "RB", 79, 83, 66, 74, 77, 75, 73],
+            "Konstantinos Koulierakis": ["gr", "CB", 78, 74, 48, 68, 67, 78, 81],
+            "Devyne Rensch": ["nl", "RB", 77, 80, 58, 72, 75, 74, 73],
+            "Niccolò Pisilli": ["it", "CM", 75, 74, 69, 74, 77, 67, 68],
+            "Daniele Ghilardi": ["it", "CB", 74, 70, 38, 60, 62, 75, 76],
+            "Devis Vásquez": ["co", "GK", 74, 75, 72, 68, 76, 40, 74],
+
+            // NAPOLI
+            "Scott McTominay": ["gb-sct", "CM", 85, 75, 81, 78, 79, 80, 86],
+            "Kevin De Bruyne": ["be", "CAM", 87, 67, 84, 92, 84, 64, 74],
+            "Amir Rrahmani": ["xk", "CB", 82, 67, 45, 66, 65, 84, 82],
+            "Stanislav Lobotka": ["sk", "CDM", 83, 71, 66, 82, 84, 79, 73],
+            "André-Frank Zambo Anguissa": ["cm", "CM", 82, 75, 72, 77, 80, 79, 84],
+            "Giovanni Di Lorenzo": ["it", "RB", 82, 78, 66, 77, 77, 81, 79],
+            "Alessandro Buongiorno": ["it", "CB", 83, 75, 42, 67, 68, 84, 84],
+            "David Neres": ["br", "RW", 81, 86, 76, 78, 85, 38, 60],
+            "Alex Meret": ["it", "GK", 81, 82, 79, 73, 83, 42, 80],
+            "Vanja Milinković-Savić": ["rs", "GK", 81, 80, 81, 76, 80, 44, 85],
+            "Matteo Politano": ["it", "RW", 80, 82, 76, 78, 83, 44, 58],
+            "Noa Lang": ["nl", "LW", 80, 84, 75, 77, 84, 37, 62],
+            "Rasmus Højlund": ["dk", "ST", 80, 86, 79, 65, 77, 34, 81],
+            "Sam Beukema": ["nl", "CB", 80, 71, 44, 67, 67, 81, 81],
+            "Mathías Olivera": ["uy", "LB", 79, 81, 58, 72, 75, 77, 78],
+            "Rafa Marín": ["es", "CB", 76, 72, 38, 62, 63, 77, 78],
+            "Benoît Badiashile": ["fr", "CB", 78, 71, 41, 67, 67, 79, 81],
+            "Billy Gilmour": ["gb-sct", "CM", 77, 69, 64, 79, 79, 71, 63],
+            "Alisson Santos": ["br", "LW", 74, 82, 69, 69, 77, 34, 61],
+            "Lorenzo Lucca": ["it", "ST", 77, 73, 77, 62, 71, 33, 83],
+
+            // JUVENTUS
+            "Bremer": ["br", "CB", 86, 81, 51, 64, 68, 87, 86],
+            "Kenan Yıldız": ["tr", "LW", 80, 82, 76, 77, 84, 41, 68],
+            "Manuel Locatelli": ["it", "CDM", 83, 66, 72, 83, 79, 81, 78],
+            "Kamil Grabara": ["pl", "GK", 80, 81, 78, 73, 81, 43, 80],
+            "Pierre Kalulu": ["fr", "CB", 81, 80, 46, 70, 73, 82, 78],
+            "Guglielmo Vicario": ["it", "GK", 83, 84, 80, 74, 85, 44, 80],
+            "Francisco Conceição": ["pt", "RW", 81, 87, 74, 76, 86, 36, 56],
+            "Nick Woltemade": ["de", "ST", 79, 73, 78, 72, 78, 37, 81],
+            "Weston McKennie": ["us", "CM", 80, 77, 74, 77, 78, 76, 81],
+            "Nico González": ["ar", "RW", 80, 82, 77, 75, 81, 49, 73],
+            "Federico Gatti": ["it", "CB", 80, 72, 48, 63, 65, 80, 84],
+            "Pape Sarr": ["sn", "CM", 79, 79, 70, 76, 79, 75, 76],
+            "Douglas Luiz": ["br", "CM", 81, 71, 76, 82, 82, 75, 75],
+            "Teun Koopmeiners": ["nl", "CAM", 81, 69, 80, 82, 79, 74, 77],
+            "Edon Zhegrova": ["xk", "RW", 80, 85, 76, 76, 85, 35, 61],
+            "Jérémie Boga": ["ci", "LW", 78, 86, 72, 72, 83, 33, 64],
+            "Lloyd Kelly": ["gb-eng", "CB", 77, 78, 44, 68, 70, 77, 78],
+            "Randal Kolo Muani": ["fr", "ST", 81, 87, 79, 72, 81, 38, 76],
+            "Jhon Lucumí": ["co", "CB", 79, 75, 41, 67, 68, 79, 81],
+            "Arkadiusz Milik": ["pl", "ST", 78, 68, 80, 70, 75, 38, 77],
+            "Juan Cabal": ["co", "LB", 76, 80, 52, 68, 71, 75, 78],
+            "Daniele Rugani": ["it", "CB", 76, 62, 42, 63, 62, 78, 76],
+            "Neto": ["br", "GK", 77, 77, 75, 72, 78, 43, 77],
+
+            // ARSENAL
+            "Gabriel": ["br", "CB", 88, 76, 48, 66, 68, 88, 87],
+            "David Raya": ["es", "GK", 86, 85, 83, 84, 87, 48, 83],
+            "William Saliba": ["fr", "CB", 87, 81, 41, 70, 73, 88, 84],
+            "Declan Rice": ["gb-eng", "CDM", 87, 75, 74, 83, 81, 86, 85],
+            "Bukayo Saka": ["gb-eng", "RW", 88, 86, 83, 85, 89, 60, 72],
+            "Bruno Guimarães": ["br", "CM", 86, 71, 76, 85, 85, 81, 81],
+            "Martin Ødegaard": ["no", "CAM", 87, 76, 81, 89, 88, 64, 66],
+            "Viktor Gyökeres": ["se", "ST", 86, 87, 86, 73, 82, 41, 87],
+            "Eberechi Eze": ["gb-eng", "CAM", 83, 81, 79, 81, 86, 51, 71],
+            "Piero Hincapié": ["ec", "CB", 82, 81, 45, 70, 73, 82, 81],
+            "Jurriën Timber": ["nl", "RB", 83, 82, 58, 77, 80, 82, 80],
+            "Ezri Konsa": ["gb-eng", "CB", 83, 79, 42, 69, 72, 84, 80],
+            "Martín Zubimendi": ["es", "CDM", 84, 71, 69, 82, 81, 83, 77],
+            "Mikel Merino": ["es", "CM", 83, 67, 77, 81, 79, 81, 83],
+            "Riccardo Calafiori": ["it", "LB", 81, 78, 62, 75, 77, 81, 81],
+            "Christos Tzolis": ["gr", "LW", 80, 85, 78, 75, 81, 41, 69],
+            "Ben White": ["gb-eng", "RB", 83, 78, 55, 77, 77, 83, 79],
+            "Kai Havertz": ["de", "ST", 83, 81, 80, 79, 83, 54, 78],
+            "Noni Madueke": ["gb-eng", "RW", 80, 88, 76, 73, 83, 36, 68],
+            "Myles Lewis-Skelly": ["gb-eng", "LB", 78, 80, 62, 75, 79, 75, 74],
+            "Cristhian Mosquera": ["es", "CB", 79, 77, 38, 63, 66, 80, 80],
+            "Kepa": ["es", "GK", 79, 80, 77, 78, 81, 45, 76],
+
+            // MANCHESTER CITY
+            "Erling Haaland": ["no", "ST", 91, 88, 92, 70, 81, 45, 88],
+            "Gianluigi Donnarumma": ["it", "GK", 89, 90, 84, 79, 90, 50, 87],
+            "Rúben Dias": ["pt", "CB", 87, 67, 42, 70, 69, 88, 86],
+            "Enzo Fernández": ["ar", "CM", 84, 72, 77, 85, 83, 77, 76],
+            "Rayan Cherki": ["fr", "CAM", 83, 78, 77, 83, 88, 36, 65],
+            "Joško Gvardiol": ["hr", "CB", 85, 80, 64, 76, 78, 85, 84],
+            "Marc Guéhi": ["gb-eng", "CB", 83, 77, 42, 68, 71, 84, 81],
+            "Antoine Semenyo": ["gh", "RW", 82, 87, 80, 73, 81, 48, 82],
+            "Phil Foden": ["gb-eng", "CAM", 86, 83, 82, 85, 89, 56, 63],
+            "Jérémy Doku": ["be", "LW", 82, 93, 72, 75, 88, 34, 67],
+            "Nico O'Reilly": ["gb-eng", "CM", 77, 76, 70, 75, 78, 71, 76],
+            "Matheus Nunes": ["pt", "CM", 80, 83, 71, 77, 82, 71, 75],
+            "Abdukodir Khusanov": ["uz", "CB", 79, 82, 39, 62, 65, 79, 82],
+            "Rayan Aït-Nouri": ["dz", "LB", 81, 84, 65, 76, 84, 75, 71],
+            "Mateo Kovačić": ["hr", "CM", 83, 74, 70, 83, 86, 75, 72],
+            "Gerónimo Rulli": ["ar", "GK", 80, 80, 78, 76, 82, 44, 79],
+            "Ayyoub Bouaddi": ["fr", "CM", 77, 74, 65, 76, 79, 73, 72],
+            "Rico Lewis": ["gb-eng", "RB", 78, 78, 63, 77, 80, 74, 65],
+            "Allan": ["br", "CM", 76, 72, 66, 74, 76, 75, 76],
+
+            // LIVERPOOL
+            "Virgil van Dijk": ["nl", "CB", 90, 78, 60, 72, 72, 89, 86],
+            "Alisson": ["br", "GK", 89, 86, 85, 85, 89, 52, 90],
+            "Dominik Szoboszlai": ["hu", "CAM", 84, 82, 82, 84, 83, 66, 77],
+            "Alexander Isak": ["se", "ST", 88, 86, 87, 76, 87, 39, 77],
+            "Florian Wirtz": ["de", "CAM", 89, 82, 82, 88, 91, 54, 66],
+            "Ryan Gravenberch": ["nl", "CDM", 85, 79, 74, 82, 85, 81, 81],
+            "Bradley Barcola": ["fr", "LW", 84, 91, 79, 78, 86, 41, 66],
+            "Alexis Mac Allister": ["ar", "CM", 86, 71, 81, 86, 85, 78, 76],
+            "Giorgi Mamardashvili": ["ge", "GK", 84, 85, 82, 72, 85, 43, 84],
+            "Cody Gakpo": ["nl", "LW", 84, 84, 82, 80, 84, 46, 77],
+            "Milos Kerkez": ["hu", "LB", 81, 87, 63, 74, 79, 77, 77],
+            "Ronald Araújo": ["uy", "CB", 84, 81, 51, 65, 67, 85, 85],
+            "Jérémy Jacquet": ["fr", "CB", 77, 76, 40, 64, 66, 77, 79],
+            "Jeremie Frimpong": ["nl", "RB", 84, 94, 69, 77, 85, 74, 68],
+            "Federico Chiesa": ["it", "RW", 82, 88, 80, 76, 84, 46, 70],
+            "Víctor Muñoz": ["es", "LW", 74, 83, 69, 69, 76, 36, 60],
+            "Joe Gomez": ["gb-eng", "CB", 80, 80, 38, 68, 70, 81, 79],
+            "Conor Bradley": ["gb-nir", "RB", 79, 84, 62, 73, 77, 76, 74],
+            "Wataru Endo": ["jp", "CDM", 80, 64, 66, 75, 74, 81, 81],
+            "Kostas Tsimikas": ["gr", "LB", 78, 79, 57, 76, 77, 75, 72],
+
+            // CHELSEA
+            "Moisés Caicedo": ["ec", "CDM", 85, 76, 67, 80, 81, 84, 83],
+            "Cole Palmer": ["gb-eng", "CAM", 87, 79, 84, 86, 87, 52, 68],
+            "Emiliano Martínez": ["ar", "GK", 86, 85, 83, 81, 86, 51, 85],
+            "João Pedro": ["br", "ST", 82, 82, 80, 75, 83, 42, 76],
+            "Morgan Rogers": ["gb-eng", "CAM", 82, 83, 78, 78, 83, 53, 80],
+            "Pedro Neto": ["pt", "LW", 82, 91, 75, 78, 84, 43, 66],
+            "Levi Colwill": ["gb-eng", "CB", 81, 75, 42, 72, 71, 82, 80],
+            "Estêvão": ["br", "RW", 80, 86, 75, 76, 85, 34, 56],
+            "Danny Welbeck": ["gb-eng", "ST", 79, 76, 78, 71, 77, 41, 77],
+            "Wesley Fofana": ["fr", "CB", 80, 78, 41, 66, 68, 81, 80],
+            "Valentín Barco": ["ar", "LB", 78, 80, 65, 77, 81, 71, 65],
+            "Pep Chavarría": ["es", "LB", 78, 83, 61, 72, 75, 74, 74],
+            "Malo Gusto": ["fr", "RB", 80, 86, 55, 74, 79, 76, 74],
+            "Jordan Henderson": ["gb-eng", "CDM", 79, 62, 70, 81, 75, 77, 77],
+            "Roméo Lavia": ["be", "CDM", 79, 74, 62, 76, 79, 77, 76],
+            "Jorrel Hato": ["nl", "LB", 79, 79, 52, 73, 75, 78, 76],
+            "Marco Palestra": ["it", "RB", 75, 81, 56, 70, 74, 71, 72],
+            "Emanuel Emegha": ["nl", "ST", 78, 86, 76, 63, 74, 34, 78],
+            "Jamie Gittens": ["gb-eng", "LW", 79, 89, 73, 71, 83, 33, 62],
+            "Geovany Quenda": ["pt", "RW", 77, 85, 71, 73, 81, 46, 64],
+            "Josh Acheampong": ["gb-eng", "RB", 74, 79, 48, 67, 71, 73, 73],
+            "Kendry Páez": ["ec", "CAM", 75, 78, 70, 75, 80, 44, 58],
+            "Mike Penders": ["be", "GK", 74, 75, 72, 68, 76, 40, 75],
+
+            // MANCHESTER UNITED
+            "Bruno Fernandes": ["pt", "CAM", 87, 72, 84, 89, 84, 68, 74],
+            "Youri Tielemans": ["be", "CM", 83, 61, 79, 85, 81, 74, 72],
+            "Bryan Mbeumo": ["cm", "RW", 83, 87, 81, 78, 82, 47, 75],
+            "Matheus Cunha": ["br", "ST", 83, 82, 81, 78, 85, 45, 78],
+            "Senne Lammens": ["be", "GK", 79, 80, 77, 72, 80, 42, 79],
+            "Harry Maguire": ["gb-eng", "CB", 80, 52, 54, 67, 64, 81, 85],
+            "Lisandro Martínez": ["ar", "CB", 83, 73, 56, 76, 77, 84, 81],
+            "Benjamin Šeško": ["si", "ST", 81, 85, 81, 67, 78, 38, 82],
+            "Kobbie Mainoo": ["gb-eng", "CM", 80, 74, 70, 78, 82, 74, 73],
+            "Carlos Baleba": ["cm", "CDM", 80, 79, 67, 74, 78, 78, 82],
+            "Andrey Santos": ["br", "CM", 79, 73, 73, 77, 78, 76, 77],
+            "Noussair Mazraoui": ["ma", "RB", 81, 79, 66, 77, 81, 78, 74],
+            "Amad": ["ci", "RW", 80, 84, 75, 76, 84, 46, 58],
+            "Luke Shaw": ["gb-eng", "LB", 80, 77, 61, 77, 78, 79, 78],
+            "Mason Mount": ["gb-eng", "CAM", 79, 74, 75, 79, 80, 62, 65],
+            "Patrick Dorgu": ["dk", "LB", 78, 85, 66, 72, 77, 73, 77],
+            "Leny Yoro": ["fr", "CB", 79, 77, 39, 65, 68, 80, 77],
+            "Diogo Dalot": ["pt", "RB", 81, 82, 67, 76, 79, 78, 77],
+            "Manuel Ugarte": ["uy", "CDM", 81, 72, 59, 73, 75, 82, 82],
+            "Joshua Zirkzee": ["nl", "ST", 79, 75, 76, 74, 82, 38, 77],
+
+            // FENERBAHÇE
+            "N'Golo Kanté": ["fr", "CDM", 85, 77, 66, 77, 81, 86, 82],
+            "Mason Greenwood": ["gb-eng", "RW", 82, 84, 83, 76, 83, 35, 71],
+            "Ederson": ["br", "GK", 85, 84, 82, 91, 86, 64, 84],
+            "Marco Asensio": ["es", "CAM", 81, 76, 81, 82, 83, 44, 63],
+            "Vedat Muriqi": ["xk", "ST", 80, 65, 81, 68, 72, 41, 86],
+            "Romelu Lukaku": ["be", "ST", 84, 79, 84, 73, 76, 39, 86],
+            "Mattéo Guendouzi": ["fr", "CM", 81, 74, 72, 79, 80, 78, 79],
+            "Milan Škriniar": ["sk", "CB", 81, 67, 43, 66, 66, 83, 82],
+            "Nathan Aké": ["nl", "CB", 83, 75, 53, 75, 74, 84, 79],
+            "Kerem Aktürkoğlu": ["tr", "LW", 80, 86, 77, 76, 82, 41, 63],
+            "Nélson Semedo": ["pt", "RB", 79, 84, 61, 73, 79, 75, 72],
+            "İsmail Yüksek": ["tr", "CDM", 78, 73, 66, 75, 76, 77, 79],
+            "Oğuz Aydın": ["tr", "RW", 76, 83, 72, 71, 77, 45, 66],
+            "Jayden Oosterwolde": ["nl", "LB", 77, 86, 56, 68, 73, 74, 80],
+            "Dorgeles Nene": ["ml", "LW", 77, 88, 72, 70, 79, 38, 63],
+            "İrfan Can Kahveci": ["tr", "RW", 78, 71, 77, 80, 80, 56, 67],
+            "Kojo Oppong": ["gh", "CB", 72, 74, 37, 58, 61, 72, 76],
+            "Archie Brown": ["gb-eng", "LB", 74, 82, 55, 67, 72, 70, 76],
+            "Levent Mercan": ["tr", "LB", 74, 77, 61, 71, 74, 70, 69],
+            "Mert Müldür": ["tr", "RB", 75, 79, 60, 70, 73, 73, 74],
+            "Mert Günok": ["tr", "GK", 77, 77, 75, 71, 78, 43, 77],
+            "Ognjen Mimović": ["rs", "RB", 73, 78, 54, 67, 71, 70, 71],
+            "Mert Hakan Yandaş": ["tr", "CM", 73, 68, 70, 74, 73, 66, 70],
+
+            // BEŞİKTAŞ
+            "Leandro Trossard": ["be", "LW", 83, 81, 82, 80, 85, 45, 63],
+            "Orkun Kökçü": ["tr", "CM", 81, 71, 78, 84, 81, 68, 71],
+            "Dušan Vlahović": ["rs", "ST", 82, 78, 84, 67, 77, 36, 83],
+            "Alexander Nübel": ["de", "GK", 81, 81, 79, 75, 83, 44, 80],
+            "Emmanuel Agbadou": ["ci", "CB", 78, 73, 45, 65, 66, 78, 83],
+            "Ernest Poku": ["nl", "LW", 75, 88, 69, 67, 77, 34, 64],
+            "Václav Černý": ["cz", "RW", 78, 83, 76, 74, 80, 39, 63],
+            "Wilfred Ndidi": ["ng", "CDM", 78, 69, 63, 70, 72, 79, 81],
+            "Emirhan Topçu": ["tr", "CB", 75, 71, 41, 63, 64, 76, 77],
+            "Oh Hyeon Gyu": ["kr", "ST", 75, 78, 74, 62, 72, 34, 78],
+            "Salih Özcan": ["tr", "CDM", 76, 65, 64, 73, 73, 76, 78],
+            "Tiago Djaló": ["pt", "CB", 76, 77, 42, 63, 65, 77, 78],
+            "Amir Murillo": ["pa", "RB", 76, 80, 61, 70, 73, 73, 76],
+            "Fabio Miretti": ["it", "CM", 76, 73, 69, 76, 78, 67, 67],
+            "Milot Rashica": ["xk", "RW", 76, 83, 73, 73, 78, 46, 66],
+            "Rıdvan Yılmaz": ["tr", "LB", 74, 81, 56, 69, 74, 70, 65],
+            "Kassoum Ouattara": ["fr", "LB", 73, 81, 52, 67, 71, 69, 70],
+            "Junior Olaitan": ["bj", "CAM", 72, 77, 67, 71, 75, 45, 62],
+            "Yasin Özcan": ["tr", "CB", 72, 74, 41, 61, 63, 72, 74],
+            "Ümit Akdağ": ["tr", "CB", 71, 69, 39, 59, 60, 71, 75],
+            "Kartal Yılmaz": ["tr", "CM", 71, 69, 64, 72, 72, 65, 66],
+            "Doğan Alemdar": ["tr", "GK", 72, 73, 70, 67, 74, 40, 71],
+            "Taylan Bulut": ["tr", "RB", 69, 76, 51, 63, 67, 66, 67],
+            "Can Keleş": ["tr", "RW", 70, 79, 66, 66, 72, 38, 61],
+            "Mustafa Hekimoğlu": ["tr", "ST", 68, 75, 67, 57, 67, 29, 71],
+
+            // GALATASARAY
+            "Victor Osimhen": ["ng", "ST", 87, 90, 85, 67, 81, 42, 83],
+            "Uğurcan Çakır": ["tr", "GK", 79, 80, 76, 71, 81, 43, 78],
+            "Davinson Sánchez": ["co", "CB", 81, 79, 46, 64, 67, 81, 83],
+            "Lucas Torreira": ["uy", "CDM", 82, 74, 68, 78, 80, 81, 77],
+            "Barış Alper Yılmaz": ["tr", "RW", 79, 87, 75, 71, 78, 56, 81],
+            "Gabriel Sara": ["br", "CM", 80, 74, 76, 82, 81, 71, 74],
+            "Aleksey Batrakov": ["ru", "CAM", 78, 77, 74, 79, 80, 56, 63],
+            "Leroy Sané": ["de", "RW", 82, 89, 80, 79, 85, 38, 67],
+            "Yunus Akgün": ["tr", "RW", 78, 83, 73, 75, 81, 42, 61],
+            "İlkay Gündoğan": ["de", "CM", 83, 61, 79, 85, 84, 72, 69],
+            "Mario Lemina": ["ga", "CDM", 79, 74, 68, 75, 77, 78, 81],
+            "Abdülkerim Bardakcı": ["tr", "CB", 78, 66, 54, 67, 65, 79, 81],
+            "Wilfried Singo": ["ci", "RB", 80, 86, 56, 70, 75, 78, 84],
+            "Roland Sallai": ["hu", "RW", 78, 82, 75, 73, 78, 54, 73],
+            "Lesley Ugochukwu": ["fr", "CDM", 76, 71, 61, 71, 73, 75, 81],
+            "Ismail Jakobs": ["sn", "LB", 76, 85, 57, 69, 74, 72, 75],
+            "El Bitshiabu": ["fr", "CB", 75, 73, 37, 60, 62, 75, 81],
+            "Evren Elmalı": ["tr", "LB", 74, 79, 55, 68, 72, 71, 73],
+            "Kaan Ayhan": ["tr", "CDM", 75, 62, 63, 72, 69, 76, 76],
+            "Deniz Gül": ["tr", "ST", 71, 74, 70, 59, 69, 31, 75],
+            "Günay Güvenç": ["tr", "GK", 73, 73, 71, 67, 74, 41, 73],
+            "Kazımcan Karataş": ["tr", "LB", 69, 76, 51, 63, 67, 66, 68],
+
+            // TRABZONSPOR
+            "Mohamed Salah": ["eg", "RW", 91, 89, 88, 86, 90, 45, 76],
+            "Fabinho": ["br", "CDM", 83, 62, 69, 78, 76, 83, 82],
+            "André Onana": ["cm", "GK", 80, 81, 77, 83, 82, 48, 79],
+            "Stefan Savić": ["me", "CB", 78, 61, 41, 62, 61, 80, 79],
+            "Arseniy Batagov": ["ua", "CB", 75, 71, 43, 65, 65, 76, 77],
+            "Franculino": ["gw", "ST", 75, 82, 74, 63, 75, 31, 71],
+            "Aral Şimşir": ["tr", "LW", 75, 81, 71, 72, 78, 36, 61],
+            "Ernest Muçi": ["al", "CAM", 76, 78, 75, 74, 78, 43, 65],
+            "Ruslan Malinovskyi": ["ua", "CAM", 77, 66, 81, 79, 76, 61, 74],
+            "Batista Mendy": ["fr", "CDM", 76, 71, 61, 70, 72, 75, 81],
+            "Chibuike Nwaiwu": ["ng", "CB", 73, 72, 37, 57, 60, 73, 78],
+            "Wagner Pina": ["cv", "RB", 73, 80, 53, 66, 71, 69, 70],
+            "Okay Yokuşlu": ["tr", "CDM", 75, 58, 65, 71, 69, 75, 80],
+            "Ozan Tufan": ["tr", "CM", 73, 69, 72, 72, 73, 67, 74],
+            "Tim Jabol-Folcarelli": ["fr", "CM", 72, 71, 64, 71, 72, 68, 73],
+            "Cenk Özkacar": ["tr", "CB", 73, 71, 39, 61, 62, 74, 76],
+            "Mustafa Eskihellaç": ["tr", "RB", 72, 81, 58, 66, 71, 67, 68],
+            "Samet Akaydın": ["tr", "CB", 72, 63, 41, 58, 58, 73, 78],
+            "Sidny Cabral": ["cv", "LB", 71, 78, 53, 65, 69, 68, 69],
+            "Noah Saviolo": ["be", "LW", 69, 78, 64, 64, 72, 34, 57],
+            "Ali Habesoglu": ["tr", "ST", 68, 72, 68, 57, 66, 29, 70],
+            "Umut Nayir": ["tr", "ST", 71, 65, 72, 60, 66, 33, 77],
+            "Benjamin Bouchouari": ["ma", "CM", 73, 74, 63, 72, 77, 65, 60],
+            "Melih Kabasakal": ["tr", "CDM", 69, 65, 59, 67, 68, 68, 70],
+            "Metehan Mimaroğlu": ["tr", "LW", 68, 76, 65, 64, 70, 35, 60]
+        };
+
+        const rawData = `BAYERN MÜNİH
+Harry Kane
+Michael Olise
+Joshua Kimmich
+Luis Díaz
+Jamal Musiala
+Dayot Upamecano
+Jonathan Tah
+Konrad Laimer
+Kim Min-jae
+Aleksandar Pavlović
+Serge Gnabry
+Ismael Saibari
+Alphonso Davies
+Nathaniel Brown
+Josip Stanišić
+Manuel Neuer
+Jonas Urbig
+Tom Bischof
+Hiroki Ito
+Lennart Karl
+Sacha Boey
+Sven Ulreich
+BORUSSIA DORTMUND
+Nico Schlotterbeck
+Gregor Kobel
+Serhou Guirassy
+Felix Nmecha
+Waldemar Anton
+Julian Ryerson
+Joey Veerman
+Emre Can
+Marcel Sabitzer
+Maximilian Beier
+Daniel Svensson
+Ramy Bensebaini
+Carney Chukwuemeka
+Fábio Silva
+Jobe Bellingham
+Konstantinos Karetsas
+Ethan Nwaneri
+Alexander Meyer
+PARIS SAINT-GERMAIN
+Ousmane Dembélé
+Vitinha
+Khvicha Kvaratskhelia
+Nuno Mendes
+Willian Pacho
+Achraf Hakimi
+João Neves
+Fabián Ruiz
+Marquinhos
+Désiré Doué
+Matvey Safonov
+Warren Zaïre-Emery
+Lucas Hernández
+Maghnes Akliouche
+Lucas Chevalier
+Illia Zabarnyi
+Senny Mayulu
+Lucas Beraldo
+Lucas Digne
+Mika Godts
+REAL MADRID
+Kylian Mbappé
+Thibaut Courtois
+Jude Bellingham
+Vini Jr.
+Federico Valverde
+Marc Cucurella
+Arda Güler
+Bernardo Silva
+Éder Militão
+Ibrahima Konaté
+Aurélien Tchouaméni
+Trent Alexander-Arnold
+Denzel Dumfries
+Antonio Rüdiger
+Eduardo Camavinga
+Brahim
+Álvaro Carreras
+Andriy Lunin
+Ferland Mendy
+Endrick
+Asencio
+Carlos Espí
+BARCELONA
+Lamine Yamal
+Pedri
+Rodri
+Raphinha
+Frenkie de Jong
+Joan García
+Pau Cubarsí
+Jules Koundé
+Fermín López
+Dani Olmo
+João Cancelo
+Anthony Gordon
+Karim Adeyemi
+Gavi
+Balde
+Wojciech Szczęsny
+Dominik Livaković
+Marc Bernal
+Gerard Martín
+Andreas Christensen
+Gabriel Jesus
+Xavi Espart
+ATLÉTICO MADRID
+Jan Oblak
+Julián Álvarez
+Marcos Llorente
+Grimaldo
+Dávid Hancko
+Pablo Barrios
+Morten Hjulmand
+Álex Baena
+Alexander Sørloth
+Ademola Lookman
+Cristian Romero
+Giuliano
+Juan Musso
+Koke
+Lee Kang-in
+Robin Le Normand
+Johnny Cardoso
+Jonathan David
+Pubill
+Obed Vargas
+Rodri Mendoza
+Arnau Ortiz
+INTER
+Alessandro Bastoni
+Federico Dimarco
+Marcus Thuram
+Hakan Çalhanoğlu
+Yann Sommer
+Henrikh Mkhitaryan
+Davide Frattesi
+Stefan de Vrij
+Piotr Zieliński
+Carlos Augusto
+Benjamin Pavard
+Curtis Jones
+Djed Spence
+Luis Henrique
+MILAN
+Mike Maignan
+Luka Modrić
+Adrien Rabiot
+Christian Pulisic
+Mario Gila
+Fikayo Tomori
+Matteo Gabbia
+Alexis Saelemaekers
+Diego Moreira
+Ruben Loftus-Cheek
+Strahinja Pavlović
+Samuel Chukwueze
+Pervis Estupiñán
+ROMA
+Paulo Dybala
+Mile Svilar
+Donyell Malen
+Gianluca Mancini
+Evan Ndicka
+Kouadio Koné
+Bryan Cristante
+Wesley
+Mario Hermoso
+Marten de Roon
+Matías Soulé
+Leonardo Balerdi
+Lorenzo Pellegrini
+Santiago Castro
+Rodrigo Mora
+Nahuel Molina
+Konstantinos Koulierakis
+Devyne Rensch
+Niccolò Pisilli
+Daniele Ghilardi
+Devis Vásquez
+NAPOLI
+Scott McTominay
+Kevin De Bruyne
+Amir Rrahmani
+Stanislav Lobotka
+André-Frank Zambo Anguissa
+Giovanni Di Lorenzo
+Alessandro Buongiorno
+David Neres
+Alex Meret
+Vanja Milinković-Savić
+Matteo Politano
+Noa Lang
+Rasmus Højlund
+Sam Beukema
+Mathías Olivera
+Rafa Marín
+Benoît Badiashile
+Billy Gilmour
+Alisson Santos
+Lorenzo Lucca
+JUVENTUS
+Bremer
+Kenan Yıldız
+Manuel Locatelli
+Kamil Grabara
+Pierre Kalulu
+Guglielmo Vicario
+Francisco Conceição
+Nick Woltemade
+Weston McKennie
+Nico González
+Federico Gatti
+Pape Sarr
+Douglas Luiz
+Teun Koopmeiners
+Edon Zhegrova
+Jérémie Boga
+Lloyd Kelly
+Randal Kolo Muani
+Jhon Lucumí
+Arkadiusz Milik
+Juan Cabal
+Daniele Rugani
+Neto
+ARSENAL
+Gabriel
+David Raya
+William Saliba
+Declan Rice
+Bukayo Saka
+Bruno Guimarães
+Martin Ødegaard
+Viktor Gyökeres
+Eberechi Eze
+Piero Hincapié
+Jurriën Timber
+Ezri Konsa
+Martín Zubimendi
+Mikel Merino
+Riccardo Calafiori
+Christos Tzolis
+Ben White
+Kai Havertz
+Noni Madueke
+Myles Lewis-Skelly
+Cristhian Mosquera
+Kepa
+MANCHESTER CITY
+Erling Haaland
+Gianluigi Donnarumma
+Rúben Dias
+Enzo Fernández
+Rayan Cherki
+Joško Gvardiol
+Marc Guéhi
+Antoine Semenyo
+Phil Foden
+Jérémy Doku
+Nico O'Reilly
+Matheus Nunes
+Abdukodir Khusanov
+Rayan Aït-Nouri
+Mateo Kovačić
+Gerónimo Rulli
+Ayyoub Bouaddi
+Rico Lewis
+Allan
+LIVERPOOL
+Virgil van Dijk
+Alisson
+Dominik Szoboszlai
+Alexander Isak
+Florian Wirtz
+Ryan Gravenberch
+Bradley Barcola
+Alexis Mac Allister
+Giorgi Mamardashvili
+Cody Gakpo
+Milos Kerkez
+Ronald Araújo
+Jérémy Jacquet
+Jeremie Frimpong
+Federico Chiesa
+Víctor Muñoz
+Joe Gomez
+Conor Bradley
+Wataru Endo
+Kostas Tsimikas
+CHELSEA
+Moisés Caicedo
+Cole Palmer
+Emiliano Martínez
+João Pedro
+Morgan Rogers
+Pedro Neto
+Levi Colwill
+Estêvão
+Danny Welbeck
+Wesley Fofana
+Valentín Barco
+Pep Chavarría
+Malo Gusto
+Jordan Henderson
+Roméo Lavia
+Jorrel Hato
+Marco Palestra
+Emanuel Emegha
+Jamie Gittens
+Geovany Quenda
+Josh Acheampong
+Kendry Páez
+Mike Penders
+MANCHESTER UNITED
+Bruno Fernandes
+Youri Tielemans
+Bryan Mbeumo
+Matheus Cunha
+Senne Lammens
+Harry Maguire
+Lisandro Martínez
+Benjamin Šeško
+Kobbie Mainoo
+Carlos Baleba
+Andrey Santos
+Noussair Mazraoui
+Amad
+Luke Shaw
+Mason Mount
+Patrick Dorgu
+Leny Yoro
+Diogo Dalot
+Manuel Ugarte
+Joshua Zirkzee
+FENERBAHÇE
+N'Golo Kanté
+Mason Greenwood
+Ederson
+Marco Asensio
+Vedat Muriqi
+Romelu Lukaku
+Mattéo Guendouzi
+Milan Škriniar
+Nathan Aké
+Kerem Aktürkoğlu
+Nélson Semedo
+İsmail Yüksek
+Oğuz Aydın
+Jayden Oosterwolde
+Dorgeles Nene
+İrfan Can Kahveci
+Kojo Oppong
+Archie Brown
+Levent Mercan
+Mert Müldür
+Mert Günok
+Ognjen Mimović
+Mert Hakan Yandaş
+BEŞİKTAŞ
+Leandro Trossard
+Orkun Kökçü
+Dušan Vlahović
+Alexander Nübel
+Emmanuel Agbadou
+Ernest Poku
+Václav Černý
+Wilfred Ndidi
+Emirhan Topçu
+Oh Hyeon Gyu
+Salih Özcan
+Tiago Djaló
+Amir Murillo
+Fabio Miretti
+Milot Rashica
+Rıdvan Yılmaz
+Kassoum Ouattara
+Junior Olaitan
+Yasin Özcan
+Ümit Akdağ
+Kartal Yılmaz
+Doğan Alemdar
+Taylan Bulut
+Can Keleş
+Mustafa Hekimoğlu
+GALATASARAY
+Victor Osimhen
+Uğurcan Çakır
+Davinson Sánchez
+Lucas Torreira
+Barış Alper Yılmaz
+Gabriel Sara
+Aleksey Batrakov
+Leroy Sané
+Yunus Akgün
+İlkay Gündoğan
+Mario Lemina
+Abdülkerim Bardakcı
+Wilfried Singo
+Roland Sallai
+Lesley Ugochukwu
+Ismail Jakobs
+El Bitshiabu
+Evren Elmalı
+Kaan Ayhan
+Deniz Gül
+Günay Güvenç
+Kazımcan Karataş
+TRABZONSPOR
+Mohamed Salah
+Fabinho
+André Onana
+Stefan Savić
+Arseniy Batagov
+Franculino
+Aral Şimşir
+Ernest Muçi
+Ruslan Malinovskyi
+Batista Mendy
+Chibuike Nwaiwu
+Wagner Pina
+Okay Yokuşlu
+Ozan Tufan
+Tim Jabol-Folcarelli
+Cenk Özkacar
+Mustafa Eskihellaç
+Samet Akaydın
+Sidny Cabral
+Noah Saviolo
+Ali Habesoglu
+Umut Nayir
+Benjamin Bouchouari
+Melih Kabasakal
+Metehan Mimaroğlu`;
+
+        let allPlayers = [];
+        let teamPool = [];
+        let currentPlayer = null;
+        let preloadedPhotoUrl = null;
+        let isRoundRevealed = false;
+        let availableClues = [];
+        let currentRoundScore = 1000;
+        let totalScore = 0;
+        let revealStepCounter = 0;
+
+        try {
+            totalScore = parseInt(localStorage.getItem('MysteryBallerScore')) || 0;
+        } catch (e) { totalScore = 0; }
+        document.getElementById('totalScore').innerText = totalScore;
+
+        const statKeys = ["PAC", "SHO", "PAS", "DRI", "DEF", "PHY", "OVR", "POS", "Nation"];
+
+        function parseData() {
+            allPlayers = [];
+            const lines = rawData.split('\n').map(l => l.trim()).filter(Boolean);
+            let rawTeamKey = "";
+            const seenInTeam = new Set();
+
+            lines.forEach(line => {
+                if (teamConfig[line.toUpperCase()]) {
+                    rawTeamKey = line.toUpperCase();
+                } else {
+                    const name = line;
+                    const dedupKey = `${rawTeamKey}|${name}`;
+                    if (seenInTeam.has(dedupKey)) return;
+                    seenInTeam.add(dedupKey);
+
+                    const entry = playerDB[name] || ["tr", "CM", 75, 72, 68, 72, 74, 65, 70];
+                    const [countryCode, pos, ovr, pac, sho, pas, dri, def, phy] = entry;
+                    const cfg = teamConfig[rawTeamKey];
+                    const lg = leagueData[cfg.league];
+
+                    allPlayers.push({
+                        name: name,
+                        TeamKey: rawTeamKey,
+                        Team: cfg.name,
+                        league: cfg.league,
+                        searchTerms: cfg.searchTerms,
+                        OVR: ovr,
+                        POS: pos,
+                        PAC: pac,
+                        SHO: sho,
+                        PAS: pas,
+                        DRI: dri,
+                        DEF: def,
+                        PHY: phy,
+                        teamWikiTitle: cfg.wikiTitle,
+                        teamTrWikiTitle: cfg.trWikiTitle || null,
+                        teamFallbackUrl: cfg.fallbackUrl,
+                        teamColors: cfg.colors,
+                        leagueWikiTitle: lg.wikiTitle,
+                        leagueTrWikiTitle: lg.trWikiTitle || null,
+                        leagueFallbackUrl: lg.fallbackUrl,
+                        leagueColors: lg.colors,
+                        nation: `https://flagcdn.com/w80/${countryCode}.png`
+                    });
+                }
+            });
+        }
+
+        // 8. YÜZ ODAKLI VE AKTİF TAKIM FORMALI OYUNCU FOTOĞRAFI BULUCU & KADRAJLAYICI
+        const playerPhotoCache = {};
+
+        function scoreCandidatePhoto(title, imageInfo, player, isInfobox = false) {
+            if (!imageInfo || !imageInfo.thumburl) return -999;
+            const titleLower = (title || "").toLowerCase();
+            if (!/\.(jpg|jpeg|png|webp)$/i.test(titleLower)) return -999;
+            if (/logo|crest|flag|stadium|arena|map|trophy|signature|kit_body|shorts|socks|diagram|tactics|lineup|formation|crowd|banner|statue|caricature|cartoon/i.test(titleLower)) {
+                return -999;
+            }
+
+            const w = imageInfo.width || 0;
+            const h = imageInfo.height || 0;
+            if ((w > 0 && w < 160) || (h > 0 && h < 160)) return -999;
+
+            const descRaw = imageInfo.extmetadata?.ImageDescription?.value || "";
+            const catsRaw = imageInfo.extmetadata?.Categories?.value || "";
+            const metaNorm = normalizeStr(`${title} ${descRaw} ${catsRaw}`);
+            const titleNorm = normalizeStr(title);
+
+            let score = isInfobox ? 18 : 0;
+
+            // 1. Aktif giydiği takımın forması eşleşmesi
+            const teamTerms = (player.searchTerms || [player.Team]).map(t => normalizeStr(t));
+            let matchedTeam = false;
+            for (const term of teamTerms) {
+                if (!term) continue;
+                if (titleNorm.includes(term)) {
+                    score += 50;
+                    matchedTeam = true;
+                } else if (metaNorm.includes(term)) {
+                    score += 34;
+                    matchedTeam = true;
+                }
+            }
+
+            // 2. Güncel sezon yılları (2025 / 2026)
+            if (/2026/.test(metaNorm)) score += 36;
+            else if (/2025/.test(metaNorm)) score += 26;
+            else if (/2024/.test(metaNorm)) score += 10;
+            else if (/201[0-9]|2020|2021/.test(metaNorm) && !matchedTeam) score -= 18;
+
+            // 3. Portre / Yüz odaklı çekim anahtar kelimeleri
+            if (/portrait|headshot|closeup|close-up|face|training|warmup|warm-up|presentation|interview/i.test(metaNorm)) {
+                score += 20;
+            }
+
+            // 4. En-boy oranı puanı (dikey/kare portreler yüzü büyük ve net gösterir; geniş saha fotoğrafları cezalandırılır)
+            if (w > 0 && h > 0) {
+                const ratio = w / h;
+                if (ratio >= 0.55 && ratio <= 1.15) {
+                    score += 30;
+                } else if (ratio > 1.15 && ratio <= 1.45) {
+                    score += 8;
+                } else if (ratio > 1.45) {
+                    score -= 36;
+                } else if (ratio < 0.45) {
+                    score -= 14;
+                }
+            }
+
+            return score;
+        }
+
+        async function fetchPlayerActiveKitImage(player) {
+            const cacheKey = `${player.name}|${player.TeamKey}`;
+            if (playerPhotoCache[cacheKey]) return playerPhotoCache[cacheKey];
+
+            const teamTerms = player.searchTerms || [player.Team];
+            const primaryTerm = teamTerms[0];
+            let bestUrl = null;
+            let bestScore = -999;
+
+            const considerPages = (pages, infoboxTitle = null) => {
+                for (const p of pages) {
+                    const ii = p?.imageinfo?.[0];
+                    const isIb = infoboxTitle && p.title === infoboxTitle;
+                    const s = scoreCandidatePhoto(p.title, ii, player, isIb);
+                    if (s > bestScore) {
+                        bestScore = s;
+                        bestUrl = ii.thumburl;
+                    }
+                }
+            };
+
+            // Aşama 1: Wikimedia Commons üzerinde "Oyuncu + Aktif Takım" ve güncel yıl araması
+            try {
+                const queries = [
+                    `"${player.name}" "${primaryTerm}"`,
+                    `"${player.name}" 2025 OR 2026`
+                ];
+                const responses = await Promise.all(queries.map(q =>
+                    fetch(`https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(q)}&gsrnamespace=6&gsrlimit=8&prop=imageinfo&iiprop=url|size|extmetadata&iiurlwidth=500&format=json&origin=*`)
+                        .then(r => r.json())
+                        .catch(() => null)
+                ));
+                for (const cmData of responses) {
+                    if (cmData?.query?.pages) {
+                        considerPages(Object.values(cmData.query.pages));
+                    }
+                }
+            } catch (e) {}
+
+            // Aşama 2: Oyuncunun Wikipedia sayfasındaki infobox portresi ve tüm makale görselleri
+            try {
+                const searchRes = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(player.name + ' footballer')}&utf8=&format=json&origin=*`);
+                const searchData = await searchRes.json();
+                if (searchData?.query?.search?.length > 0) {
+                    const title = searchData.query.search[0].title;
+                    const imgRes = await fetch(`https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(title)}&redirects=1&prop=pageimages|images&piprop=thumbnail&pithumbsize=500&imlimit=20&format=json&origin=*`);
+                    const imgData = await imgRes.json();
+                    const pages = imgData?.query?.pages || {};
+                    const pageObj = Object.values(pages)[0];
+
+                    const candidateFileTitles = [];
+                    if (pageObj?.pageimage) {
+                        candidateFileTitles.push(`File:${pageObj.pageimage}`);
+                    }
+                    (pageObj?.images || []).forEach(im => {
+                        if (im.title && /\.(jpg|jpeg|png|webp)$/i.test(im.title)) {
+                            candidateFileTitles.push(im.title);
+                        }
+                    });
+
+                    const uniqueFiles = [...new Set(candidateFileTitles)].slice(0, 15);
+                    if (uniqueFiles.length > 0) {
+                        const infoRes = await fetch(`https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(uniqueFiles.join('|'))}&prop=imageinfo&iiprop=url|size|extmetadata&iiurlwidth=500&format=json&origin=*`);
+                        const infoData = await infoRes.json();
+                        if (infoData?.query?.pages) {
+                            const ibFile = pageObj?.pageimage ? `File:${pageObj.pageimage}` : null;
+                            considerPages(Object.values(infoData.query.pages), ibFile);
+                        }
+                    }
+
+                    if (!bestUrl && pageObj?.thumbnail?.source) {
+                        bestUrl = pageObj.thumbnail.source;
+                        bestScore = 10;
+                    }
+                }
+            } catch (e) {}
+
+            if (bestUrl && bestScore >= 5) {
+                playerPhotoCache[cacheKey] = bestUrl;
+                return bestUrl;
+            }
+            return null;
+        }
+
+        // Yüz odaklı kadrajlama: Tarayıcı FaceDetector destekliyorsa yüzü merkeze kilitler, değilse en-boy oranına göre yüz + forma kadrajı uygular
+        async function applyFaceFocusedFraming(imgEl) {
+            const nw = imgEl.naturalWidth || 300;
+            const nh = imgEl.naturalHeight || 400;
+            const ratio = nw / nh;
+
+            let posX = 50;
+            let posY = ratio > 1.15 ? 20 : (ratio >= 0.85 ? 17 : 14);
+            let zoom = ratio > 1.2 ? 1.15 : 1.03;
+
+            try {
+                if ('FaceDetector' in window) {
+                    const detector = new window.FaceDetector({ fastMode: true, maxDetectedFaces: 3 });
+                    const faces = await detector.detect(imgEl);
+                    if (faces && faces.length > 0) {
+                        faces.sort((a, b) => (b.boundingBox.width * b.boundingBox.height) - (a.boundingBox.width * a.boundingBox.height));
+                        const box = faces[0].boundingBox;
+                        const faceCx = ((box.x + box.width * 0.5) / nw) * 100;
+                        // Yüzü üst-ortada tutarken altında aktif takım formasının yakası ve arması görünmesi için +9% aşağı denge
+                        const faceCy = ((box.y + box.height * 0.5) / nh) * 100 + 9;
+                        posX = Math.max(15, Math.min(85, faceCx));
+                        posY = Math.max(10, Math.min(65, faceCy));
+
+                        const faceRatio = box.width / nw;
+                        if (faceRatio < 0.26) {
+                            zoom = Math.min(1.38, 0.34 / Math.max(faceRatio, 0.16));
+                        } else {
+                            zoom = 1.04;
+                        }
+                    }
+                }
+            } catch (e) {}
+
+            imgEl.style.objectPosition = `${posX.toFixed(1)}% ${posY.toFixed(1)}%`;
+            imgEl.style.transformOrigin = `${posX.toFixed(1)}% ${Math.max(8, posY - 8).toFixed(1)}%`;
+            imgEl.style.transform = `scale(${zoom.toFixed(2)})`;
+        }
+
+        function showScreen(id) {
+            playSound('click');
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function startGame() {
+            if (allPlayers.length === 0) parseData();
+            showScreen('gameScreen');
+            initGame();
+        }
+
+        function updateScoreUI() {
+            document.getElementById('currentScore').innerText = currentRoundScore;
+        }
+
+        function triggerPhotoReveal() {
+            if (!preloadedPhotoUrl) return;
+            const silEl = document.getElementById('s-Silhouette');
+            const frameEl = document.getElementById('s-PhotoFrame');
+            const photoEl = document.getElementById('s-Photo');
+            if (!photoEl.src) photoEl.src = preloadedPhotoUrl;
+            frameEl.classList.add('revealed');
+            silEl.classList.add('fade-out');
+        }
+
+        function initGame() {
+            if (allPlayers.length === 0) parseData();
+            const filteredPlayers = allPlayers.filter(p => activeLeagues.has(p.league));
+            const poolToPick = filteredPlayers.length > 0 ? filteredPlayers : allPlayers;
+
+            currentPlayer = poolToPick[Math.floor(Math.random() * poolToPick.length)];
+            teamPool = allPlayers.filter(p => p.TeamKey === currentPlayer.TeamKey);
+            availableClues = [...statKeys].sort(() => Math.random() - 0.5);
+            currentRoundScore = 1000;
+            preloadedPhotoUrl = null;
+            isRoundRevealed = false;
+            revealStepCounter = 0;
+            updateScoreUI();
+
+            const input = document.getElementById('guessInput');
+            input.value = '';
+            input.disabled = false;
+            document.getElementById('ui-guessBtn').disabled = false;
+            document.getElementById('msgArea').innerText = '';
+            document.getElementById('ui-hintBtn').style.display = 'block';
+            document.getElementById('ui-nextBtn').style.display = 'none';
+
+            // Resmi takım & lig logolarını doğrulanmış kaynaklardan yerleştir
+            document.getElementById('top-TeamName').innerText = currentPlayer.Team;
+            applyVerifiedLogo(document.getElementById('top-TeamLogo'), currentPlayer.teamWikiTitle, currentPlayer.teamFallbackUrl, currentPlayer.Team, currentPlayer.teamColors, currentPlayer.teamTrWikiTitle);
+            applyVerifiedLogo(document.getElementById('s-TeamLogo'), currentPlayer.teamWikiTitle, currentPlayer.teamFallbackUrl, currentPlayer.Team, currentPlayer.teamColors, currentPlayer.teamTrWikiTitle);
+            applyVerifiedLogo(document.getElementById('s-League'), currentPlayer.leagueWikiTitle, currentPlayer.leagueFallbackUrl, currentPlayer.league, currentPlayer.leagueColors, currentPlayer.leagueTrWikiTitle);
+            document.getElementById('s-Nation').src = currentPlayer.nation;
+
+            // Silüeti göster, yüz odaklı oyuncu portresini gizli katmanda hazırla
+            const silEl = document.getElementById('s-Silhouette');
+            const frameEl = document.getElementById('s-PhotoFrame');
+            const photoEl = document.getElementById('s-Photo');
+            silEl.classList.remove('fade-out');
+            silEl.src = defaultSilhouette;
+            frameEl.classList.remove('revealed');
+            photoEl.removeAttribute('src');
+            photoEl.style.objectPosition = '50% 15%';
+            photoEl.style.transform = 'scale(1)';
+
+            // Aktif takım formalı ve yüz odaklı fotoğrafı arka planda ön-yükle
+            const targetPlayer = currentPlayer;
+            fetchPlayerActiveKitImage(targetPlayer).then(url => {
+                if (!url || currentPlayer !== targetPlayer) return;
+                const tempImg = new Image();
+                tempImg.onload = async () => {
+                    if (currentPlayer !== targetPlayer) return;
+                    preloadedPhotoUrl = url;
+                    photoEl.src = url;
+                    await applyFaceFocusedFraming(tempImg);
+                    photoEl.style.objectPosition = tempImg.style.objectPosition;
+                    photoEl.style.transformOrigin = tempImg.style.transformOrigin;
+                    photoEl.style.transform = tempImg.style.transform;
+                    if (isRoundRevealed) {
+                        triggerPhotoReveal();
+                    }
+                };
+                tempImg.src = url;
+            });
+
+            // Tüm ipucu değerlerini gerçek EA FC reytingleriyle doldur ve gizle
+            statKeys.forEach(s => {
+                const el = document.getElementById(`s-${s}`);
+                if (el) {
+                    if (s !== "Nation") el.innerText = currentPlayer[s];
+                    el.classList.add('hidden-stat');
+                }
+            });
+
+            const nameEl = document.getElementById('s-Name');
+            nameEl.innerText = "??????";
+            nameEl.style.fontSize = "";
+            nameEl.classList.add('hidden-stat');
+            closeList();
+        }
+
+        function handleHint() {
+            if (availableClues.length > 0) {
+                currentRoundScore = Math.max(50, currentRoundScore - 50);
+                updateScoreUI();
+                const clue = availableClues.pop();
+                const el = document.getElementById(`s-${clue}`);
+                if (el) el.classList.remove('hidden-stat');
+
+                if (availableClues.length === 0) {
+                    revealAll(false);
+                } else {
+                    playSound('stat', revealStepCounter++);
+                }
+            } else {
+                revealAll(false);
+            }
+        }
+
+        function checkGuess() {
+            const input = document.getElementById('guessInput');
+            const guess = input.value.trim();
+            if (!guess) return;
+
+            const normGuess = normalizeStr(guess);
+            const normTarget = normalizeStr(currentPlayer.name);
+
+            if (normGuess === normTarget) {
+                revealAll(true);
+            } else {
+                input.value = '';
+                if (availableClues.length > 1) {
+                    playSound('wrong');
+                    currentRoundScore = Math.max(50, currentRoundScore - 100);
+                    updateScoreUI();
+                    const clue = availableClues.pop();
+                    const el = document.getElementById(`s-${clue}`);
+                    if (el) {
+                        setTimeout(() => {
+                            playSound('stat', revealStepCounter++);
+                            el.classList.remove('hidden-stat');
+                        }, 160);
+                    }
+                    const msg = document.getElementById('msgArea');
+                    msg.innerText = langData[currentLang].t.wrong;
+                    msg.style.color = '#f87171';
+                } else {
+                    revealAll(false);
+                }
+            }
+            closeList();
+        }
+
+        function revealAll(isWin) {
+            isRoundRevealed = true;
+
+            const hiddenStats = statKeys
+                .map(s => document.getElementById(`s-${s}`))
+                .filter(el => el && el.classList.contains('hidden-stat'));
+
+            hiddenStats.forEach((el, idx) => {
+                setTimeout(() => {
+                    el.classList.remove('hidden-stat');
+                }, idx * 95);
+            });
+
+            const nameEl = document.getElementById('s-Name');
+            nameEl.innerText = currentPlayer.name;
+            if (currentPlayer.name.length > 19) {
+                nameEl.style.fontSize = 'clamp(0.84rem, 3.3vw, 1.08rem)';
+            } else if (currentPlayer.name.length > 15) {
+                nameEl.style.fontSize = 'clamp(0.94rem, 3.7vw, 1.22rem)';
+            } else {
+                nameEl.style.fontSize = '';
+            }
+            setTimeout(() => {
+                nameEl.classList.remove('hidden-stat');
+            }, Math.min(hiddenStats.length * 70, 350));
+
+            setTimeout(() => {
+                triggerPhotoReveal();
+            }, 220);
+
+            const msg = document.getElementById('msgArea');
+            if (isWin) {
+                playSound('win');
+                totalScore += currentRoundScore;
+                try { localStorage.setItem('MysteryBallerScore', totalScore); } catch (e) {}
+                document.getElementById('totalScore').innerText = totalScore;
+                msg.innerText = `${langData[currentLang].t.win}${currentRoundScore}`;
+                msg.style.color = '#facc15';
+            } else {
+                playSound('lose');
+                currentRoundScore = 0;
+                updateScoreUI();
+                msg.innerText = langData[currentLang].t.lose;
+                msg.style.color = '#f87171';
+            }
+
+            const input = document.getElementById('guessInput');
+            input.disabled = true;
+            input.value = currentPlayer.name;
+            document.getElementById('ui-guessBtn').disabled = true;
+            document.getElementById('ui-hintBtn').style.display = 'none';
+            document.getElementById('ui-nextBtn').style.display = 'block';
+        }
+
+        // TAKIMA ÖZEL AKSAN DUYARSIZ OTOMATİK TAMAMLAMA
+        const inp = document.getElementById("guessInput");
+        inp.addEventListener("input", function () {
+            const val = normalizeStr(this.value);
+            closeList();
+            if (!val) return;
+
+            const list = document.getElementById("autocompleteList");
+            const matches = teamPool.filter(p => normalizeStr(p.name).includes(val)).slice(0, 6);
+            if (matches.length === 0) return;
+
+            list.style.display = "block";
+            matches.forEach(player => {
+                const item = document.createElement("DIV");
+                item.innerText = player.name;
+                item.addEventListener("pointerdown", function (e) {
+                    e.preventDefault();
+                    inp.value = player.name;
+                    closeList();
+                });
+                list.appendChild(item);
+            });
+        });
+
+        function closeList() {
+            const list = document.getElementById("autocompleteList");
+            list.style.display = "none";
+            list.innerHTML = "";
+        }
+
+        document.addEventListener("pointerdown", (e) => {
+            if (e.target.id !== "guessInput" && !e.target.closest('.autocomplete-list')) {
+                closeList();
+            }
+        });
+
+        inp.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                inp.blur();
+                checkGuess();
+            }
+        });
+
+        // Sayfa açılır açılmaz tüm takım ve lig logolarını arka planda ön-yükle
+        ensureAllLogosPreloaded();
+        changeLanguage();
+    </script>
+</body>
+</html>

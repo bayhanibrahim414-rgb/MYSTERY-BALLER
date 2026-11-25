@@ -3,7 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mystery Baller">
     <title>Mystery Baller FC</title>
+    <link id="appleTouchIcon" rel="apple-touch-icon" sizes="180x180" href="">
+    <link id="appFavicon" rel="icon" type="image/png" sizes="192x192" href="">
+    <link id="appManifest" rel="manifest" href="">
+    <script>
+        (function generateHomeScreenIcons() {
+            function traceFcCardPath(ctx) {
+                ctx.beginPath();
+                ctx.moveTo(54, 34);
+                ctx.quadraticCurveTo(150, 6, 246, 34);
+                ctx.quadraticCurveTo(260, 54, 286, 58);
+                ctx.lineTo(286, 376);
+                ctx.quadraticCurveTo(286, 404, 218, 412);
+                ctx.quadraticCurveTo(174, 418, 150, 436);
+                ctx.quadraticCurveTo(126, 418, 82, 412);
+                ctx.quadraticCurveTo(14, 404, 14, 376);
+                ctx.lineTo(14, 58);
+                ctx.quadraticCurveTo(40, 54, 54, 34);
+                ctx.closePath();
+            }
+
+            function drawQuestionMark(ctx, offsetX, offsetY, fillStyle) {
+                ctx.save();
+                ctx.translate(offsetX, offsetY);
+                ctx.fillStyle = fillStyle;
+                ctx.beginPath();
+                ctx.moveTo(98, 166);
+                ctx.bezierCurveTo(98, 114, 126, 94, 154, 94);
+                ctx.bezierCurveTo(190, 94, 212, 118, 212, 154);
+                ctx.bezierCurveTo(212, 186, 188, 202, 172, 220);
+                ctx.bezierCurveTo(164, 229, 163, 239, 163, 256);
+                ctx.lineTo(135, 256);
+                ctx.bezierCurveTo(135, 232, 138, 219, 151, 203);
+                ctx.bezierCurveTo(166, 185, 177, 174, 177, 155);
+                ctx.bezierCurveTo(177, 136, 166, 125, 151, 125);
+                ctx.bezierCurveTo(136, 125, 128, 137, 128, 159);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(150, 298, 21, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+
+            function renderAppIconPng(size) {
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+
+                // Ana ekran ikonu arka planı (koyu lacivert + altın parlama)
+                const bgGrad = ctx.createRadialGradient(size * 0.5, size * 0.45, size * 0.08, size * 0.5, size * 0.5, size * 0.72);
+                bgGrad.addColorStop(0, '#1e2e4f');
+                bgGrad.addColorStop(0.65, '#0e1526');
+                bgGrad.addColorStop(1, '#080b14');
+                ctx.fillStyle = bgGrad;
+                ctx.fillRect(0, 0, size, size);
+
+                const glow = ctx.createRadialGradient(size * 0.5, size * 0.5, size * 0.05, size * 0.5, size * 0.5, size * 0.46);
+                glow.addColorStop(0, 'rgba(250, 204, 21, 0.34)');
+                glow.addColorStop(1, 'rgba(250, 204, 21, 0)');
+                ctx.fillStyle = glow;
+                ctx.fillRect(0, 0, size, size);
+
+                // Altın EA FC kart simgesi
+                const scale = (size * 0.78) / 435;
+                const offsetX = (size - 300 * scale) / 2;
+                const offsetY = (size - 435 * scale) / 2;
+
+                ctx.save();
+                ctx.translate(offsetX, offsetY);
+                ctx.scale(scale, scale);
+
+                ctx.save();
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.65)';
+                ctx.shadowBlur = 24;
+                ctx.shadowOffsetY = 10;
+                traceFcCardPath(ctx);
+                const goldGrad = ctx.createLinearGradient(0, 0, 300, 435);
+                goldGrad.addColorStop(0, '#fff2ac');
+                goldGrad.addColorStop(0.35, '#ecc85b');
+                goldGrad.addColorStop(0.7, '#cfa032');
+                goldGrad.addColorStop(1, '#f3d877');
+                ctx.fillStyle = goldGrad;
+                ctx.fill();
+                ctx.restore();
+
+                // Kart içi ışık kırılması ve alt ton
+                ctx.save();
+                traceFcCardPath(ctx);
+                ctx.clip();
+
+                ctx.fillStyle = 'rgba(255, 251, 224, 0.34)';
+                ctx.beginPath();
+                ctx.moveTo(10, 232);
+                ctx.lineTo(290, 52);
+                ctx.lineTo(290, 192);
+                ctx.lineTo(10, 330);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = 'rgba(180, 128, 24, 0.16)';
+                ctx.fillRect(0, 332, 300, 105);
+
+                // Kartın içindeki kabartmalı soru işareti (?)
+                drawQuestionMark(ctx, 3, 5, 'rgba(255, 251, 224, 0.85)');
+                drawQuestionMark(ctx, 0, 0, '#2e1b04');
+                ctx.restore();
+
+                // Kart dış ve iç çerçevesi
+                traceFcCardPath(ctx);
+                ctx.lineWidth = 8;
+                ctx.strokeStyle = '#614309';
+                ctx.stroke();
+
+                traceFcCardPath(ctx);
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = 'rgba(255, 249, 207, 0.88)';
+                ctx.stroke();
+
+                ctx.restore();
+                return canvas.toDataURL('image/png');
+            }
+
+            try {
+                const icon180 = renderAppIconPng(180);
+                const icon512 = renderAppIconPng(512);
+                document.getElementById('appleTouchIcon').href = icon180;
+                document.getElementById('appFavicon').href = icon180;
+
+                const manifest = {
+                    name: 'Mystery Baller FC',
+                    short_name: 'Mystery Baller',
+                    start_url: '.',
+                    display: 'standalone',
+                    background_color: '#090d16',
+                    theme_color: '#090d16',
+                    icons: [
+                        { src: icon180, sizes: '180x180', type: 'image/png' },
+                        { src: icon512, sizes: '512x512', type: 'image/png' }
+                    ]
+                };
+                document.getElementById('appManifest').href =
+                    'data:application/manifest+json;charset=utf-8,' + encodeURIComponent(JSON.stringify(manifest));
+            } catch (e) {}
+        })();
+    </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,700;0,800;0,900;1,900&display=swap');
 
@@ -58,17 +208,16 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        /* GİRİŞ EKRANI: SARI KARE + ARKASINA DOLANAN TOP + 3B DÖNEN SORU İŞARETLİ KART */
+        /* GİRİŞ EKRANI: SARI KARE + ARKASINA DOLANAN TOP + KARŞIDAN ÇIKIP OLDUĞU YERDE DÖNEN BOŞ KART */
         .logo-emblem {
             position: relative;
             width: 84px;
             height: 84px;
-            margin-bottom: 24px;
+            margin-bottom: 22px;
             overflow: visible;
             display: flex;
             align-items: center;
             justify-content: center;
-            perspective: 520px;
         }
 
         .emblem-plate {
@@ -80,7 +229,7 @@
                 0 12px 30px rgba(234, 179, 8, 0.35),
                 inset 0 2px 4px rgba(255, 255, 255, 0.6);
             z-index: 2;
-            animation: emblemRecoil 6.8s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
+            animation: emblemRecoil 8.6s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
         }
 
         .logo-ball {
@@ -93,19 +242,18 @@
             line-height: 1;
             filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.38));
             will-change: transform;
-            animation: ballCycleLoop 6.8s cubic-bezier(0.32, 0.72, 0.35, 1) infinite;
+            animation: ballCycleLoop 8.6s cubic-bezier(0.32, 0.72, 0.35, 1) infinite;
         }
 
         .logo-mini-card {
             position: absolute;
-            width: 48px;
-            height: 68px;
+            width: 44px;
+            height: 64px;
             z-index: 1;
             pointer-events: none;
-            transform-style: preserve-3d;
             filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.65));
             will-change: transform;
-            animation: questionCardSpinLoop 6.8s cubic-bezier(0.32, 0.08, 0.24, 1) infinite;
+            animation: emptyCardSpinLoop 8.6s cubic-bezier(0.35, 0.05, 0.25, 1) infinite;
         }
         .logo-mini-card svg {
             width: 100%;
@@ -119,24 +267,23 @@
             14% { transform: translate(30px, -25px) rotate(190deg) scale(0.9, 1.1); z-index: 4; }
             23% { transform: translate(-25px, 22px) rotate(345deg) scale(1.03, 0.97); z-index: 4; }
             25% { transform: translate(-27px, 24px) rotate(370deg) scale(1.1, 0.9); z-index: 4; }
-            32% { transform: translate(0px, 0px) rotate(720deg) scale(1, 1); z-index: 4; }
-            37% { transform: translate(-40px, -28px) rotate(620deg) scale(0.95); z-index: 4; }
-            38% { transform: translate(-40px, -28px) rotate(615deg) scale(0.95); z-index: 1; }
-            43%, 86% { transform: translate(0px, 0px) rotate(540deg) scale(0.85); z-index: 1; }
-            91% { transform: translate(-40px, -28px) rotate(620deg) scale(0.95); z-index: 1; }
-            92% { transform: translate(-40px, -28px) rotate(625deg) scale(0.95); z-index: 4; }
+            33% { transform: translate(0px, 0px) rotate(720deg) scale(1, 1); z-index: 4; }
+            38% { transform: translate(-42px, -30px) rotate(620deg) scale(0.95); z-index: 4; }
+            39% { transform: translate(-42px, -30px) rotate(615deg) scale(0.95); z-index: 1; }
+            44%, 85% { transform: translate(0px, 0px) rotate(540deg) scale(0.85); z-index: 1; }
+            91% { transform: translate(-42px, -30px) rotate(620deg) scale(0.95); z-index: 1; }
+            92% { transform: translate(-42px, -30px) rotate(625deg) scale(0.95); z-index: 4; }
             97%, 100% { transform: translate(0px, 0px) rotate(720deg) scale(1, 1); z-index: 4; }
         }
 
-        @keyframes questionCardSpinLoop {
-            0%, 38% { transform: translate(0px, 0px) rotate(0deg) rotateY(0deg) scale(0.82); z-index: 1; }
-            45% { transform: translate(36px, 16px) rotate(12deg) rotateY(0deg) scale(0.98); z-index: 1; }
-            46% { transform: translate(36px, 16px) rotate(14deg) rotateY(0deg) scale(1.02); z-index: 4; }
-            55% { transform: translate(36px, 16px) rotate(14deg) rotateY(0deg) scale(1.04); z-index: 4; }
-            68% { transform: translate(36px, 16px) rotate(14deg) rotateY(360deg) scale(1.04); z-index: 4; }
-            77% { transform: translate(36px, 16px) rotate(14deg) rotateY(360deg) scale(1.02); z-index: 4; }
-            78% { transform: translate(36px, 16px) rotate(12deg) rotateY(360deg) scale(0.98); z-index: 1; }
-            85%, 100% { transform: translate(0px, 0px) rotate(0deg) rotateY(360deg) scale(0.82); z-index: 1; }
+        @keyframes emptyCardSpinLoop {
+            0%, 44% { transform: translate(0px, 0px) rotate(0deg) scale(0.82); z-index: 1; }
+            51% { transform: translate(40px, 28px) rotate(18deg) scale(0.96); z-index: 1; }
+            52% { transform: translate(40px, 28px) rotate(22deg) scale(0.98); z-index: 4; }
+            64% { transform: translate(40px, 28px) rotate(190deg) scale(1.02); z-index: 4; }
+            75% { transform: translate(40px, 28px) rotate(360deg) scale(0.98); z-index: 4; }
+            76% { transform: translate(40px, 28px) rotate(360deg) scale(0.96); z-index: 1; }
+            84%, 100% { transform: translate(0px, 0px) rotate(360deg) scale(0.82); z-index: 1; }
         }
 
         @keyframes emblemRecoil {
@@ -809,10 +956,14 @@
                 <svg viewBox="0 0 300 435" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="miniGoldBase" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#fff1a8"/>
-                            <stop offset="35%" stop-color="#ecc85b"/>
-                            <stop offset="70%" stop-color="#cfa032"/>
-                            <stop offset="100%" stop-color="#f2d672"/>
+                            <stop offset="0%" stop-color="#f7e594"/>
+                            <stop offset="32%" stop-color="#e5c258"/>
+                            <stop offset="68%" stop-color="#cfa336"/>
+                            <stop offset="100%" stop-color="#ebd06e"/>
+                        </linearGradient>
+                        <linearGradient id="miniGoldLower" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#e7c663"/>
+                            <stop offset="100%" stop-color="#cfa135"/>
                         </linearGradient>
                         <clipPath id="miniCardClip">
                             <path d="M 54 34 Q 150 6 246 34 Q 260 54 286 58 L 286 376 Q 286 404 218 412 Q 174 418 150 436 Q 126 418 82 412 Q 14 404 14 376 L 14 58 Q 40 54 54 34 Z"/>
@@ -820,22 +971,14 @@
                     </defs>
                     <g clip-path="url(#miniCardClip)">
                         <rect x="0" y="0" width="300" height="435" fill="url(#miniGoldBase)"/>
-                        <polygon points="10,235 290,55 290,190 10,335" fill="#fffbe0" fill-opacity="0.32"/>
-
-                        <!-- Kart ortasında net kabartmalı soru işareti (?) -->
-                        <g transform="translate(2, 4)" fill="#fffbe0" fill-opacity="0.88">
-                            <path d="M 106 168 C 106 126, 130 108, 155 108 C 185 108, 204 128, 204 158 C 204 185, 184 198, 170 213 C 163 221, 162 229, 162 242 L 138 242 C 138 223, 140 212, 151 199 C 164 184, 174 175, 174 159 C 174 143, 165 134, 152 134 C 139 134, 132 144, 132 162 Z"/>
-                            <circle cx="150" cy="278" r="18"/>
-                        </g>
-                        <g fill="#2e1b04">
-                            <path d="M 106 168 C 106 126, 130 108, 155 108 C 185 108, 204 128, 204 158 C 204 185, 184 198, 170 213 C 163 221, 162 229, 162 242 L 138 242 C 138 223, 140 212, 151 199 C 164 184, 174 175, 174 159 C 174 143, 165 134, 152 134 C 139 134, 132 144, 132 162 Z"/>
-                            <circle cx="150" cy="278" r="18"/>
-                        </g>
+                        <polygon points="10,222 290,52 290,185 10,272" fill="#fff9cf" fill-opacity="0.35"/>
+                        <line x1="12" y1="222" x2="288" y2="52" stroke="#fffbe6" stroke-width="4" stroke-opacity="0.9"/>
+                        <line x1="12" y1="248" x2="288" y2="148" stroke="#fffce6" stroke-width="3.5" stroke-opacity="0.85"/>
+                        <rect x="0" y="272" width="300" height="165" fill="url(#miniGoldLower)"/>
+                        <line x1="12" y1="272" x2="288" y2="272" stroke="#996d18" stroke-width="3"/>
                     </g>
                     <path d="M 54 34 Q 150 6 246 34 Q 260 54 286 58 L 286 376 Q 286 404 218 412 Q 174 418 150 436 Q 126 418 82 412 Q 14 404 14 376 L 14 58 Q 40 54 54 34 Z"
-                          fill="none" stroke="#614309" stroke-width="7"/>
-                    <path d="M 56 36 Q 150 9 244 36 Q 258 56 283 60 L 283 374 Q 283 401 216 409 Q 174 415 150 433 Q 126 415 84 409 Q 17 401 17 374 L 17 60 Q 42 56 56 36 Z"
-                          fill="none" stroke="#fff9cf" stroke-width="3" stroke-opacity="0.85"/>
+                          fill="none" stroke="#614309" stroke-width="6"/>
                 </svg>
             </div>
         </div>

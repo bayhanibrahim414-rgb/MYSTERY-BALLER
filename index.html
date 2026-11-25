@@ -58,16 +58,17 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        /* GİRİŞ EKRANI: SARI KARE + ARKASINA DOLANAN TOP + KARŞIDAN ÇIKIP OLDUĞU YERDE DÖNEN SORU İŞARETLİ KART */
+        /* GİRİŞ EKRANI: SARI KARE + ARKASINA DOLANAN TOP + 3B DÖNEN SORU İŞARETLİ KART */
         .logo-emblem {
             position: relative;
             width: 84px;
             height: 84px;
-            margin-bottom: 22px;
+            margin-bottom: 24px;
             overflow: visible;
             display: flex;
             align-items: center;
             justify-content: center;
+            perspective: 520px;
         }
 
         .emblem-plate {
@@ -79,7 +80,7 @@
                 0 12px 30px rgba(234, 179, 8, 0.35),
                 inset 0 2px 4px rgba(255, 255, 255, 0.6);
             z-index: 2;
-            animation: emblemRecoil 8.6s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
+            animation: emblemRecoil 6.8s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
         }
 
         .logo-ball {
@@ -92,18 +93,19 @@
             line-height: 1;
             filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.38));
             will-change: transform;
-            animation: ballCycleLoop 8.6s cubic-bezier(0.32, 0.72, 0.35, 1) infinite;
+            animation: ballCycleLoop 6.8s cubic-bezier(0.32, 0.72, 0.35, 1) infinite;
         }
 
         .logo-mini-card {
             position: absolute;
-            width: 44px;
-            height: 64px;
+            width: 48px;
+            height: 68px;
             z-index: 1;
             pointer-events: none;
+            transform-style: preserve-3d;
             filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.65));
             will-change: transform;
-            animation: emptyCardSpinLoop 8.6s cubic-bezier(0.35, 0.05, 0.25, 1) infinite;
+            animation: questionCardSpinLoop 6.8s cubic-bezier(0.32, 0.08, 0.24, 1) infinite;
         }
         .logo-mini-card svg {
             width: 100%;
@@ -117,23 +119,24 @@
             14% { transform: translate(30px, -25px) rotate(190deg) scale(0.9, 1.1); z-index: 4; }
             23% { transform: translate(-25px, 22px) rotate(345deg) scale(1.03, 0.97); z-index: 4; }
             25% { transform: translate(-27px, 24px) rotate(370deg) scale(1.1, 0.9); z-index: 4; }
-            33% { transform: translate(0px, 0px) rotate(720deg) scale(1, 1); z-index: 4; }
-            38% { transform: translate(-42px, -30px) rotate(620deg) scale(0.95); z-index: 4; }
-            39% { transform: translate(-42px, -30px) rotate(615deg) scale(0.95); z-index: 1; }
-            44%, 85% { transform: translate(0px, 0px) rotate(540deg) scale(0.85); z-index: 1; }
-            91% { transform: translate(-42px, -30px) rotate(620deg) scale(0.95); z-index: 1; }
-            92% { transform: translate(-42px, -30px) rotate(625deg) scale(0.95); z-index: 4; }
+            32% { transform: translate(0px, 0px) rotate(720deg) scale(1, 1); z-index: 4; }
+            37% { transform: translate(-40px, -28px) rotate(620deg) scale(0.95); z-index: 4; }
+            38% { transform: translate(-40px, -28px) rotate(615deg) scale(0.95); z-index: 1; }
+            43%, 86% { transform: translate(0px, 0px) rotate(540deg) scale(0.85); z-index: 1; }
+            91% { transform: translate(-40px, -28px) rotate(620deg) scale(0.95); z-index: 1; }
+            92% { transform: translate(-40px, -28px) rotate(625deg) scale(0.95); z-index: 4; }
             97%, 100% { transform: translate(0px, 0px) rotate(720deg) scale(1, 1); z-index: 4; }
         }
 
-        @keyframes emptyCardSpinLoop {
-            0%, 44% { transform: translate(0px, 0px) rotate(0deg) scale(0.82); z-index: 1; }
-            51% { transform: translate(40px, 28px) rotate(18deg) scale(0.96); z-index: 1; }
-            52% { transform: translate(40px, 28px) rotate(22deg) scale(0.98); z-index: 4; }
-            64% { transform: translate(40px, 28px) rotate(190deg) scale(1.02); z-index: 4; }
-            75% { transform: translate(40px, 28px) rotate(360deg) scale(0.98); z-index: 4; }
-            76% { transform: translate(40px, 28px) rotate(360deg) scale(0.96); z-index: 1; }
-            84%, 100% { transform: translate(0px, 0px) rotate(360deg) scale(0.82); z-index: 1; }
+        @keyframes questionCardSpinLoop {
+            0%, 38% { transform: translate(0px, 0px) rotate(0deg) rotateY(0deg) scale(0.82); z-index: 1; }
+            45% { transform: translate(36px, 16px) rotate(12deg) rotateY(0deg) scale(0.98); z-index: 1; }
+            46% { transform: translate(36px, 16px) rotate(14deg) rotateY(0deg) scale(1.02); z-index: 4; }
+            55% { transform: translate(36px, 16px) rotate(14deg) rotateY(0deg) scale(1.04); z-index: 4; }
+            68% { transform: translate(36px, 16px) rotate(14deg) rotateY(360deg) scale(1.04); z-index: 4; }
+            77% { transform: translate(36px, 16px) rotate(14deg) rotateY(360deg) scale(1.02); z-index: 4; }
+            78% { transform: translate(36px, 16px) rotate(12deg) rotateY(360deg) scale(0.98); z-index: 1; }
+            85%, 100% { transform: translate(0px, 0px) rotate(0deg) rotateY(360deg) scale(0.82); z-index: 1; }
         }
 
         @keyframes emblemRecoil {
@@ -535,7 +538,6 @@
             border-radius: 24px 24px 6px 6px;
             overflow: hidden;
             opacity: 0;
-            /* Başlangıçta koyu gölgeli ve bulanık */
             filter: blur(14px) brightness(0.18) contrast(1.2) drop-shadow(0 6px 10px rgba(0, 0, 0, 0.4));
             transition:
                 opacity 1.15s ease-in-out,
@@ -807,14 +809,10 @@
                 <svg viewBox="0 0 300 435" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="miniGoldBase" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#f7e594"/>
-                            <stop offset="32%" stop-color="#e5c258"/>
-                            <stop offset="68%" stop-color="#cfa336"/>
-                            <stop offset="100%" stop-color="#ebd06e"/>
-                        </linearGradient>
-                        <linearGradient id="miniGoldLower" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" stop-color="#e7c663"/>
-                            <stop offset="100%" stop-color="#cfa135"/>
+                            <stop offset="0%" stop-color="#fff1a8"/>
+                            <stop offset="35%" stop-color="#ecc85b"/>
+                            <stop offset="70%" stop-color="#cfa032"/>
+                            <stop offset="100%" stop-color="#f2d672"/>
                         </linearGradient>
                         <clipPath id="miniCardClip">
                             <path d="M 54 34 Q 150 6 246 34 Q 260 54 286 58 L 286 376 Q 286 404 218 412 Q 174 418 150 436 Q 126 418 82 412 Q 14 404 14 376 L 14 58 Q 40 54 54 34 Z"/>
@@ -822,24 +820,22 @@
                     </defs>
                     <g clip-path="url(#miniCardClip)">
                         <rect x="0" y="0" width="300" height="435" fill="url(#miniGoldBase)"/>
-                        <polygon points="10,222 290,52 290,185 10,272" fill="#fff9cf" fill-opacity="0.35"/>
-                        <line x1="12" y1="222" x2="288" y2="52" stroke="#fffbe6" stroke-width="4" stroke-opacity="0.9"/>
-                        <line x1="12" y1="248" x2="288" y2="148" stroke="#fffce6" stroke-width="3.5" stroke-opacity="0.85"/>
-                        <rect x="0" y="272" width="300" height="165" fill="url(#miniGoldLower)"/>
-                        <line x1="12" y1="272" x2="288" y2="272" stroke="#996d18" stroke-width="3"/>
+                        <polygon points="10,235 290,55 290,190 10,335" fill="#fffbe0" fill-opacity="0.32"/>
 
-                        <!-- Kart içindeki kabartmalı soru işareti (?) -->
-                        <g transform="translate(0, 4)" fill="#fff8c9" fill-opacity="0.78">
-                            <path d="M 96 172 C 96 126, 122 106, 152 106 C 186 106, 208 128, 208 162 C 208 192, 186 206, 172 222 C 165 230, 164 238, 164 252 L 136 252 C 136 232, 138 220, 150 206 C 164 190, 174 180, 174 163 C 174 146, 164 136, 150 136 C 136 136, 128 146, 128 166 L 96 172 Z"/>
-                            <circle cx="150" cy="298" r="20"/>
+                        <!-- Kart ortasında net kabartmalı soru işareti (?) -->
+                        <g transform="translate(2, 4)" fill="#fffbe0" fill-opacity="0.88">
+                            <path d="M 106 168 C 106 126, 130 108, 155 108 C 185 108, 204 128, 204 158 C 204 185, 184 198, 170 213 C 163 221, 162 229, 162 242 L 138 242 C 138 223, 140 212, 151 199 C 164 184, 174 175, 174 159 C 174 143, 165 134, 152 134 C 139 134, 132 144, 132 162 Z"/>
+                            <circle cx="150" cy="278" r="18"/>
                         </g>
                         <g fill="#2e1b04">
-                            <path d="M 96 172 C 96 126, 122 106, 152 106 C 186 106, 208 128, 208 162 C 208 192, 186 206, 172 222 C 165 230, 164 238, 164 252 L 136 252 C 136 232, 138 220, 150 206 C 164 190, 174 180, 174 163 C 174 146, 164 136, 150 136 C 136 136, 128 146, 128 166 L 96 172 Z"/>
-                            <circle cx="150" cy="298" r="20"/>
+                            <path d="M 106 168 C 106 126, 130 108, 155 108 C 185 108, 204 128, 204 158 C 204 185, 184 198, 170 213 C 163 221, 162 229, 162 242 L 138 242 C 138 223, 140 212, 151 199 C 164 184, 174 175, 174 159 C 174 143, 165 134, 152 134 C 139 134, 132 144, 132 162 Z"/>
+                            <circle cx="150" cy="278" r="18"/>
                         </g>
                     </g>
                     <path d="M 54 34 Q 150 6 246 34 Q 260 54 286 58 L 286 376 Q 286 404 218 412 Q 174 418 150 436 Q 126 418 82 412 Q 14 404 14 376 L 14 58 Q 40 54 54 34 Z"
-                          fill="none" stroke="#614309" stroke-width="6"/>
+                          fill="none" stroke="#614309" stroke-width="7"/>
+                    <path d="M 56 36 Q 150 9 244 36 Q 258 56 283 60 L 283 374 Q 283 401 216 409 Q 174 415 150 433 Q 126 415 84 409 Q 17 401 17 374 L 17 60 Q 42 56 56 36 Z"
+                          fill="none" stroke="#fff9cf" stroke-width="3" stroke-opacity="0.85"/>
                 </svg>
             </div>
         </div>
@@ -1354,7 +1350,6 @@
             <path d="M 218 174 C 205 162, 186 156, 164 149 C 184 158, 203 165, 218 174 Z" fill="#3f3f3f"/>
         </svg>`);
 
-        // API'den resim bulunamayan çok nadir oyuncular için takım renkli forma + baş harf portresi
         function createPlayerFallbackPortrait(player) {
             const parts = player.name.trim().split(/\s+/);
             const initials = parts.length > 1
@@ -2676,7 +2671,6 @@ Metehan Mimaroğlu`;
             const searchName = identity.fullName || player.name;
             const asciiName = normalizeStr(searchName);
 
-            // 1. WIKIPEDIA INFOBOX ANA PORTRE (EN + TR)
             const fetchWikiMainPortrait = async (lang, exactTitle, searchQuery) => {
                 try {
                     let targetTitle = exactTitle || null;
@@ -2706,7 +2700,6 @@ Metehan Mimaroğlu`;
                 return null;
             };
 
-            // 2. THESPORTSDB (Şeffaf cutout + portre)
             const fetchSportsDbPortrait = async () => {
                 const found = [];
                 try {
@@ -2742,13 +2735,11 @@ Metehan Mimaroğlu`;
                 fetchSportsDbPortrait()
             ]);
 
-            // Önce şeffaf kesimler, ardından Wikipedia resmi portreleri, en sonda özel yedek portre
             sportsDbList.filter(x => x.isCutout).forEach(x => addUnique(x.url, true));
             if (enWikiUrl) addUnique(enWikiUrl, false);
             if (trWikiUrl) addUnique(trWikiUrl, false);
             sportsDbList.filter(x => !x.isCutout).forEach(x => addUnique(x.url, false));
 
-            // Her koşulda son çare olarak takım renkli görsel portre yedeklenir (hiç boş kalmaz)
             candidates.push({ url: createPlayerFallbackPortrait(player), isCutout: true });
 
             playerPhotoCache[cacheKey] = candidates;
@@ -2873,7 +2864,6 @@ Metehan Mimaroğlu`;
                         return;
                     }
                     applyFaceFocusedFraming(photoEl, !!item.isCutout);
-                    // Önce hafif gölgeli görünür, hemen ardından netleşir
                     requestAnimationFrame(() => {
                         frameEl.classList.add('revealed');
                         silEl.classList.add('fade-out');
@@ -3007,7 +2997,6 @@ Metehan Mimaroğlu`;
             fetchPlayerFaceCandidates(targetPlayer).then(list => {
                 if (currentPlayer !== targetPlayer) return;
                 preloadedPhotoCandidates = list;
-                // İlk aday resmi tarayıcı önbelleğine erken al
                 if (list[0]?.url && !list[0].url.startsWith('data:')) {
                     const preImg = new Image();
                     preImg.src = list[0].url;
@@ -3107,7 +3096,6 @@ Metehan Mimaroğlu`;
 
             setTimeout(() => { nameEl.classList.remove('hidden-stat'); }, Math.min(hiddenStats.length * 65, 320));
 
-            // Gölgeli silüetten net oyuncu fotoğrafına geçiş
             setTimeout(() => { triggerPhotoReveal(); }, 180);
 
             const msg = document.getElementById('msgArea');

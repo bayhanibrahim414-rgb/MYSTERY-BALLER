@@ -4,12 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Mystery Baller">
+    <meta name="application-name" content="Mystery Baller">
+    <meta name="theme-color" content="#090d16">
     <title>Mystery Baller FC</title>
-    <link id="appleTouchIcon" rel="apple-touch-icon" sizes="180x180" href="">
-    <link id="appFavicon" rel="icon" type="image/png" sizes="192x192" href="">
+
+    <!-- SAFARİ ANA EKRANA EKLE İÇİN DOĞRUDAN GÖMÜLÜ ÖZEL KART LOGOSU (M HARFİNİ ENGELLER) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3CradialGradient id='bg' cx='50%25' cy='45%25' r='68%25'%3E%3Cstop offset='0%25' stop-color='%231e2e4f'/%3E%3Cstop offset='65%25' stop-color='%230e1526'/%3E%3Cstop offset='100%25' stop-color='%23080b14'/%3E%3C/radialGradient%3E%3CradialGradient id='glow' cx='50%25' cy='50%25' r='48%25'%3E%3Cstop offset='0%25' stop-color='%23facc15' stop-opacity='0.38'/%3E%3Cstop offset='100%25' stop-color='%23facc15' stop-opacity='0'/%3E%3C/radialGradient%3E%3ClinearGradient id='gold' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fff2ac'/%3E%3Cstop offset='35%25' stop-color='%23ecc85b'/%3E%3Cstop offset='70%25' stop-color='%23cfa032'/%3E%3Cstop offset='100%25' stop-color='%23f3d877'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' fill='url(%23bg)'/%3E%3Crect width='512' height='512' fill='url(%23glow)'/%3E%3Cg transform='translate(116,56) scale(0.9333)'%3E%3Cpath d='M 54 34 Q 150 6 246 34 Q 260 54 286 58 L 286 376 Q 286 404 218 412 Q 174 418 150 436 Q 126 418 82 412 Q 14 404 14 376 L 14 58 Q 40 54 54 34 Z' fill='url(%23gold)' stroke='%23614309' stroke-width='9'/%3E%3Cpath d='M 56 37 Q 150 10 244 37 Q 258 56 282 60 L 282 374 Q 282 400 216 408 Q 173 414 150 431 Q 127 414 84 408 Q 18 400 18 374 L 18 60 Q 42 56 56 37 Z' fill='none' stroke='%23fff9cf' stroke-width='3.5' stroke-opacity='0.88'/%3E%3Cpolygon points='18,225 282,58 282,190 18,325' fill='%23fffbe0' fill-opacity='0.34'/%3E%3Cg transform='translate(3,5)' fill='%23fffbe0' fill-opacity='0.85'%3E%3Cpath d='M 98 166 C 98 114 126 94 154 94 C 190 94 212 118 212 154 C 212 186 188 202 172 220 C 164 229 163 239 163 256 L 135 256 C 135 232 138 219 151 203 C 166 185 177 174 177 155 C 177 136 166 125 151 125 C 136 125 128 137 128 159 Z'/%3E%3Ccircle cx='150' cy='298' r='21'/%3E%3C/g%3E%3Cg fill='%232e1b04'%3E%3Cpath d='M 98 166 C 98 114 126 94 154 94 C 190 94 212 118 212 154 C 212 186 188 202 172 220 C 164 229 163 239 163 256 L 135 256 C 135 232 138 219 151 203 C 166 185 177 174 177 155 C 177 136 166 125 151 125 C 136 125 128 137 128 159 Z'/%3E%3Ccircle cx='150' cy='298' r='21'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3CradialGradient id='bg' cx='50%25' cy='45%25' r='68%25'%3E%3Cstop offset='0%25' stop-color='%231e2e4f'/%3E%3Cstop offset='65%25' stop-color='%230e1526'/%3E%3Cstop offset='100%25' stop-color='%23080b14'/%3E%3C/radialGradient%3E%3CradialGradient id='glow' cx='50%25' cy='50%25' r='48%25'%3E%3Cstop offset='0%25' stop-color='%23facc15' stop-opacity='0.38'/%3E%3Cstop offset='100%25' stop-color='%23facc15' stop-opacity='0'/%3E%3C/radialGradient%3E%3ClinearGradient id='gold' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fff2ac'/%3E%3Cstop offset='35%25' stop-color='%23ecc85b'/%3E%3Cstop offset='70%25' stop-color='%23cfa032'/%3E%3Cstop offset='100%25' stop-color='%23f3d877'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' fill='url(%23bg)'/%3E%3Crect width='512' height='512' fill='url(%23glow)'/%3E%3Cg transform='translate(116,56) scale(0.9333)'%3E%3Cpath d='M 54 34 Q 150 6 246 34 Q 260 54 286 58 L 286 376 Q 286 404 218 412 Q 174 418 150 436 Q 126 418 82 412 Q 14 404 14 376 L 14 58 Q 40 54 54 34 Z' fill='url(%23gold)' stroke='%23614309' stroke-width='9'/%3E%3Cpath d='M 56 37 Q 150 10 244 37 Q 258 56 282 60 L 282 374 Q 282 400 216 408 Q 173 414 150 431 Q 127 414 84 408 Q 18 400 18 374 L 18 60 Q 42 56 56 37 Z' fill='none' stroke='%23fff9cf' stroke-width='3.5' stroke-opacity='0.88'/%3E%3Cpolygon points='18,225 282,58 282,190 18,325' fill='%23fffbe0' fill-opacity='0.34'/%3E%3Cg transform='translate(3,5)' fill='%23fffbe0' fill-opacity='0.85'%3E%3Cpath d='M 98 166 C 98 114 126 94 154 94 C 190 94 212 118 212 154 C 212 186 188 202 172 220 C 164 229 163 239 163 256 L 135 256 C 135 232 138 219 151 203 C 166 185 177 174 177 155 C 177 136 166 125 151 125 C 136 125 128 137 128 159 Z'/%3E%3Ccircle cx='150' cy='298' r='21'/%3E%3C/g%3E%3Cg fill='%232e1b04'%3E%3Cpath d='M 98 166 C 98 114 126 94 154 94 C 190 94 212 118 212 154 C 212 186 188 202 172 220 C 164 229 163 239 163 256 L 135 256 C 135 232 138 219 151 203 C 166 185 177 174 177 155 C 177 136 166 125 151 125 C 136 125 128 137 128 159 Z'/%3E%3Ccircle cx='150' cy='298' r='21'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
+    <link id="appleTouchIcon" rel="apple-touch-icon" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3CradialGradient id='bg' cx='50%25' cy='45%25' r='68%25'%3E%3Cstop offset='0%25' stop-color='%231e2e4f'/%3E%3Cstop offset='65%25' stop-color='%230e1526'/%3E%3Cstop offset='100%25' stop-color='%23080b14'/%3E%3C/radialGradient%3E%3CradialGradient id='glow' cx='50%25' cy='50%25' r='48%25'%3E%3Cstop offset='0%25' stop-color='%23facc15' stop-opacity='0.38'/%3E%3Cstop offset='100%25' stop-color='%23facc15' stop-opacity='0'/%3E%3C/radialGradient%3E%3ClinearGradient id='gold' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fff2ac'/%3E%3Cstop offset='35%25' stop-color='%23ecc85b'/%3E%3Cstop offset='70%25' stop-color='%23cfa032'/%3E%3Cstop offset='100%25' stop-color='%23f3d877'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' fill='url(%23bg)'/%3E%3Crect width='512' height='512' fill='url(%23glow)'/%3E%3Cg transform='translate(116,56) scale(0.9333)'%3E%3Cpath d='M 54 34 Q 150 6 246 34 Q 260 54 286 58 L 286 376 Q 286 404 218 412 Q 174 418 150 436 Q 126 418 82 412 Q 14 404 14 376 L 14 58 Q 40 54 54 34 Z' fill='url(%23gold)' stroke='%23614309' stroke-width='9'/%3E%3Cpath d='M 56 37 Q 150 10 244 37 Q 258 56 282 60 L 282 374 Q 282 400 216 408 Q 173 414 150 431 Q 127 414 84 408 Q 18 400 18 374 L 18 60 Q 42 56 56 37 Z' fill='none' stroke='%23fff9cf' stroke-width='3.5' stroke-opacity='0.88'/%3E%3Cpolygon points='18,225 282,58 282,190 18,325' fill='%23fffbe0' fill-opacity='0.34'/%3E%3Cg transform='translate(3,5)' fill='%23fffbe0' fill-opacity='0.85'%3E%3Cpath d='M 98 166 C 98 114 126 94 154 94 C 190 94 212 118 212 154 C 212 186 188 202 172 220 C 164 229 163 239 163 256 L 135 256 C 135 232 138 219 151 203 C 166 185 177 174 177 155 C 177 136 166 125 151 125 C 136 125 128 137 128 159 Z'/%3E%3Ccircle cx='150' cy='298' r='21'/%3E%3C/g%3E%3Cg fill='%232e1b04'%3E%3Cpath d='M 98 166 C 98 114 126 94 154 94 C 190 94 212 118 212 154 C 212 186 188 202 172 220 C 164 229 163 239 163 256 L 135 256 C 135 232 138 219 151 203 C 166 185 177 174 177 155 C 177 136 166 125 151 125 C 136 125 128 137 128 159 Z'/%3E%3Ccircle cx='150' cy='298' r='21'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
+    <link id="appFavicon" rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3CradialGradient id='bg' cx='50%25' cy='45%25' r='68%25'%3E%3Cstop offset='0%25' stop-color='%231e2e4f'/%3E%3Cstop offset='65%25' stop-color='%230e1526'/%3E%3Cstop offset='100%25' stop-color='%23080b14'/%3E%3C/radialGradient%3E%3ClinearGradient id='gold' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fff2ac'/%3E%3Cstop offset='35%25' stop-color='%23ecc85b'/%3E%3Cstop offset='70%25' stop-color='%23cfa032'/%3E%3Cstop offset='100%25' stop-color='%23f3d877'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='112' fill='url(%23bg)'/%3E%3Cg transform='translate(116,56) scale(0.9333)'%3E%3Cpath d='M 54 34 Q 150 6 246 34 Q 260 54 286 58 L 286 376 Q 286 404 218 412 Q 174 418 150 436 Q 126 418 82 412 Q 14 404 14 376 L 14 58 Q 40 54 54 34 Z' fill='url(%23gold)' stroke='%23614309' stroke-width='9'/%3E%3Cg fill='%232e1b04'%3E%3Cpath d='M 98 166 C 98 114 126 94 154 94 C 190 94 212 118 212 154 C 212 186 188 202 172 220 C 164 229 163 239 163 256 L 135 256 C 135 232 138 219 151 203 C 166 185 177 174 177 155 C 177 136 166 125 151 125 C 136 125 128 137 128 159 Z'/%3E%3Ccircle cx='150' cy='298' r='21'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
     <link id="appManifest" rel="manifest" href="">
+
     <script>
         (function generateHomeScreenIcons() {
             function traceFcCardPath(ctx) {
@@ -57,7 +65,6 @@
                 canvas.height = size;
                 const ctx = canvas.getContext('2d');
 
-                // Ana ekran ikonu arka planı (koyu lacivert + altın parlama)
                 const bgGrad = ctx.createRadialGradient(size * 0.5, size * 0.45, size * 0.08, size * 0.5, size * 0.5, size * 0.72);
                 bgGrad.addColorStop(0, '#1e2e4f');
                 bgGrad.addColorStop(0.65, '#0e1526');
@@ -65,14 +72,13 @@
                 ctx.fillStyle = bgGrad;
                 ctx.fillRect(0, 0, size, size);
 
-                const glow = ctx.createRadialGradient(size * 0.5, size * 0.5, size * 0.05, size * 0.5, size * 0.5, size * 0.46);
-                glow.addColorStop(0, 'rgba(250, 204, 21, 0.34)');
+                const glow = ctx.createRadialGradient(size * 0.5, size * 0.5, size * 0.05, size * 0.5, size * 0.5, size * 0.48);
+                glow.addColorStop(0, 'rgba(250, 204, 21, 0.38)');
                 glow.addColorStop(1, 'rgba(250, 204, 21, 0)');
                 ctx.fillStyle = glow;
                 ctx.fillRect(0, 0, size, size);
 
-                // Altın EA FC kart simgesi
-                const scale = (size * 0.78) / 435;
+                const scale = (size * 0.82) / 435;
                 const offsetX = (size - 300 * scale) / 2;
                 const offsetY = (size - 435 * scale) / 2;
 
@@ -94,7 +100,6 @@
                 ctx.fill();
                 ctx.restore();
 
-                // Kart içi ışık kırılması ve alt ton
                 ctx.save();
                 traceFcCardPath(ctx);
                 ctx.clip();
@@ -111,12 +116,10 @@
                 ctx.fillStyle = 'rgba(180, 128, 24, 0.16)';
                 ctx.fillRect(0, 332, 300, 105);
 
-                // Kartın içindeki kabartmalı soru işareti (?)
                 drawQuestionMark(ctx, 3, 5, 'rgba(255, 251, 224, 0.85)');
                 drawQuestionMark(ctx, 0, 0, '#2e1b04');
                 ctx.restore();
 
-                // Kart dış ve iç çerçevesi
                 traceFcCardPath(ctx);
                 ctx.lineWidth = 8;
                 ctx.strokeStyle = '#614309';
@@ -134,7 +137,9 @@
             try {
                 const icon180 = renderAppIconPng(180);
                 const icon512 = renderAppIconPng(512);
-                document.getElementById('appleTouchIcon').href = icon180;
+                document.querySelectorAll('link[rel="apple-touch-icon"], link[rel="apple-touch-icon-precomposed"]').forEach(el => {
+                    el.href = icon180;
+                });
                 document.getElementById('appFavicon').href = icon180;
 
                 const manifest = {
@@ -208,88 +213,26 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        /* GİRİŞ EKRANI: SARI KARE + ARKASINA DOLANAN TOP + KARŞIDAN ÇIKIP OLDUĞU YERDE DÖNEN BOŞ KART */
+        /* GİRİŞ EKRANI ÖZEL KART AMBLEMİ */
         .logo-emblem {
             position: relative;
-            width: 84px;
-            height: 84px;
-            margin-bottom: 22px;
-            overflow: visible;
+            width: 96px;
+            height: 112px;
+            margin-bottom: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
+            filter: drop-shadow(0 14px 28px rgba(234, 179, 8, 0.36));
+            animation: cardLogoFloat 3.6s ease-in-out infinite;
         }
-
-        .emblem-plate {
-            position: absolute;
-            inset: 0;
-            border-radius: 22px;
-            background: linear-gradient(135deg, #fef08a, #ca8a04);
-            box-shadow:
-                0 12px 30px rgba(234, 179, 8, 0.35),
-                inset 0 2px 4px rgba(255, 255, 255, 0.6);
-            z-index: 2;
-            animation: emblemRecoil 8.6s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
-        }
-
-        .logo-ball {
-            position: relative;
-            z-index: 4;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.3rem;
-            line-height: 1;
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.38));
-            will-change: transform;
-            animation: ballCycleLoop 8.6s cubic-bezier(0.32, 0.72, 0.35, 1) infinite;
-        }
-
-        .logo-mini-card {
-            position: absolute;
-            width: 44px;
-            height: 64px;
-            z-index: 1;
-            pointer-events: none;
-            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.65));
-            will-change: transform;
-            animation: emptyCardSpinLoop 8.6s cubic-bezier(0.35, 0.05, 0.25, 1) infinite;
-        }
-        .logo-mini-card svg {
+        .logo-emblem svg {
             width: 100%;
             height: 100%;
             display: block;
         }
-
-        @keyframes ballCycleLoop {
-            0%, 4% { transform: translate(0px, 0px) rotate(0deg) scale(1, 1); z-index: 4; }
-            12% { transform: translate(28px, -24px) rotate(165deg) scale(1.04, 0.96); z-index: 4; }
-            14% { transform: translate(30px, -25px) rotate(190deg) scale(0.9, 1.1); z-index: 4; }
-            23% { transform: translate(-25px, 22px) rotate(345deg) scale(1.03, 0.97); z-index: 4; }
-            25% { transform: translate(-27px, 24px) rotate(370deg) scale(1.1, 0.9); z-index: 4; }
-            33% { transform: translate(0px, 0px) rotate(720deg) scale(1, 1); z-index: 4; }
-            38% { transform: translate(-42px, -30px) rotate(620deg) scale(0.95); z-index: 4; }
-            39% { transform: translate(-42px, -30px) rotate(615deg) scale(0.95); z-index: 1; }
-            44%, 85% { transform: translate(0px, 0px) rotate(540deg) scale(0.85); z-index: 1; }
-            91% { transform: translate(-42px, -30px) rotate(620deg) scale(0.95); z-index: 1; }
-            92% { transform: translate(-42px, -30px) rotate(625deg) scale(0.95); z-index: 4; }
-            97%, 100% { transform: translate(0px, 0px) rotate(720deg) scale(1, 1); z-index: 4; }
-        }
-
-        @keyframes emptyCardSpinLoop {
-            0%, 44% { transform: translate(0px, 0px) rotate(0deg) scale(0.82); z-index: 1; }
-            51% { transform: translate(40px, 28px) rotate(18deg) scale(0.96); z-index: 1; }
-            52% { transform: translate(40px, 28px) rotate(22deg) scale(0.98); z-index: 4; }
-            64% { transform: translate(40px, 28px) rotate(190deg) scale(1.02); z-index: 4; }
-            75% { transform: translate(40px, 28px) rotate(360deg) scale(0.98); z-index: 4; }
-            76% { transform: translate(40px, 28px) rotate(360deg) scale(0.96); z-index: 1; }
-            84%, 100% { transform: translate(0px, 0px) rotate(360deg) scale(0.82); z-index: 1; }
-        }
-
-        @keyframes emblemRecoil {
-            0%, 12%, 17%, 23%, 28%, 100% { transform: rotate(0deg) scale(1); }
-            14% { transform: rotate(4deg) scale(1.03); }
-            25% { transform: rotate(-4deg) scale(1.03); }
+        @keyframes cardLogoFloat {
+            0%, 100% { transform: translateY(0px) rotate(-1.5deg); }
+            50% { transform: translateY(-6px) rotate(1.5deg); }
         }
 
         .brand-title {
@@ -652,7 +595,6 @@
             text-shadow: 0 1px 0 rgba(255, 250, 210, 0.75);
         }
 
-        /* SİLÜET VE GÖLGEDEN NETLİĞE AÇILAN OYUNCU YÜZ PORTRE KATMANI */
         .c-player-img {
             position: absolute;
             bottom: 37.5%;
@@ -720,7 +662,6 @@
             object-position: bottom center;
         }
 
-        /* KART ALT BİLGİLER */
         .card-bottom {
             position: absolute;
             bottom: 6.8%;
@@ -906,7 +847,6 @@
 
         .action-row { display: flex; gap: 8px; width: 100%; }
 
-        /* OYUN SONU ÖZET MODALI */
         .summary-overlay {
             position: fixed;
             inset: 0;
@@ -949,38 +889,37 @@
 
     <!-- 1. GİRİŞ EKRANI -->
     <div id="startScreen" class="screen active">
-        <div class="logo-emblem">
-            <div class="emblem-plate"></div>
-            <span class="logo-ball">⚽</span>
-            <div class="logo-mini-card" aria-hidden="true">
-                <svg viewBox="0 0 300 435" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="miniGoldBase" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#f7e594"/>
-                            <stop offset="32%" stop-color="#e5c258"/>
-                            <stop offset="68%" stop-color="#cfa336"/>
-                            <stop offset="100%" stop-color="#ebd06e"/>
-                        </linearGradient>
-                        <linearGradient id="miniGoldLower" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" stop-color="#e7c663"/>
-                            <stop offset="100%" stop-color="#cfa135"/>
-                        </linearGradient>
-                        <clipPath id="miniCardClip">
-                            <path d="M 54 34 Q 150 6 246 34 Q 260 54 286 58 L 286 376 Q 286 404 218 412 Q 174 418 150 436 Q 126 418 82 412 Q 14 404 14 376 L 14 58 Q 40 54 54 34 Z"/>
-                        </clipPath>
-                    </defs>
-                    <g clip-path="url(#miniCardClip)">
-                        <rect x="0" y="0" width="300" height="435" fill="url(#miniGoldBase)"/>
-                        <polygon points="10,222 290,52 290,185 10,272" fill="#fff9cf" fill-opacity="0.35"/>
-                        <line x1="12" y1="222" x2="288" y2="52" stroke="#fffbe6" stroke-width="4" stroke-opacity="0.9"/>
-                        <line x1="12" y1="248" x2="288" y2="148" stroke="#fffce6" stroke-width="3.5" stroke-opacity="0.85"/>
-                        <rect x="0" y="272" width="300" height="165" fill="url(#miniGoldLower)"/>
-                        <line x1="12" y1="272" x2="288" y2="272" stroke="#996d18" stroke-width="3"/>
+        <div class="logo-emblem" aria-hidden="true">
+            <svg viewBox="0 0 300 435" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="emblemGoldBase" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#fff2ac"/>
+                        <stop offset="35%" stop-color="#ecc85b"/>
+                        <stop offset="70%" stop-color="#cfa032"/>
+                        <stop offset="100%" stop-color="#f3d877"/>
+                    </linearGradient>
+                    <clipPath id="emblemCardClip">
+                        <path d="M 54 34 Q 150 6 246 34 Q 260 54 286 58 L 286 376 Q 286 404 218 412 Q 174 418 150 436 Q 126 418 82 412 Q 14 404 14 376 L 14 58 Q 40 54 54 34 Z"/>
+                    </clipPath>
+                </defs>
+                <g clip-path="url(#emblemCardClip)">
+                    <rect x="0" y="0" width="300" height="435" fill="url(#emblemGoldBase)"/>
+                    <polygon points="10,232 290,52 290,192 10,330" fill="#fffbe0" fill-opacity="0.36"/>
+                    <rect x="0" y="332" width="300" height="105" fill="#b48018" fill-opacity="0.16"/>
+                    <g transform="translate(3,5)" fill="#fffbe0" fill-opacity="0.85">
+                        <path d="M 98 166 C 98 114 126 94 154 94 C 190 94 212 118 212 154 C 212 186 188 202 172 220 C 164 229 163 239 163 256 L 135 256 C 135 232 138 219 151 203 C 166 185 177 174 177 155 C 177 136 166 125 151 125 C 136 125 128 137 128 159 Z"/>
+                        <circle cx="150" cy="298" r="21"/>
                     </g>
-                    <path d="M 54 34 Q 150 6 246 34 Q 260 54 286 58 L 286 376 Q 286 404 218 412 Q 174 418 150 436 Q 126 418 82 412 Q 14 404 14 376 L 14 58 Q 40 54 54 34 Z"
-                          fill="none" stroke="#614309" stroke-width="6"/>
-                </svg>
-            </div>
+                    <g fill="#2e1b04">
+                        <path d="M 98 166 C 98 114 126 94 154 94 C 190 94 212 118 212 154 C 212 186 188 202 172 220 C 164 229 163 239 163 256 L 135 256 C 135 232 138 219 151 203 C 166 185 177 174 177 155 C 177 136 166 125 151 125 C 136 125 128 137 128 159 Z"/>
+                        <circle cx="150" cy="298" r="21"/>
+                    </g>
+                </g>
+                <path d="M 54 34 Q 150 6 246 34 Q 260 54 286 58 L 286 376 Q 286 404 218 412 Q 174 418 150 436 Q 126 418 82 412 Q 14 404 14 376 L 14 58 Q 40 54 54 34 Z"
+                      fill="none" stroke="#614309" stroke-width="8"/>
+                <path d="M 56 37 Q 150 10 244 37 Q 258 56 282 60 L 282 374 Q 282 400 216 408 Q 173 414 150 431 Q 127 414 84 408 Q 18 400 18 374 L 18 60 Q 42 56 56 37 Z"
+                      fill="none" stroke="#fff9cf" stroke-width="3" stroke-opacity="0.88"/>
+            </svg>
         </div>
         <div class="brand-title" id="ui-title">GİZEMLİ FUTBOLCU</div>
         <div class="brand-sub">ULTIMATE TEAM EDITION</div>
@@ -1149,7 +1088,6 @@
                     <span class="c-pos revealable hidden-stat" id="s-POS">ST</span>
                 </div>
 
-                <!-- Katman 1: Siyah silüet | Katman 2: Gölgeli halden netliğe açılan oyuncu portresi -->
                 <img src="" id="s-Silhouette" class="c-player-img" alt="Silhouette">
                 <div id="s-PhotoFrame" class="c-player-portrait-frame">
                     <img src="" id="s-Photo" class="c-player-photo" alt="Player">
@@ -1220,7 +1158,6 @@
     </div>
 
     <script>
-        // 1. ÇOKLU DİL SÖZLÜĞÜ (15 DİL)
         const langData = {
             tr: { t: { title: "GİZEMLİ FUTBOLCU", roundsLbl: "KAÇ EL OYNANSIN?", roundUnit: "EL", roundHud: "EL", start: "OYUNA BAŞLA", leagues: "LİGLER", leaguesTitle: "LİG FİLTRESİ", minLeague: "En az 1 lig seçili olmalı!", done: "TAMAM", settings: "AYARLAR", lang: "Dil:", sound: "Ses Efektleri:", vol: "Ses Seviyesi:", back: "GERİ DÖN", guess: "TAHMİN", hint: "İPUCU AÇ (-50)", next: "SONRAKİ EL", finish: "SONUCU GÖR", menu: "MENÜ", ph: "Listeden oyuncu seç...", win: "TEBRİKLER! +", lose: "0 PUAN - BİLEMEDİN!", wrong: "Yanlış! İpucu açıldı (-100P)", pot: "TUR PUANI", tot: "TOPLAM", streak: "SERİ", teamsWord: "Takım", sumTitle: "OYUN TAMAMLANDI!", sumCorrect: "DOĞRU TAHMİN", playAgain: "TEKRAR OYNA" }, stats: { PAC: "HIZ", SHO: "ŞUT", PAS: "PAS", DRI: "DRİ", DEF: "DEF", PHY: "FİZ" } },
             en: { t: { title: "MYSTERY BALLER", roundsLbl: "NUMBER OF ROUNDS", roundUnit: "RDS", roundHud: "ROUND", start: "START GAME", leagues: "LEAGUES", leaguesTitle: "LEAGUE FILTER", minLeague: "At least 1 league must stay active!", done: "DONE", settings: "SETTINGS", lang: "Language:", sound: "Sound Effects:", vol: "Volume:", back: "BACK", guess: "GUESS", hint: "HINT (-50)", next: "NEXT ROUND", finish: "SEE RESULTS", menu: "MENU", ph: "Select player from list...", win: "SPOT ON! +", lose: "0 PTS - GAME OVER!", wrong: "Wrong! Hint opened (-100P)", pot: "ROUND PTS", tot: "TOTAL", streak: "STREAK", teamsWord: "Teams", sumTitle: "SESSION COMPLETE!", sumCorrect: "CORRECT", playAgain: "PLAY AGAIN" }, stats: { PAC: "PAC", SHO: "SHO", PAS: "PAS", DRI: "DRI", DEF: "DEF", PHY: "PHY" } },
@@ -1322,7 +1259,6 @@
             renderLeagueFilterList();
         }
 
-        // 2. GELİŞMİŞ YUMUŞAK SES SİSTEMİ
         let audioCtx = null;
         function playSound(type, stepIndex = 0) {
             try {
@@ -1460,7 +1396,6 @@
             return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
         }
 
-        // 3. KATMANLI SAÇLI, KULAKLI VE YAKA GÖLGELİ İNSAN SİLÜETİ
         const defaultSilhouette = svgUri(`<svg viewBox="0 0 240 245" xmlns="http://www.w3.org/2000/svg">
             <path d="M 83 56
                      C 81 40, 88 24, 101 19
@@ -1528,7 +1463,6 @@
             </svg>`);
         }
 
-        // 4. LİG VE TAKIM KONFİGÜRASYONU
         const leagueData = {
             "Premier League": { wikiTitle: "Premier League", fallbackUrl: "https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg", colors: ["#38003c", "#00ff85"] },
             "La Liga": { wikiTitle: "La Liga", fallbackUrl: "https://upload.wikimedia.org/wikipedia/commons/0/0f/LaLiga_logo_2023.svg", colors: ["#ff4b44", "#111827"] },
@@ -1561,7 +1495,6 @@
             "TRABZONSPOR": { name: "Trabzonspor", league: "Süper Lig", wikiTitle: "Trabzonspor", trWikiTitle: "Trabzonspor", searchTerms: ["Trabzonspor"], fallbackUrl: "https://upload.wikimedia.org/wikipedia/en/a/ab/TrabzonsporAmblem.png", colors: ["#800020", "#3bb9ff"] }
         };
 
-        // 5. WIKIPEDIA INFOBOX ARMALARINI TOPLU ÇEKME
         const wikiInfoboxCache = {};
         let logoBatchPromise = null;
 
@@ -1663,7 +1596,6 @@
             setWithFallbackChain([trLoaded?.primary, enLoaded?.primary, fallbackUrl, trLoaded?.backup, enLoaded?.backup]);
         }
 
-        // 6. LİG FİLTRESİ YÖNETİMİ
         const allLeagueNames = Object.keys(leagueData);
         let activeLeagues = new Set(allLeagueNames);
         try {
@@ -1760,9 +1692,7 @@
             });
         }
 
-        // 7. OYUNCULARIN GERÇEK EA SPORTS FC REYTİNGLERİ [UYRUK, MEVKİ, OVR, PAC, SHO, PAS, DRI, DEF, PHY]
         const playerDB = {
-            // BAYERN MÜNİH
             "Harry Kane": ["gb-eng", "ST", 90, 66, 93, 84, 83, 49, 83],
             "Michael Olise": ["fr", "RW", 86, 82, 81, 84, 88, 45, 67],
             "Joshua Kimmich": ["de", "CDM", 89, 70, 74, 89, 84, 83, 79],
@@ -1786,7 +1716,6 @@
             "Sacha Boey": ["fr", "RB", 78, 84, 60, 70, 76, 76, 78],
             "Sven Ulreich": ["de", "GK", 75, 75, 73, 72, 76, 40, 74],
 
-            // BORUSSIA DORTMUND
             "Nico Schlotterbeck": ["de", "CB", 85, 77, 58, 76, 74, 86, 83],
             "Gregor Kobel": ["ch", "GK", 88, 87, 86, 75, 89, 45, 87],
             "Serhou Guirassy": ["gn", "ST", 86, 78, 87, 73, 81, 39, 84],
@@ -1806,7 +1735,6 @@
             "Ethan Nwaneri": ["gb-eng", "CAM", 76, 80, 73, 74, 80, 44, 62],
             "Alexander Meyer": ["de", "GK", 76, 76, 74, 73, 77, 41, 75],
 
-            // PARIS SAINT-GERMAIN
             "Ousmane Dembélé": ["fr", "RW", 90, 94, 83, 84, 93, 40, 64],
             "Vitinha": ["pt", "CM", 89, 77, 80, 89, 90, 76, 70],
             "Khvicha Kvaratskhelia": ["ge", "LW", 87, 86, 82, 82, 90, 45, 74],
@@ -1828,7 +1756,6 @@
             "Lucas Digne": ["fr", "LB", 80, 76, 68, 80, 78, 77, 74],
             "Mika Godts": ["be", "LW", 77, 84, 71, 72, 81, 35, 62],
 
-            // REAL MADRID
             "Kylian Mbappé": ["fr", "ST", 91, 97, 90, 81, 93, 36, 78],
             "Thibaut Courtois": ["be", "GK", 89, 85, 89, 76, 90, 46, 88],
             "Jude Bellingham": ["gb-eng", "CAM", 90, 80, 87, 85, 90, 78, 85],
@@ -1852,7 +1779,6 @@
             "Asencio": ["es", "CB", 78, 78, 42, 65, 67, 79, 79],
             "Carlos Espí": ["es", "ST", 72, 70, 73, 61, 69, 30, 76],
 
-            // BARCELONA
             "Lamine Yamal": ["es", "RW", 89, 88, 81, 83, 91, 28, 56],
             "Pedri": ["es", "CM", 89, 78, 74, 88, 91, 74, 68],
             "Rodri": ["es", "CDM", 90, 66, 80, 86, 84, 87, 85],
@@ -1876,7 +1802,6 @@
             "Gabriel Jesus": ["br", "ST", 81, 82, 79, 74, 85, 44, 73],
             "Xavi Espart": ["es", "RB", 71, 76, 52, 68, 71, 69, 66],
 
-            // ATLÉTICO MADRID
             "Jan Oblak": ["si", "GK", 88, 86, 89, 77, 87, 46, 88],
             "Julián Álvarez": ["ar", "ST", 87, 85, 86, 81, 87, 56, 76],
             "Marcos Llorente": ["es", "CM", 84, 88, 79, 80, 81, 79, 82],
@@ -1900,7 +1825,6 @@
             "Rodri Mendoza": ["es", "CM", 73, 73, 66, 73, 76, 63, 65],
             "Arnau Ortiz": ["es", "LW", 71, 79, 66, 66, 73, 35, 58],
 
-            // INTER
             "Alessandro Bastoni": ["it", "CB", 87, 76, 46, 77, 76, 88, 83],
             "Federico Dimarco": ["it", "LB", 85, 81, 77, 84, 82, 79, 76],
             "Marcus Thuram": ["fr", "ST", 85, 87, 82, 74, 83, 44, 84],
@@ -1916,7 +1840,6 @@
             "Djed Spence": ["gb-eng", "RB", 78, 86, 58, 70, 77, 74, 76],
             "Luis Henrique": ["br", "RW", 78, 86, 72, 73, 81, 55, 68],
 
-            // MILAN
             "Mike Maignan": ["fr", "GK", 87, 86, 85, 85, 89, 51, 86],
             "Luka Modrić": ["hr", "CM", 83, 66, 74, 86, 86, 70, 63],
             "Adrien Rabiot": ["fr", "CM", 83, 74, 77, 80, 80, 79, 82],
@@ -1931,7 +1854,6 @@
             "Samuel Chukwueze": ["ng", "RW", 80, 87, 74, 74, 83, 35, 62],
             "Pervis Estupiñán": ["ec", "LB", 80, 82, 64, 75, 78, 77, 77],
 
-            // ROMA
             "Paulo Dybala": ["ar", "CAM", 86, 80, 85, 85, 89, 40, 60],
             "Mile Svilar": ["rs", "GK", 83, 83, 81, 74, 85, 45, 81],
             "Donyell Malen": ["nl", "ST", 83, 89, 82, 73, 83, 39, 73],
@@ -1954,7 +1876,6 @@
             "Daniele Ghilardi": ["it", "CB", 74, 70, 38, 60, 62, 75, 76],
             "Devis Vásquez": ["co", "GK", 74, 75, 72, 68, 76, 40, 74],
 
-            // NAPOLI
             "Scott McTominay": ["gb-sct", "CM", 85, 75, 81, 78, 79, 80, 86],
             "Kevin De Bruyne": ["be", "CAM", 87, 67, 84, 92, 84, 64, 74],
             "Amir Rrahmani": ["xk", "CB", 82, 67, 45, 66, 65, 84, 82],
@@ -1976,7 +1897,6 @@
             "Alisson Santos": ["br", "LW", 74, 82, 69, 69, 77, 34, 61],
             "Lorenzo Lucca": ["it", "ST", 77, 73, 77, 62, 71, 33, 83],
 
-            // JUVENTUS
             "Bremer": ["br", "CB", 86, 81, 51, 64, 68, 87, 86],
             "Kenan Yıldız": ["tr", "LW", 80, 82, 76, 77, 84, 41, 68],
             "Manuel Locatelli": ["it", "CDM", 83, 66, 72, 83, 79, 81, 78],
@@ -2001,7 +1921,6 @@
             "Daniele Rugani": ["it", "CB", 76, 62, 42, 63, 62, 78, 76],
             "Neto": ["br", "GK", 77, 77, 75, 72, 78, 43, 77],
 
-            // ARSENAL
             "Gabriel": ["br", "CB", 88, 76, 48, 66, 68, 88, 87],
             "David Raya": ["es", "GK", 86, 85, 83, 84, 87, 48, 83],
             "William Saliba": ["fr", "CB", 87, 81, 41, 70, 73, 88, 84],
@@ -2025,7 +1944,6 @@
             "Cristhian Mosquera": ["es", "CB", 79, 77, 38, 63, 66, 80, 80],
             "Kepa": ["es", "GK", 79, 80, 77, 78, 81, 45, 76],
 
-            // MANCHESTER CITY
             "Erling Haaland": ["no", "ST", 91, 88, 92, 70, 81, 45, 88],
             "Gianluigi Donnarumma": ["it", "GK", 89, 90, 84, 79, 90, 50, 87],
             "Rúben Dias": ["pt", "CB", 87, 67, 42, 70, 69, 88, 86],
@@ -2046,7 +1964,6 @@
             "Rico Lewis": ["gb-eng", "RB", 78, 78, 63, 77, 80, 74, 65],
             "Allan": ["br", "CM", 76, 72, 66, 74, 76, 75, 76],
 
-            // LIVERPOOL
             "Virgil van Dijk": ["nl", "CB", 90, 78, 60, 72, 72, 89, 86],
             "Alisson": ["br", "GK", 89, 86, 85, 85, 89, 52, 90],
             "Dominik Szoboszlai": ["hu", "CAM", 84, 82, 82, 84, 83, 66, 77],
@@ -2068,7 +1985,6 @@
             "Wataru Endo": ["jp", "CDM", 80, 64, 66, 75, 74, 81, 81],
             "Kostas Tsimikas": ["gr", "LB", 78, 79, 57, 76, 77, 75, 72],
 
-            // CHELSEA
             "Moisés Caicedo": ["ec", "CDM", 85, 76, 67, 80, 81, 84, 83],
             "Cole Palmer": ["gb-eng", "CAM", 87, 79, 84, 86, 87, 52, 68],
             "Emiliano Martínez": ["ar", "GK", 86, 85, 83, 81, 86, 51, 85],
@@ -2093,7 +2009,6 @@
             "Kendry Páez": ["ec", "CAM", 75, 78, 70, 75, 80, 44, 58],
             "Mike Penders": ["be", "GK", 74, 75, 72, 68, 76, 40, 75],
 
-            // MANCHESTER UNITED
             "Bruno Fernandes": ["pt", "CAM", 87, 72, 84, 89, 84, 68, 74],
             "Youri Tielemans": ["be", "CM", 83, 61, 79, 85, 81, 74, 72],
             "Bryan Mbeumo": ["cm", "RW", 83, 87, 81, 78, 82, 47, 75],
@@ -2115,7 +2030,6 @@
             "Manuel Ugarte": ["uy", "CDM", 81, 72, 59, 73, 75, 82, 82],
             "Joshua Zirkzee": ["nl", "ST", 79, 75, 76, 74, 82, 38, 77],
 
-            // FENERBAHÇE
             "N'Golo Kanté": ["fr", "CDM", 85, 77, 66, 77, 81, 86, 82],
             "Mason Greenwood": ["gb-eng", "RW", 82, 84, 83, 76, 83, 35, 71],
             "Ederson": ["br", "GK", 85, 84, 82, 91, 86, 64, 84],
@@ -2140,7 +2054,6 @@
             "Ognjen Mimović": ["rs", "RB", 73, 78, 54, 67, 71, 70, 71],
             "Mert Hakan Yandaş": ["tr", "CM", 73, 68, 70, 74, 73, 66, 70],
 
-            // BEŞİKTAŞ
             "Leandro Trossard": ["be", "LW", 83, 81, 82, 80, 85, 45, 63],
             "Orkun Kökçü": ["tr", "CM", 81, 71, 78, 84, 81, 68, 71],
             "Dušan Vlahović": ["rs", "ST", 82, 78, 84, 67, 77, 36, 83],
@@ -2167,7 +2080,6 @@
             "Can Keleş": ["tr", "RW", 70, 79, 66, 66, 72, 38, 61],
             "Mustafa Hekimoğlu": ["tr", "ST", 68, 75, 67, 57, 67, 29, 71],
 
-            // GALATASARAY
             "Victor Osimhen": ["ng", "ST", 87, 90, 85, 67, 81, 42, 83],
             "Uğurcan Çakır": ["tr", "GK", 79, 80, 76, 71, 81, 43, 78],
             "Davinson Sánchez": ["co", "CB", 81, 79, 46, 64, 67, 81, 83],
@@ -2191,7 +2103,6 @@
             "Günay Güvenç": ["tr", "GK", 73, 73, 71, 67, 74, 41, 73],
             "Kazımcan Karataş": ["tr", "LB", 69, 76, 51, 63, 67, 66, 68],
 
-            // TRABZONSPOR
             "Mohamed Salah": ["eg", "RW", 91, 89, 88, 86, 90, 45, 76],
             "Fabinho": ["br", "CDM", 83, 62, 69, 78, 76, 83, 82],
             "André Onana": ["cm", "GK", 80, 81, 77, 83, 82, 48, 79],
@@ -2724,7 +2635,6 @@ Metehan Mimaroğlu`;
             });
         }
 
-        // 8. GÜVENİLİR VE HIZLI OYUNCU PORTRE ÇEKME MOTORU
         const playerPhotoCache = {};
 
         const playerIdentityMap = {
